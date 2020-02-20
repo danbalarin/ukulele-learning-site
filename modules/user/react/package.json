@@ -1,0 +1,27 @@
+{
+    "name": "@uls/user-react",
+    "private": true,
+    "version": "0.1.0",
+    "scripts": {
+        "storybook": "start-storybook"
+    },
+    "dependencies": {
+        "@uls/look-react": "workspace:modules/look/react",
+        "@uls/user-common": "workspace:modules/user/common",
+        "formik": "^2.1.4",
+        "react-dom": "^16.12.0"
+    },
+    "devDependencies": {
+        "@storybook/addon-actions": "^5.3.13",
+        "@storybook/addon-knobs": "^5.3.13",
+        "@storybook/react": "^5.3.13",
+        "@types/react": "16.9.19",
+        "@types/react-dom": "16.9.5",
+        "react": "^16.12.0"
+    },
+    "dependenciesMeta": {
+        "@chakra-ui": {
+            "unplugged": true
+        }
+    }
+}

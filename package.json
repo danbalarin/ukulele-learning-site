@@ -1,0 +1,56 @@
+{
+    "name": "ukulele-learning-site",
+    "version": "0.1.0",
+    "private": true,
+    "npmClient": "yarn",
+    "workspaces": [
+        "packages/*",
+        "modules/**/common",
+        "modules/**/nodejs",
+        "modules/**/react"
+    ],
+    "scripts": {
+        "storybook": "start-storybook",
+        "storybook2": "yarn workspaces foreach -pi run storybook"
+    },
+    "dependencies": {
+        "@yarnpkg/pnpify": "^2.0.0-rc.18",
+        "typescript": "^3.7.5"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.8.4",
+        "@babel/preset-react": "^7.8.3",
+        "@storybook/addon-actions": "^5.3.13",
+        "@storybook/addon-knobs": "^5.3.13",
+        "@storybook/react": "^5.3.13",
+        "@types/babel__core": "7.1.4",
+        "@types/prettier": "1.19.0",
+        "@types/react": "16.9.19",
+        "@types/react-dom": "^16.9.5",
+        "@types/webpack": "4.41.6",
+        "babel-loader": "^8.0.6",
+        "babel-preset-react": "^6.24.1",
+        "pnp-webpack-plugin": "^1.6.0",
+        "prettier": "^1.19.1",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "react-hot-loader": "^4.12.19",
+        "source-map-loader": "^0.2.4",
+        "ts-loader": "^6.2.1",
+        "webpack": "^4.41.6"
+    },
+    "dependenciesMeta": {
+        "@chakra-ui": {
+            "unplugged": true
+        },
+        "@storybook/core": {
+            "unplugged": true
+        },
+        "@types/react": {
+            "unplugged": true
+        },
+        "@types/react-dom": {
+            "unplugged": true
+        }
+    }
+}
