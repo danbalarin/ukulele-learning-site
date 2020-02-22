@@ -27,6 +27,7 @@ function PasswordInput(props: Props) {
                     onClick={handleClick}
                     disabled={props.disabled}
                     tabIndex={-1}
+                    variant="solid"
                 >
                     {show && !props.disabled ? 'Hide' : 'Show'}
                 </Button>

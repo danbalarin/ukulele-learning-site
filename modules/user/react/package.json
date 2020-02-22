@@ -9,7 +9,9 @@
         "@uls/look-react": "workspace:modules/look/react",
         "@uls/user-common": "workspace:modules/user/common",
         "formik": "^2.1.4",
-        "react-dom": "^16.12.0"
+        "react-dom": "^16.12.0",
+        "react-spring": "^8.0.27",
+        "yup": "^0.28.1"
     },
     "devDependencies": {
         "@storybook/addon-actions": "^5.3.13",
@@ -17,6 +19,7 @@
         "@storybook/react": "^5.3.13",
         "@types/react": "16.9.19",
         "@types/react-dom": "16.9.5",
+        "@types/yup": "0.26.32",
         "react": "^16.12.0"
     },
     "dependenciesMeta": {

@@ -1,14 +1,9 @@
 import React from 'react';
+import { storiesOf } from '@storybook/react';
 import { withKnobs, boolean, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import LoginForm from './LoginForm';
-
-export default {
-    title: 'Login form',
-    component: LoginForm,
-    decorators: [withKnobs],
-};
 
 interface Props {
     children: React.ReactNode;
@@ -35,11 +30,13 @@ const Wrapper = (props: Props) => {
     );
 };
 
-export const basic = () => (
-    <Wrapper>
-        <LoginForm
-            onSubmit={action('form-submit')}
-            isLoading={boolean('Form loading', false)}
-        />
-    </Wrapper>
-);
+storiesOf('User/Login form', module)
+    .addDecorator(withKnobs)
+    .add('Basic', () => (
+        <Wrapper>
+            <LoginForm
+                onSubmit={action('form-submit')}
+                isLoading={boolean('Form loading', false)}
+            />
+        </Wrapper>
+    ));

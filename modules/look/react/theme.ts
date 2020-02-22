@@ -1,6 +1,14 @@
 import { theme, DefaultTheme } from '@chakra-ui/core';
 
-const customTheme: DefaultTheme = {
+import { ModalTheme } from './components/Modal';
+import { ButtonTheme } from './components/Button/Button';
+
+interface InternalTheme {
+    modal?: ModalTheme;
+    button?: ButtonTheme;
+}
+
+const customTheme: DefaultTheme & InternalTheme = {
     ...theme,
     colors: {
         ...theme.colors,
@@ -10,7 +18,8 @@ const customTheme: DefaultTheme = {
         },
         orange: {
             ...theme.colors.orange,
-            500: '#fd9644',
+            // 500: '#fd9644',
+            500: '#ff851c',
         },
         yellow: {
             ...theme.colors.yellow,
@@ -27,6 +36,19 @@ const customTheme: DefaultTheme = {
         purple: {
             ...theme.colors.purple,
             500: '#a55eea',
+        },
+    },
+    modal: {
+        border: {
+            borderRadius: '10px',
+        },
+    },
+    button: {
+        defaultVariant: 'outline',
+        outline: {
+            border: {
+                borderWidth: '3px',
+            },
         },
     },
 };

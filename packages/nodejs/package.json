@@ -1,5 +1,5 @@
 {
-    "name": "nodejs-package",
+    "name": "@uls/nodejs-package",
     "version": "0.1.0",
     "private": true
 }

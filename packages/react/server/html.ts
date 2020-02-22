@@ -19,6 +19,7 @@ const html = (helmet: any, body: string) => `
         </head>
         <body >
             <div id="app">${body}</div>
+            <script type="application/javascript" src="bundle.js"></script>
         </body>
     </html>
 `;

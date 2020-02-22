@@ -1,11 +1,12 @@
 import React from 'react';
+import { storiesOf } from '@storybook/react';
 import { withKnobs, boolean, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import RegisterForm from './RegisterForm';
 
 export default {
-    title: 'Register form',
+    title: 'User/Register form',
     component: RegisterForm,
     decorators: [withKnobs],
 };
@@ -35,21 +36,22 @@ const Wrapper = (props: Props) => {
     );
 };
 
-export const basic = () => (
-    <Wrapper>
-        <RegisterForm
-            onSubmit={action('form-submit')}
-            isLoading={boolean('Form loading', false)}
-        />
-    </Wrapper>
-);
-
-export const withTermsAndConditions = () => (
-    <Wrapper>
-        <RegisterForm
-            onSubmit={action('form-submit')}
-            isLoading={boolean('Form loading', false)}
-            termsAndConditionsElement={'Sample terms and conditions'}
-        />
-    </Wrapper>
-);
+storiesOf('User/Register form', module)
+    .addDecorator(withKnobs)
+    .add('Basic', () => (
+        <Wrapper>
+            <RegisterForm
+                onSubmit={action('form-submit')}
+                isLoading={boolean('Form loading', false)}
+            />
+        </Wrapper>
+    ))
+    .add('With terms and conditions', () => (
+        <Wrapper>
+            <RegisterForm
+                onSubmit={action('form-submit')}
+                isLoading={boolean('Form loading', false)}
+                termsAndConditionsElement={'Sample terms and conditions'}
+            />
+        </Wrapper>
+    ));

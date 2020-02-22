@@ -10,8 +10,7 @@
         "modules/**/react"
     ],
     "scripts": {
-        "storybook": "start-storybook",
-        "storybook2": "yarn workspaces foreach -pi run storybook"
+        "storybook": "start-storybook"
     },
     "dependencies": {
         "@yarnpkg/pnpify": "^2.0.0-rc.18",
@@ -31,13 +30,11 @@
         "babel-loader": "^8.0.6",
         "babel-preset-react": "^6.24.1",
         "pnp-webpack-plugin": "^1.6.0",
-        "prettier": "^1.19.1",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
         "react-hot-loader": "^4.12.19",
         "source-map-loader": "^0.2.4",
-        "ts-loader": "^6.2.1",
-        "webpack": "^4.41.6"
+        "ts-loader": "^6.2.1"
     },
     "dependenciesMeta": {
         "@chakra-ui": {
@@ -50,6 +47,9 @@
             "unplugged": true
         },
         "@types/react-dom": {
+            "unplugged": true
+        },
+        "webpack-cli": {
             "unplugged": true
         }
     }

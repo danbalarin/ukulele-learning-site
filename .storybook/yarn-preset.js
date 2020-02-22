@@ -1,7 +1,27 @@
-const path = require('path');
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
 
-const custom = require('../webpack.config.js');
+const webpack = {
+    module: {
+        rules: [
+            {
+                test: /\.ts(x?)$/,
+                exclude: /node_modules/,
+                loader: 'ts-loader',
+                resolve: {
+                    extensions: ['.ts', '.tsx', '.js'],
+                },
+            },
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['@babel/react'],
+                },
+            },
+        ],
+    },
+};
 
 async function yarn2Config(config, options) {
     const newConfig = {
@@ -31,7 +51,7 @@ async function yarn2Config(config, options) {
 const webpackFinal = config => {
     return {
         ...config,
-        module: { ...config.module, rules: custom.module.rules },
+        module: { ...config.module, rules: webpack.module.rules },
     };
 };
 
