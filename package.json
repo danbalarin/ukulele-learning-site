@@ -49,6 +49,9 @@
         "@types/react-dom": {
             "unplugged": true
         },
+        "apollo-server": {
+            "unplugged": true
+        },
         "webpack-cli": {
             "unplugged": true
         }

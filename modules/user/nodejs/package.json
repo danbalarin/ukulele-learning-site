@@ -1,5 +1,15 @@
 {
-  "name": "@uls/user-nodejs",
-  "version": "0.1.0",
-  "private": true
+    "name": "@uls/user-nodejs",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@uls/user-common": "workspace:modules/user/common",
+        "graphql": "^14.6.0",
+        "graphql-compose": "^7.12.3",
+        "graphql-compose-mongoose": "^7.3.4",
+        "mongoose": "^5.9.2"
+    },
+    "devDependencies": {
+        "@types/mongoose": "5.7.1"
+    }
 }

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { User } from '@uls/user-common';
+import { User, Role } from '@uls/user-common';
 import {
     PasswordInput,
     Input,
@@ -28,6 +28,7 @@ function LoginForm({ onSubmit, isLoading }: Props): ReactElement {
             username: '',
             password: '',
             email: '',
+            role: Role.USER,
         },
         onSubmit: values => {
             onSubmit(values as User);

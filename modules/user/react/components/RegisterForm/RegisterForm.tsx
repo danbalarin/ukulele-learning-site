@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { User } from '@uls/user-common';
+import { User, Role } from '@uls/user-common';
 import {
     PasswordInput,
     Input,
@@ -47,6 +47,7 @@ function RegisterForm({
             password: '',
             passwordMatch: '',
             email: '',
+            role: Role.USER,
             terms: false,
         },
         onSubmit: values => {

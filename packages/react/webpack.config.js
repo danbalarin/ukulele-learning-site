@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');

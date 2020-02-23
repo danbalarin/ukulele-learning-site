@@ -1,5 +1,44 @@
 {
     "name": "@uls/nodejs-package",
     "version": "0.1.0",
-    "private": true
+    "private": true,
+    "scripts": {
+        "clean": "rimraf build",
+        "prestart-dev": "cross-env yarn run clean && yarn run build",
+        "watch:build": "webpack-cli --watch",
+        "watch:server": "nodemon \"./build/server.js\" --watch \"./build\"",
+        "build": "webpack-cli",
+        "start": "node build/server.js",
+        "start-dev": "npm-run-all --parallel watch:server watch:build",
+        "start2": "ts-node server/index.ts"
+    },
+    "dependencies": {
+        "@uls/user-nodejs": "workspace:modules/user/nodejs",
+        "apollo-server": "^2.10.1",
+        "dotenv": "^8.2.0",
+        "graphql": "^14.6.0",
+        "mongoose": "^5.9.2",
+        "nodets": "^0.0.1",
+        "sha1": "^1.1.1",
+        "ts-node": "^8.6.2",
+        "typescript": "^3.8.2"
+    },
+    "devDependencies": {
+        "@types/mongoose": "5.7.1",
+        "@types/nodemon": "1.19.0",
+        "@types/rimraf": "2.0.3",
+        "@types/sha1": "1.1.2",
+        "@types/webpack": "4.41.6",
+        "@types/webpack-node-externals": "1.7.1",
+        "cross-env": "^7.0.0",
+        "html-loader": "^0.5.5",
+        "nodemon": "^2.0.2",
+        "npm-run-all": "^4.1.5",
+        "pnp-webpack-plugin": "^1.6.4",
+        "rimraf": "^3.0.2",
+        "ts-loader": "^6.2.1",
+        "webpack": "^4.41.6",
+        "webpack-cli": "^3.3.11",
+        "webpack-node-externals": "^1.7.2"
+    }
 }
