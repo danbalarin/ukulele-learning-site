@@ -1,22 +1,14 @@
 import React, { ReactElement } from 'react';
 
-import {
-    ColorModeProvider as ChakraColorModeProvider,
-    useColorMode as useChakraColorMode,
-} from '@chakra-ui/core';
+import { ColorModeProvider as ChakraColorModeProvider } from '@chakra-ui/core';
 
 interface Props {
     children: React.ReactNode;
+    value: 'light' | 'dark';
 }
 
 function ColorModeProvider(props: Props): ReactElement {
     return <ChakraColorModeProvider {...props} />;
 }
-
-export interface UseColorMode {
-    colorMode: 'light' | 'dark';
-    toggleColorMode: () => void;
-}
-export const useColorMode: () => UseColorMode = useChakraColorMode;
 
 export default ColorModeProvider;

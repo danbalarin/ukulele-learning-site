@@ -13,15 +13,20 @@
         "storybook": "start-storybook"
     },
     "dependencies": {
+        "@apollo/client": "^3.0.0-beta.38",
         "@yarnpkg/pnpify": "^2.0.0-rc.18",
+        "graphql": "^14.6.0",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "styled-components": "^5.0.1",
         "typescript": "^3.7.5"
     },
     "devDependencies": {
         "@babel/core": "^7.8.4",
         "@babel/preset-react": "^7.8.3",
-        "@storybook/addon-actions": "^5.3.13",
-        "@storybook/addon-knobs": "^5.3.13",
-        "@storybook/react": "^5.3.13",
+        "@storybook/addon-actions": "6.0.0-alpha.27",
+        "@storybook/addon-knobs": "6.0.0-alpha.27",
+        "@storybook/react": "6.0.0-alpha.27",
         "@types/babel__core": "7.1.4",
         "@types/prettier": "1.19.0",
         "@types/react": "16.9.19",
@@ -29,6 +34,7 @@
         "@types/webpack": "4.41.6",
         "babel-loader": "^8.0.6",
         "babel-preset-react": "^6.24.1",
+        "file-loader": "^5.1.0",
         "pnp-webpack-plugin": "^1.6.0",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
@@ -50,6 +56,9 @@
             "unplugged": true
         },
         "apollo-server": {
+            "unplugged": true
+        },
+        "apollo-utilities": {
             "unplugged": true
         },
         "webpack-cli": {

@@ -11,7 +11,6 @@ storiesOf('User/Authentication modal', module)
     .addDecorator(withKnobs)
     .add('Basic', () => {
         const { isOpen, onOpen, onClose } = useDisclosure();
-        const isRegister = boolean('Register form', false);
         const isLoading = boolean('Loading', false);
 
         return (
@@ -20,18 +19,17 @@ storiesOf('User/Authentication modal', module)
                     Open
                 </Button>
                 <AuthenticationModal
-                    isRegister={isRegister}
+                    isLoading={isLoading}
                     isOpen={isOpen}
                     onClose={onClose}
-                    onLoginSubmit={action('login')}
-                    onRegisterSubmit={action('register')}
+                    onLogin={action('login')}
+                    onRegister={action('register')}
                 />
             </>
         );
     })
     .add('With terms of service', () => {
         const { isOpen, onOpen, onClose } = useDisclosure();
-        const isRegister = boolean('Register form', true);
         const isLoading = boolean('Loading', false);
 
         return (
@@ -40,12 +38,11 @@ storiesOf('User/Authentication modal', module)
                     Open
                 </Button>
                 <AuthenticationModal
-                    isRegister={isRegister}
+                    isLoading={isLoading}
                     isOpen={isOpen}
                     onClose={onClose}
-                    onLoginSubmit={action('login')}
-                    onRegisterSubmit={action('register')}
-                    isLoading={isLoading}
+                    onLogin={action('login')}
+                    onRegister={action('register')}
                     termsAndConditionsElement={'Sample terms and conditions'}
                 />
             </>

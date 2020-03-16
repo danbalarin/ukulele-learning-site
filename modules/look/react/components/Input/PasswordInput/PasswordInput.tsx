@@ -1,10 +1,7 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
-import { InputGroup } from '../InputGroup';
-import { Input } from '../Input';
-import { Button } from '../Button';
-import { InputElement } from '../InputElement';
-import { InputProps } from '../Input';
+import { Input, InputProps, InputGroup, InputElement } from '..';
+import { Button } from '../../Button';
 
 interface Props extends InputProps {}
 

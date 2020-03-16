@@ -12,10 +12,17 @@
 //     </html>
 // `;
 
-const html = (helmet: any, body: string) => `
+interface Props {
+    helmet: any;
+    body: string;
+    styles: any;
+}
+
+const html = ({ helmet, body, styles }: Props) => `
     <!doctype html>
     <html>
         <head>
+            ${styles}
         </head>
         <body >
             <div id="app">${body}</div>

@@ -12,17 +12,21 @@ import {
     FormErrorMessage,
 } from '@uls/look-react';
 
+import { useLoginMutation } from '../../graphql/user';
+
 const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required'),
     password: Yup.string().required('Password is required'),
 });
 
 interface Props {
-    onSubmit: (user: User) => void;
+    onLogin: (token: string) => void;
     isLoading?: boolean;
 }
 
-function LoginForm({ onSubmit, isLoading }: Props): ReactElement {
+function LoginForm({ onLogin, isLoading }: Props): ReactElement {
+    const [login, { data, loading, error }] = useLoginMutation();
+
     const { handleSubmit, handleChange, values, touched, errors } = useFormik({
         initialValues: {
             username: '',
@@ -31,10 +35,19 @@ function LoginForm({ onSubmit, isLoading }: Props): ReactElement {
             role: Role.USER,
         },
         onSubmit: values => {
-            onSubmit(values as User);
+            login({
+                variables: {
+                    password: values.password,
+                    username: values.username,
+                },
+            });
         },
         validationSchema,
     });
+
+    if (!!data) {
+        onLogin(data.login.token);
+    }
 
     return (
         <form onSubmit={handleSubmit}>
@@ -43,27 +56,42 @@ function LoginForm({ onSubmit, isLoading }: Props): ReactElement {
                     <Input
                         name="username"
                         placeholder="Username"
-                        disabled={isLoading}
+                        disabled={isLoading || loading}
                         onChange={handleChange}
                         value={values.username}
                     />
-                    <FormErrorMessage>{errors?.username}</FormErrorMessage>
+                    <FormErrorMessage show={!!errors.username}>
+                        {errors?.username}
+                    </FormErrorMessage>
                 </FormControl>
                 <FormControl isInvalid={touched.password && !!errors.password}>
                     <PasswordInput
                         name="password"
                         placeholder="Password"
-                        disabled={isLoading}
+                        disabled={isLoading || loading}
                         onChange={handleChange}
                         value={values.password}
                     />
-                    <FormErrorMessage>{errors?.password}</FormErrorMessage>
+                    <FormErrorMessage show={!!errors.password}>
+                        {errors?.password}
+                    </FormErrorMessage>
                 </FormControl>
+                {!!error ? (
+                    <FormControl isInvalid={true}>
+                        {error?.graphQLErrors.map(({ message }, i) => (
+                            <FormErrorMessage key={i}>
+                                {message}
+                            </FormErrorMessage>
+                        ))}
+                    </FormControl>
+                ) : (
+                    <></>
+                )}
                 <Button
                     variantColor="blue"
                     type="submit"
                     variant="solid"
-                    isLoading={isLoading}
+                    isLoading={isLoading || loading}
                 >
                     Login
                 </Button>

@@ -1,46 +1,39 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, {
+    ReactElement,
+    useState,
+    forwardRef,
+    useImperativeHandle,
+} from 'react';
 import { useTransition, animated } from 'react-spring';
 
 import { Modal, Button } from '@uls/look-react';
+
 import { LoginForm } from '../LoginForm';
 import { RegisterForm } from '../RegisterForm';
-import { User } from '@uls/user-common';
 
 interface AuthenticationModalProps {
     isOpen?: boolean;
-    isRegister?: boolean;
     onClose?: () => void;
-    onLoginSubmit: (user: User) => void;
-    onRegisterSubmit: (user: User) => void;
+    onLogin: (token: string) => void;
+    onRegister: (token: string) => void;
     isLoading?: boolean;
     termsAndConditionsElement?: React.ReactNode;
 }
 
-function AuthenticationModal({
-    isRegister,
-    onLoginSubmit,
-    onRegisterSubmit,
-    isLoading,
-    termsAndConditionsElement,
-    onClose,
-    ...props
-}: AuthenticationModalProps): ReactElement {
-    const [registerForm, setRegisterForm] = useState(isRegister);
-
-    const toggleForm = () => {
-        setRegisterForm(!registerForm);
-    };
+function AuthenticationModal(
+    {
+        onLogin,
+        onRegister,
+        isLoading,
+        termsAndConditionsElement,
+        onClose,
+        ...props
+    }: AuthenticationModalProps,
+    ref: any
+): ReactElement {
+    const [registerForm, setRegisterForm] = useState(false);
 
     const transitions = useTransition(registerForm, null, {
-        // from: {
-        //     opacity: 0,
-        //     height: 0,
-        // },
-        // enter: [
-        //     { opacity: 1 },
-        //     { height: 'auto' },
-        // ],
-        // leave: [{ opacity: 0, position: 'absolute' }, { height: 0 }],
         from: {
             position: 'absolute',
             opacity: 0,
@@ -55,8 +48,16 @@ function AuthenticationModal({
         },
     });
 
+    useImperativeHandle(ref, () => ({
+        setLogin: () => {
+            setRegisterForm(false);
+        },
+        setRegister: () => {
+            setRegisterForm(true);
+        },
+    }));
+
     const closeCallback = () => {
-        setRegisterForm(isRegister);
         onClose && onClose();
     };
 
@@ -68,8 +69,12 @@ function AuthenticationModal({
             footer={
                 <ModalFooter
                     isRegister={registerForm || false}
-                    onLoginClick={toggleForm}
-                    onRegisterClick={toggleForm}
+                    onLoginClick={() => {
+                        setRegisterForm(false);
+                    }}
+                    onRegisterClick={() => {
+                        setRegisterForm(true);
+                    }}
                     isLoading={isLoading}
                 />
             }
@@ -79,7 +84,7 @@ function AuthenticationModal({
                     <animated.div style={props} key="register">
                         {' '}
                         <RegisterForm
-                            onSubmit={onRegisterSubmit}
+                            onRegister={onRegister}
                             isLoading={isLoading}
                             termsAndConditionsElement={
                                 termsAndConditionsElement
@@ -88,22 +93,10 @@ function AuthenticationModal({
                     </animated.div>
                 ) : (
                     <animated.div style={props} key="login">
-                        <LoginForm
-                            onSubmit={onLoginSubmit}
-                            isLoading={isLoading}
-                        />
+                        <LoginForm onLogin={onLogin} isLoading={isLoading} />
                     </animated.div>
                 )
             )}
-            {/* {registerForm ? (
-                <RegisterForm
-                    onSubmit={onRegisterSubmit}
-                    isLoading={isLoading}
-                    termsAndConditionsElement={termsAndConditionsElement}
-                />
-            ) : (
-                <LoginForm onSubmit={onLoginSubmit} isLoading={isLoading} />
-            )} */}
         </Modal>
     );
 }
@@ -132,4 +125,4 @@ function ModalFooter({
     );
 }
 
-export default AuthenticationModal;
+export default forwardRef(AuthenticationModal);

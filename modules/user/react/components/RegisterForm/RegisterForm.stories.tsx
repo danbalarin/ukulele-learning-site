@@ -41,7 +41,7 @@ storiesOf('User/Register form', module)
     .add('Basic', () => (
         <Wrapper>
             <RegisterForm
-                onSubmit={action('form-submit')}
+                onRegister={action('form-regster')}
                 isLoading={boolean('Form loading', false)}
             />
         </Wrapper>
@@ -49,7 +49,7 @@ storiesOf('User/Register form', module)
     .add('With terms and conditions', () => (
         <Wrapper>
             <RegisterForm
-                onSubmit={action('form-submit')}
+                onRegister={action('form-regster')}
                 isLoading={boolean('Form loading', false)}
                 termsAndConditionsElement={'Sample terms and conditions'}
             />

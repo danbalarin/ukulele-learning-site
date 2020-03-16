@@ -7,8 +7,17 @@ export class UserInteractor {
         this._user = user;
     }
 
-    updateUser(fieldsToUpdate: Partial<Omit<User, 'id'>>) {
-        const newUser = { ...this._user, ...fieldsToUpdate };
+    updateUser(fieldsToUpdate: Partial<Omit<User, 'id'>>): User {
+        const newUser: User = { ...this._user, ...fieldsToUpdate };
+        return newUser;
+    }
+
+    stripUser(): User {
+        const newUser: User = {
+            email: this._user.email,
+            role: this._user.role,
+            username: this._user.username,
+        };
         return newUser;
     }
 }

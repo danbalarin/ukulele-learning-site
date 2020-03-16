@@ -1,7 +1,8 @@
-import sha1 from 'sha1';
-import { createSchema as createUserSchema } from '@uls/user-nodejs';
+import { UserSchema } from './modules/user';
 
-const hashFn = async (str: string) => sha1(str);
-// const hashFn = async (str: string) => str;
+// todo
+const schemas = {
+    userSchema: UserSchema,
+};
 
-export const UserSchema = createUserSchema(hashFn);
+export default UserSchema;

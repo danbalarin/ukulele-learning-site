@@ -1,7 +1,8 @@
-const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
-const path = require('path');
 const webpack = require('webpack');
+const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 var config = {
     name: 'server',
@@ -41,7 +42,11 @@ var config = {
     },
     plugins: [
         new webpack.BannerPlugin({ banner: '#!/usr/bin/env node', raw: true }),
+        new CleanWebpackPlugin(),
     ],
+    stats: {
+        warnings: false,
+    },
 };
 
 module.exports = config;

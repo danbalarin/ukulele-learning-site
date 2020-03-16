@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Button as ChakraButton } from '@chakra-ui/core';
 
 import { Sizes, Spacing, BorderTheme } from '../../utils';
-import theme from '../../theme';
+import { Theme } from '../..';
 
 export interface ButtonTheme {
     defaultVariant?: ButtonVariant;
@@ -22,11 +22,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button({ children, variant, ...props }: ButtonProps): ReactElement {
-    const btnTheme = theme?.button;
+    const btnTheme = Theme?.button;
 
     const newVariant = variant || btnTheme?.defaultVariant;
 
-    const mappedThemeToProps = {
+    let mappedThemeToProps = {
         // border: btnTheme?.border?.border,
         // borderRadius: btnTheme?.border?.borderRadius,
         borderWidth:
@@ -35,6 +35,12 @@ function Button({ children, variant, ...props }: ButtonProps): ReactElement {
                 : undefined,
         variant: newVariant,
     };
+
+    if (newVariant === 'link') {
+        mappedThemeToProps = Object.assign(mappedThemeToProps, {
+            color: 'red',
+        });
+    }
 
     return (
         <ChakraButton {...props} {...mappedThemeToProps}>

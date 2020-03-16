@@ -13,5 +13,5 @@
         "emitDecoratorMetadata": true
     },
     "include": ["modules/**/*.ts", "packages/**/*.ts"],
-    "exclude": [".yarn"]
+    "exclude": [".yarn", "**/*.stories.tsx"]
 }

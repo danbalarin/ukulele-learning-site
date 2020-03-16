@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { User, Role } from '@uls/user-common';
 import {
     PasswordInput,
     Input,
@@ -12,6 +11,7 @@ import {
     FormControl,
     FormErrorMessage,
 } from '@uls/look-react';
+import { useSignupMutation } from '../../graphql/user';
 
 const validationSchema = (termsRequired: boolean) =>
     Yup.object().shape({
@@ -31,67 +31,102 @@ const validationSchema = (termsRequired: boolean) =>
     });
 
 interface Props {
-    onSubmit: (user: User) => void;
+    onRegister: (token: string) => void;
     isLoading?: boolean;
     termsAndConditionsElement?: React.ReactNode;
 }
 
 function RegisterForm({
-    onSubmit,
+    onRegister,
     isLoading,
     termsAndConditionsElement,
 }: Props): ReactElement {
+    const [signup, { data, loading, error }] = useSignupMutation();
+
     const { handleSubmit, handleChange, values, touched, errors } = useFormik({
         initialValues: {
             username: '',
             password: '',
             passwordMatch: '',
             email: '',
-            role: Role.USER,
             terms: false,
         },
         onSubmit: values => {
-            const user = { ...values };
-            delete user.passwordMatch;
-            delete user.terms;
-            onSubmit(user as User);
+            signup({
+                variables: {
+                    email: values.email,
+                    username: values.username,
+                    password: values.password,
+                },
+            });
         },
         validationSchema: validationSchema(!!termsAndConditionsElement),
     });
 
+    if (!!data) {
+        onRegister(data.signup.token);
+    }
+
+    const invalidFields = error?.graphQLErrors[0]?.extensions
+        ?.invalidArgs as string[];
+
     return (
         <form onSubmit={handleSubmit}>
             <Stack spacing={4}>
-                <FormControl isInvalid={touched.username && !!errors.username}>
+                <FormControl
+                    isInvalid={
+                        (touched.username && !!errors.username) ||
+                        invalidFields?.includes('username')
+                    }
+                >
                     <Input
                         name="username"
                         placeholder="Username"
-                        disabled={isLoading}
+                        disabled={isLoading || loading}
                         onChange={handleChange}
                         value={values.username}
                     />
-                    <FormErrorMessage>{errors.username}</FormErrorMessage>
+                    <FormErrorMessage show={!!errors.username}>
+                        {errors.username}
+                    </FormErrorMessage>
+                    <FormErrorMessage
+                        show={invalidFields?.includes('username')}
+                    >
+                        This username is already taken
+                    </FormErrorMessage>
                 </FormControl>
-                <FormControl isInvalid={touched.email && !!errors.email}>
+                <FormControl
+                    isInvalid={
+                        (touched.email && !!errors.email) ||
+                        invalidFields?.includes('email')
+                    }
+                >
                     <Input
                         name="email"
                         placeholder="Email"
                         type="email"
-                        disabled={isLoading}
+                        disabled={isLoading || loading}
                         onChange={handleChange}
                         value={values.email}
                     />
-                    <FormErrorMessage>{errors.email}</FormErrorMessage>
+                    <FormErrorMessage show={!!errors.email}>
+                        {errors.email}
+                    </FormErrorMessage>
+                    <FormErrorMessage show={invalidFields?.includes('email')}>
+                        This email is already taken
+                    </FormErrorMessage>
                 </FormControl>
                 <FormControl isInvalid={touched.password && !!errors.password}>
                     <PasswordInput
                         name="password"
                         placeholder="Password"
-                        disabled={isLoading}
+                        disabled={isLoading || loading}
                         onChange={handleChange}
                         value={values.password}
                     />
-                    <FormErrorMessage>{errors.password}</FormErrorMessage>
+                    <FormErrorMessage show={!!errors.password}>
+                        {errors.password}
+                    </FormErrorMessage>
                 </FormControl>
                 <FormControl
                     isInvalid={touched.passwordMatch && !!errors.passwordMatch}
@@ -99,16 +134,18 @@ function RegisterForm({
                     <PasswordInput
                         name="passwordMatch"
                         placeholder="Password again"
-                        disabled={isLoading}
+                        disabled={isLoading || loading}
                         onChange={handleChange}
                         value={values.passwordMatch}
                     />
-                    <FormErrorMessage>{errors.passwordMatch}</FormErrorMessage>
+                    <FormErrorMessage show={!!errors.passwordMatch}>
+                        {errors.passwordMatch}
+                    </FormErrorMessage>
                 </FormControl>
                 {termsAndConditionsElement && (
                     <Checkbox
                         name="terms"
-                        disabled={isLoading}
+                        disabled={isLoading || loading}
                         onChange={handleChange}
                         value={values.passwordMatch}
                         children={termsAndConditionsElement}
@@ -120,7 +157,7 @@ function RegisterForm({
                     variantColor="blue"
                     type="submit"
                     variant="solid"
-                    isLoading={isLoading}
+                    isLoading={isLoading || loading}
                 >
                     Register
                 </Button>

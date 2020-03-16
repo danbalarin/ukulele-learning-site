@@ -1,16 +1,18 @@
-import * as React from 'react';
+import React, { ReactElement } from 'react';
 
 import { ThemeProvider, ColorModeProvider } from '@uls/look-react';
 import { Layout } from './components/Layout';
 
-export default class App extends React.Component {
-    public render() {
-        return (
-            <ThemeProvider>
-                <ColorModeProvider>
-                    <Layout />
-                </ColorModeProvider>
-            </ThemeProvider>
-        );
-    }
+interface Props {}
+
+function App({}: Props): ReactElement {
+    return (
+        <ThemeProvider>
+            <ColorModeProvider value="dark">
+                <Layout />
+            </ColorModeProvider>
+        </ThemeProvider>
+    );
 }
+
+export default App;

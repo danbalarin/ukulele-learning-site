@@ -2,4 +2,8 @@ import { configure, addDecorator } from '@storybook/react';
 import ThemeDecorator from './theme';
 
 addDecorator(ThemeDecorator);
-configure(require.context('../modules', true, /\.stories\.tsx$/), module);
+
+configure(() => {
+    const req = require.context('../', true, /\.stories\.tsx$/);
+    req.keys().forEach(filename => req(filename));
+}, module);

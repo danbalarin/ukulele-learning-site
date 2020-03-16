@@ -1,6 +1,14 @@
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const Dotenv = require('dotenv-webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components')
+    .default;
+const styledComponentsTransformer = createStyledComponentsTransformer({
+    ssr: true,
+});
 
 var config = {
     mode: 'development',
@@ -9,16 +17,63 @@ var config = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: 'ts-loader',
+                loader: 'ts-loader',
+                options: {
+                    getCustomTransformers: () => ({
+                        before: [styledComponentsTransformer],
+                    }),
+                },
+            },
+            {
+                test: /\.mjs$/,
+                include: /node_modules/,
+                type: 'javascript/auto',
+            },
+            {
+                // because of node-gyp
+                test: /\.html$/i,
+                loader: 'html-loader',
+            },
+            {
+                test: /\.(woff(2)?|ttf|otf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'fonts/',
+                        },
+                    },
+                ],
             },
         ],
     },
     resolve: {
         plugins: [PnpWebpackPlugin],
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['mjs', '.tsx', '.ts', '.js'],
+        mainFields: ['main', 'module'], // because of GraphQL dependencies
     },
     resolveLoader: {
         plugins: [PnpWebpackPlugin.moduleLoader(module)],
+    },
+    plugins: [
+        new Dotenv(),
+        new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+    ],
+    stats: {
+        hash: false,
+        version: false,
+        timings: false,
+        assets: false,
+        chunks: false,
+        modules: false,
+        reasons: false,
+        children: false,
+        // source: false,
+        // errors: false,
+        // errorDetails: false,
+        warnings: false,
+        // publicPath: false,
     },
 };
 

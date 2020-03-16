@@ -35,7 +35,7 @@ storiesOf('User/Login form', module)
     .add('Basic', () => (
         <Wrapper>
             <LoginForm
-                onSubmit={action('form-submit')}
+                onLogin={action('form-login')}
                 isLoading={boolean('Form loading', false)}
             />
         </Wrapper>

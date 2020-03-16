@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@uls/core-nodejs": "workspace:modules/core/nodejs",
         "@uls/user-common": "workspace:modules/user/common",
         "graphql": "^14.6.0",
         "graphql-compose": "^7.12.3",

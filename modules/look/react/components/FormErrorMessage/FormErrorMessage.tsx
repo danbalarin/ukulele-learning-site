@@ -3,9 +3,13 @@ import { FormErrorMessage as ChakraFormErrorMessage } from '@chakra-ui/core';
 
 interface Props {
     children: React.ReactNode;
+    show?: boolean;
 }
 
-function FormErrorMessage(props: Props): ReactElement {
+function FormErrorMessage({ show, ...props }: Props): ReactElement {
+    if (!show) {
+        return <></>;
+    }
     return <ChakraFormErrorMessage {...props} />;
 }
 
