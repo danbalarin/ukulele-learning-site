@@ -3,6 +3,7 @@ import { theme, DefaultTheme } from '@chakra-ui/core';
 
 import { ModalTheme } from './components/Modal';
 import { ButtonTheme } from './components/Button/Button';
+import { CardTheme } from './components/Card/Card';
 
 import gothamRounded from './fonts/GothamRounded';
 import ubuntuMono from './fonts/UbuntuMono';
@@ -22,6 +23,7 @@ interface InternalTheme {
     modal?: ModalTheme;
     button?: ButtonTheme;
     modes?: ModesTheme;
+    card?: CardTheme;
     contentMinWidth?: string;
 }
 
@@ -78,6 +80,26 @@ const button: ButtonTheme = {
         },
     },
 };
+
+const card: CardTheme = {
+    padding: {
+        padding: '5px',
+    },
+    background: 'rgba(255,255,255,.2)',
+    border: {
+        borderRadius: '10px',
+        border: '2px solid rgba(255,255,255,.2)',
+    },
+    footer: {
+        background: 'rgba(255,255,255,.2)',
+        borderTop: '1px',
+    },
+    header: {
+        background: 'rgba(255,255,255,.2)',
+        borderBottom: '1px',
+    },
+};
+
 const fonts = {
     body: 'GothamRounded, sans-serif',
     heading: 'GothamRounded, sans-serif',
@@ -88,10 +110,12 @@ const modes: ModesTheme = {
     light: {
         background: '#f3ffbd',
         color: colors.gray[700],
+        primary: colors.orange[500],
     },
     dark: {
         background: colors.purple[600],
         color: colors.white,
+        primary: colors.purple[600],
     },
 };
 
@@ -104,6 +128,8 @@ const customTheme: Omit<DefaultTheme, 'breakpoints'> &
     modal,
     button,
     modes,
+    fonts,
+    card,
     contentMinWidth: breakpoints[1],
 };
 

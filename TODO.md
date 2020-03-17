@@ -9,6 +9,13 @@ user:
 -   dropdown logout
 -   user list
 
+ukulele
+
+-   metronome
+    -   mute
+    -   number input controlls
+    -   number input max/min
+
 package:
 
 -   loadable

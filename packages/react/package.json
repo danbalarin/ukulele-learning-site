@@ -14,6 +14,7 @@
     "dependencies": {
         "@apollo/client": "^3.0.0-beta.38",
         "@uls/look-react": "workspace:modules/look/react",
+        "@uls/ukulele-react": "workspace:modules/ukulele/react",
         "@uls/user-common": "workspace:modules/user/common",
         "@uls/user-react": "workspace:modules/user/react",
         "apollo-cache-persist": "^0.1.1",

@@ -1,5 +1,13 @@
-export { Input, InputGroup, PasswordInput } from './components/Input';
+export {
+    Input,
+    InputGroup,
+    PasswordInput,
+    InputLeftAddon,
+    InputRightAddon,
+} from './components/Input';
 export { Editable } from './components/Editable';
+export { Card } from './components/Card';
+export { ComponentWrapper } from './components/ComponentWrapper';
 export { FormControl } from './components/FormControl';
 export { FormErrorMessage } from './components/FormErrorMessage';
 export { Checkbox } from './components/Checkbox';
@@ -19,6 +27,7 @@ export { ColorModeProvider } from './components/ColorModeProvider';
 
 export { useColorMode } from './hooks/useColorMode';
 export { useDisclosure } from './hooks/useDisclosure';
+export { useInterval } from './hooks/useInterval';
 
 export { GlobalStyle } from './theme';
 export { default as Theme } from './theme';

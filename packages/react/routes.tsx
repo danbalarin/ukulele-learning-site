@@ -8,6 +8,7 @@ import { HomePage } from './pages/Home';
 
 import { NotFound } from './pages/NotFound';
 import { Unauthorized } from './pages/Unauthorized';
+import { MetronomePage } from './pages/Metronome';
 
 export interface RouteProps {
     path: string;
@@ -21,6 +22,10 @@ export const routes: RouteProps[] = [
         exact: true,
         path: '/',
         component: HomePage,
+    },
+    {
+        path: '/metronome',
+        component: MetronomePage,
     },
     {
         path: '/profile',

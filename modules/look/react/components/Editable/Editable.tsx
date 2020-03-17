@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 
 import { Editable as ChakraEditable } from '@chakra-ui/core';
-import EditablePreview from './EditablePreview';
-import EditableInput from './EditableInput';
+import { EditablePreview } from './EditablePreview';
+import { EditableInput } from './EditableInput';
 
 interface Props
     extends Pick<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
