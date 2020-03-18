@@ -2,5 +2,8 @@
     "name": "@uls/user-common",
     "version": "0.1.0",
     "main": "index.ts",
-    "private": true
+    "private": true,
+    "dependencies": {
+        "@uls/core-common": "workspace:modules/core/common"
+    }
 }

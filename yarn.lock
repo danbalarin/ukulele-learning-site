@@ -3023,6 +3023,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uls/core-common@workspace:modules/core/common":
+  version: 0.0.0-use.local
+  resolution: "@uls/core-common@workspace:modules/core/common"
+  languageName: unknown
+  linkType: soft
+
 "@uls/core-nodejs@workspace:modules/core/nodejs":
   version: 0.0.0-use.local
   resolution: "@uls/core-nodejs@workspace:modules/core/nodejs"
@@ -3152,6 +3158,9 @@ __metadata:
 "@uls/ukulele-common@workspace:modules/ukulele/common":
   version: 0.0.0-use.local
   resolution: "@uls/ukulele-common@workspace:modules/ukulele/common"
+  dependencies:
+    "@uls/core-common": "workspace:modules/core/common"
+    "@uls/user-common": "workspace:modules/user/common"
   languageName: unknown
   linkType: soft
 
@@ -3183,6 +3192,8 @@ __metadata:
 "@uls/user-common@workspace:modules/user/common":
   version: 0.0.0-use.local
   resolution: "@uls/user-common@workspace:modules/user/common"
+  dependencies:
+    "@uls/core-common": "workspace:modules/core/common"
   languageName: unknown
   linkType: soft
 

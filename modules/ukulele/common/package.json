@@ -1,5 +1,9 @@
 {
     "name": "@uls/ukulele-common",
     "version": "0.1.0",
-    "private": true
+    "main": "index.ts",
+    "private": true,
+    "dependencies": {
+        "@uls/core-common": "workspace:modules/core/common"
+    }
 }

@@ -1,22 +1,23 @@
 import { User } from '../entities/User';
+import { EntityBase, Updatable } from '@uls/core-common';
 
-export class UserInteractor {
-    _user: User;
+export class UserInteractor implements EntityBase<User>, Updatable<User> {
+    _entity: User;
 
     constructor(user: User) {
-        this._user = user;
+        this._entity = user;
     }
 
-    updateUser(fieldsToUpdate: Partial<Omit<User, 'id'>>): User {
-        const newUser: User = { ...this._user, ...fieldsToUpdate };
+    update(fieldsToUpdate: Partial<Omit<User, 'id'>>): User {
+        const newUser: User = { ...this._entity, ...fieldsToUpdate };
         return newUser;
     }
 
     stripUser(): User {
         const newUser: User = {
-            email: this._user.email,
-            role: this._user.role,
-            username: this._user.username,
+            email: this._entity.email,
+            role: this._entity.role,
+            username: this._entity.username,
         };
         return newUser;
     }
