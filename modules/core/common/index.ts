@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module @uls/core-common
+ */
+
 /** Interfaces */
 export { Creator } from './interfaces/Creator';
 export { CreationDate } from './interfaces/CreationDate';

@@ -1,13 +1,19 @@
-import { User } from '@uls/user-common';
 import { Creator } from '@uls/core-common';
 
 import { StrummingPattern } from './StrummingPattern';
 import { Chord } from './Chords';
 
 /**
- * Chord progression
+ * @packageDocumentation
+ * @module @uls/ukulele-common
  */
-export interface ChordProgression extends Creator<User> {
+
+/**
+ * Chord progression
+ *
+ * @typeparam T creator entity
+ */
+export interface ChordProgression<T> extends Creator<T> {
     /**
      * Chord progression name
      */

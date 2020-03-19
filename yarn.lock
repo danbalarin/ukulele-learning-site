@@ -2685,7 +2685,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^13.9.1":
   version: 13.9.1
   resolution: "@types/node@npm:13.9.1"
   checksum: 2/578d73f0128266e9fe1a0ba0017ef37196b9c8e5ecd66f8b99c22ccc7b02591b76454dbd61e420983f5b347103c8f31d8bc4f313f03c47dd6e8e70ce997ff2fc
@@ -3160,7 +3160,6 @@ __metadata:
   resolution: "@uls/ukulele-common@workspace:modules/ukulele/common"
   dependencies:
     "@uls/core-common": "workspace:modules/core/common"
-    "@uls/user-common": "workspace:modules/user/common"
   languageName: unknown
   linkType: soft
 
@@ -3215,6 +3214,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@uls/user-react@workspace:modules/user/react"
   dependencies:
+    "@apollo/client": ^3.0.0-beta.38
     "@storybook/addon-actions": 6.0.0-alpha.27
     "@storybook/addon-knobs": 6.0.0-alpha.27
     "@storybook/react": 6.0.0-alpha.27
@@ -4845,6 +4845,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"backbone@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "backbone@npm:1.4.0"
+  dependencies:
+    underscore: ">=1.8.3"
+  checksum: 2/3a3c95f133fef708ff4a7bfbcdedab6bc63f1188b952af4c16882b029ecfa6c3c6dd367989006b3772ae0bc695d608f3d1f2ab8c076de7632dffff38ce96e9fd
+  languageName: node
+  linkType: hard
+
 "backo2@npm:^1.0.2":
   version: 1.0.2
   resolution: "backo2@npm:1.0.2"
@@ -5925,7 +5934,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^2.19.0, commander@npm:^2.20.0":
+"commander@npm:^2.19.0, commander@npm:^2.20.0, commander@npm:~2.20.3":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
   checksum: 2/b73428e97de7624323f81ba13f8ed9271de487017432d18b4da3f07cfc528ad754bbd199004bd5d14e0ccd67d1fdfe0ec8dbbd4c438b401df3c4cc387bfd1daa
@@ -7993,7 +8002,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^8.0.1":
+"fs-extra@npm:^8.0.1, fs-extra@npm:^8.1.0":
   version: 8.1.0
   resolution: "fs-extra@npm:8.1.0"
   dependencies:
@@ -8582,6 +8591,23 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"handlebars@npm:^4.7.3":
+  version: 4.7.3
+  resolution: "handlebars@npm:4.7.3"
+  dependencies:
+    neo-async: ^2.6.0
+    optimist: ^0.6.1
+    source-map: ^0.6.1
+    uglify-js: ^3.1.4
+  dependenciesMeta:
+    uglify-js:
+      optional: true
+  bin:
+    handlebars: bin/handlebars
+  checksum: 2/8c9a87146ac2a98c89aafd46403044b09c312ac88668b1bf17af482a921cddaa3c04484c5eb04d9cac8dae3ebf2fb2926487b520efa59036a3d89482be1a5c2b
+  languageName: node
+  linkType: hard
+
 "har-schema@npm:^2.0.0":
   version: 2.0.0
   resolution: "har-schema@npm:2.0.0"
@@ -8736,6 +8762,13 @@ fsevents@~2.1.2:
   bin:
     he: bin/he
   checksum: 2/212122003c20c8c17ac0c83a419b4c8e835411ff6ab9195d053ea6e4a0597cc005b5b8eabcbd57b0b0c0fe676f0049e09315845fff4e051198845491cbba260e
+  languageName: node
+  linkType: hard
+
+"highlight.js@npm:^9.18.1":
+  version: 9.18.1
+  resolution: "highlight.js@npm:9.18.1"
+  checksum: 2/3fe99105e4cda17ae8dac7b49b791065b9b8306c1de40955cd59ce1a2cd2bed2683135a26f9ffd8f872a1d6e9d77935c48ffbb2557c228e647fe940a3bbbc4f2
   languageName: node
   linkType: hard
 
@@ -9873,6 +9906,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"jquery@npm:^3.4.1":
+  version: 3.4.1
+  resolution: "jquery@npm:3.4.1"
+  checksum: 2/918300d1c768ae029bc88be13dc248ae0e82e1282f0353a6cced10ba6dabb70342a581777dc594da339c1beec7a04d3754358934a098c6627c35c6fb7d9af440
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -10708,6 +10748,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"lunr@npm:^2.3.8":
+  version: 2.3.8
+  resolution: "lunr@npm:2.3.8"
+  checksum: 2/b542e6e8137b4be932f003996ab7af5f64f5843c752958723f5a04263e401cf3b7e6f32f08aa7afac3cc93c2a3b580ddee3c8dba0d735b9f4b8c121c306dadfa
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^1.0.0":
   version: 1.3.0
   resolution: "make-dir@npm:1.3.0"
@@ -10810,6 +10857,15 @@ fsevents@~2.1.2:
   peerDependencies:
     react: ">= 0.14.0"
   checksum: 2/0194d077ae021ee62b3e2a7ce666ae77a9e294b234918550258c6f1a76aa7968a6b760a80a5cdf4484ec331ed75fe545c615af9508f10a52a40e1220d4601cbd
+  languageName: node
+  linkType: hard
+
+"marked@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "marked@npm:0.8.0"
+  bin:
+    marked: bin/marked
+  checksum: 2/ab4d7b0cce8b5dbf5c41a902f99422838966fcac6848a45c268868d5b607c56089dc922b69f93bc2da8d243e56f8bb283525d5d6b46812525ffa5fe7655978dc
   languageName: node
   linkType: hard
 
@@ -11124,7 +11180,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"minimatch@npm:3.0.4, minimatch@npm:^3.0.2, minimatch@npm:^3.0.4":
+"minimatch@npm:3.0.4, minimatch@npm:^3.0.0, minimatch@npm:^3.0.2, minimatch@npm:^3.0.4":
   version: 3.0.4
   resolution: "minimatch@npm:3.0.4"
   dependencies:
@@ -11133,7 +11189,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"minimist@npm:0.0.8":
+"minimist@npm:0.0.8, minimist@npm:~0.0.1":
   version: 0.0.8
   resolution: "minimist@npm:0.0.8"
   checksum: 2/d71c4684bce92f9c0500e103498adb5e45bbda551763132a703306c2dab6f3a1f69eb6448c3ff3ea73fb562285dfd6ee3a354d5c0e5dd52e3d5f3037c82c0935
@@ -11435,7 +11491,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"neo-async@npm:^2.5.0, neo-async@npm:^2.6.1":
+"neo-async@npm:^2.5.0, neo-async@npm:^2.6.0, neo-async@npm:^2.6.1":
   version: 2.6.1
   resolution: "neo-async@npm:2.6.1"
   checksum: 2/b359ccaa5cc3eea9c49605b830382e2ec7661f1746b7210dc1f997645a40f9daf3084328151ecb21800e0e78d891dbf8d46f70c3cb5e8c5dab8a909b5597f9a1
@@ -12240,6 +12296,16 @@ fsevents@~2.1.2:
   dependencies:
     "@wry/context": ^0.5.0
   checksum: 2/f8d746eb1e6a0cc27588cd84debb1dc3dd3c9cfce7b1e85c60f462c73d0756d03dcb61fd444419073c02f0722e8af19408c9208a3418247cf8c1a922faed66f3
+  languageName: node
+  linkType: hard
+
+"optimist@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "optimist@npm:0.6.1"
+  dependencies:
+    minimist: ~0.0.1
+    wordwrap: ~0.0.2
+  checksum: 2/14cb755f3864ce3459219e1c6a7cd043c7de14f0e6ec5acfc774728e9974a50ae153ebebfcf8a3d38f7bf273e120c6aae735b99d17377fa2c2e867df33402c16
   languageName: node
   linkType: hard
 
@@ -13051,6 +13117,13 @@ fsevents@~2.1.2:
   version: 0.11.10
   resolution: "process@npm:0.11.10"
   checksum: 2/ed93a85e9185b40fb01788c588a87c1a9da0eb925ef7cebebbe1b8bbf0eba1802130366603a29e3b689c116969d4fe018de6aed3474bbeb5aefb3716b85d6449
+  languageName: node
+  linkType: hard
+
+"progress@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "progress@npm:2.0.3"
+  checksum: 2/c46ef5a1de4d527dfd32fe56a7df0c1c8b420a4c02617196813bf7f10ac7c2a929afc265d44fdd68f5c439a7e7cb3d70d569716c82d6b4148ec72089860a1312
   languageName: node
   linkType: hard
 
@@ -16064,6 +16137,48 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"typedoc-default-themes@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "typedoc-default-themes@npm:0.8.0"
+  dependencies:
+    backbone: ^1.4.0
+    jquery: ^3.4.1
+    lunr: ^2.3.8
+    underscore: ^1.9.2
+  checksum: 2/f845d0c0f8c2f8e116869c0563a4a1daa8afada802f856594976c5acf9dc16696124fbd0024338d2b4e903166b884101080e9d44cadb52ba10c0de32f5ad33e0
+  languageName: node
+  linkType: hard
+
+"typedoc-plugin-external-module-map@https://github.com/danbalarin/typedoc-plugin-external-module-map#custom-rename":
+  version: 1.0.0
+  resolution: "typedoc-plugin-external-module-map@https://github.com/danbalarin/typedoc-plugin-external-module-map#commit:b7a71a8e8d9b58d20ffb74f301980a5bd667de5d"
+  peerDependencies:
+    typedoc: ">=0.14 <1.0"
+  checksum: 2/e7fd431149c9bd79089d59baab3b866461ab2934402e105be97d97054d99525773c21ef24ead1f910be85580125c7dabc84ef4d84dd296b0f6cbfa162a0197f2
+  languageName: node
+  linkType: hard
+
+"typedoc@npm:0.17.1":
+  version: 0.17.1
+  resolution: "typedoc@npm:0.17.1"
+  dependencies:
+    fs-extra: ^8.1.0
+    handlebars: ^4.7.3
+    highlight.js: ^9.18.1
+    lodash: ^4.17.15
+    marked: ^0.8.0
+    minimatch: ^3.0.0
+    progress: ^2.0.3
+    shelljs: ^0.8.3
+    typedoc-default-themes: ^0.8.0
+  peerDependencies:
+    typescript: ">=3.8.3"
+  bin:
+    typedoc: bin/typedoc
+  checksum: 2/f6d12519251649d6647a1ee69464f19013399852a827b37af0d869a8692c6e23e36bcb2778e74c8b535ea6cd2a797c3f745141ff3b9301dbf32d189931f9c166
+  languageName: node
+  linkType: hard
+
 "typescript-plugin-styled-components@npm:^1.4.4":
   version: 1.4.4
   resolution: "typescript-plugin-styled-components@npm:1.4.4"
@@ -16105,6 +16220,18 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"uglify-js@npm:^3.1.4":
+  version: 3.8.0
+  resolution: "uglify-js@npm:3.8.0"
+  dependencies:
+    commander: ~2.20.3
+    source-map: ~0.6.1
+  bin:
+    uglifyjs: bin/uglifyjs
+  checksum: 2/abd2b49f2c8cc7e53c8466665a7419a060c5d2c7a976599ab646df71feee8f5072d3f489b796aabbbb57c442b9b408950ba8f410781b2c810e49c977f59fb738
+  languageName: node
+  linkType: hard
+
 "uid-number@npm:0.0.6":
   version: 0.0.6
   resolution: "uid-number@npm:0.0.6"
@@ -16123,6 +16250,7 @@ fsevents@~2.1.2:
     "@storybook/addon-knobs": 6.0.0-alpha.27
     "@storybook/react": 6.0.0-alpha.27
     "@types/babel__core": 7.1.4
+    "@types/node": ^13.9.1
     "@types/prettier": 1.19.0
     "@types/react": 16.9.19
     "@types/react-dom": ^16.9.5
@@ -16139,6 +16267,8 @@ fsevents@~2.1.2:
     source-map-loader: ^0.2.4
     styled-components: ^5.0.1
     ts-loader: ^6.2.1
+    typedoc: 0.17.1
+    typedoc-plugin-external-module-map: "https://github.com/danbalarin/typedoc-plugin-external-module-map#custom-rename"
     typescript: ^3.7.5
   dependenciesMeta:
     "@chakra-ui":
@@ -16152,6 +16282,8 @@ fsevents@~2.1.2:
     apollo-server:
       unplugged: true
     apollo-utilities:
+      unplugged: true
+    typedoc-plugin-external-module-map:
       unplugged: true
     webpack-cli:
       unplugged: true
@@ -16171,6 +16303,13 @@ fsevents@~2.1.2:
   dependencies:
     debug: ^2.2.0
   checksum: 2/0974f82a8750c3c247d5a9cf7fe91279d1fad0069dda7b717937e7960addddedf2ddabe3ffb1f504929acd0c924ef654c5c85185aee4c514a0fbf2e2a4efcf39
+  languageName: node
+  linkType: hard
+
+"underscore@npm:>=1.8.3, underscore@npm:^1.9.2":
+  version: 1.9.2
+  resolution: "underscore@npm:1.9.2"
+  checksum: 2/732d9b449dec613695a3510a98483f8e08cb9b6680a4cb166a8e260dbe768e9ab5cdce4a075a8f6811f675409f13974f6e4bf402e8e648a363d646b072ae7e99
   languageName: node
   linkType: hard
 
@@ -16812,6 +16951,13 @@ fsevents@~2.1.2:
   dependencies:
     string-width: ^4.0.0
   checksum: 2/729c30582e49bdcb1372216eedfd71d1640a1344a4b4e970bc9f33d575b56b130f530b383fbab2cf2bcffb76ea4357e6a66939778d8de91ca66037651d94e01a
+  languageName: node
+  linkType: hard
+
+"wordwrap@npm:~0.0.2":
+  version: 0.0.3
+  resolution: "wordwrap@npm:0.0.3"
+  checksum: 2/e8c84baa721bd7bc13a88e52e1bc25dd4d14accedafe04d24fbc400ba74ae6d620ac4eff5425d5cab342d1ff43f74396272492039b7d7a804bffd2039a153ff0
   languageName: node
   linkType: hard
 

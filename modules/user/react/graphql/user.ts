@@ -68,9 +68,9 @@ export const useUserLocalMutation = () => {
 };
 
 export const writeUserMutation: Resolver = async (
-    _root,
-    { token },
-    { cache }
+    _root: any,
+    { token }: any,
+    { cache }: any
 ) => {
     const user = jwt.decode(token) as User;
     cache.writeQuery({

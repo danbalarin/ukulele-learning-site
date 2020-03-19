@@ -10,8 +10,24 @@
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "normalTypeScriptOptions": "here"
     },
-    "include": ["modules/**/*.ts", "packages/**/*.ts"],
-    "exclude": [".yarn", "**/*.stories.tsx"]
+    "include": ["modules/**/*.ts", "packages/**/*.ts", "global.d.ts"],
+    "exclude": [".yarn", "**/*.stories.tsx"],
+    "typedocOptions": {
+        "name": "Ukulele learning site",
+        "mode": "modules",
+        "out": "doc",
+        "theme": "default",
+        "ignoreCompilerErrors": "false",
+        "preserveConstEnums": "true",
+        "exclude": "**/*+(index|.spec|.e2e).ts",
+        "externalPattern": "**/.yarn/**",
+        "excludeNotExported": true,
+        "excludeExternals": true,
+        // prettier-ignore
+        "external-modulemap": "(?:(?:.*\/)(?:modules\/)?((?:[\\w]+)\/(?:react|nodejs|common)))",
+        "stripInternal": "false"
+    }
 }

@@ -1,5 +1,9 @@
-import { EntityBase, Updatable } from '../../../core/common';
+import { EntityBase, Updatable } from '@uls/core-common';
 import { MetronomePreset } from '../entities/MetronomePreset';
+/**
+ * @packageDocumentation
+ * @module @uls/ukulele-common
+ */
 
 /**
  * Interactor for {@link MetronomePreset} entity
@@ -16,6 +20,7 @@ export class MetronomePresetInteractor
      * Update {@link MetronomePreset}
      *
      * @param fieldsToUpdate Field to be updated
+     * @returns New updated {@link MetronomePreset} object
      */
     update(
         fieldsToUpdate: Partial<Omit<MetronomePreset, 'id'>>

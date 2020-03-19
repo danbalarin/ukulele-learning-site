@@ -5,9 +5,14 @@ import { Chord } from './Chords';
 import { StrummingPattern } from './StrummingPattern';
 
 /**
+ * @packageDocumentation
+ * @module @uls/ukulele-common
+ */
+
+/**
  * Song entity
  *
- * T is creator entity
+ * @typeparam T creator entity
  */
 export interface Song<T> extends Creator<T> {
     /**

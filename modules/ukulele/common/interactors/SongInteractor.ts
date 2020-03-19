@@ -1,8 +1,14 @@
-import { EntityBase, Updatable } from '../../../core/common';
+import { EntityBase, Updatable } from '@uls/core-common';
 import { Song } from '../entities/Song';
+/**
+ * @packageDocumentation
+ * @module @uls/ukulele-common
+ */
 
 /**
  * Interactor for {@link Song} entity
+ *
+ * @typeparam T creator entity
  */
 export class SongInteractor<T>
     implements EntityBase<Song<T>>, Updatable<Song<T>> {
@@ -16,6 +22,7 @@ export class SongInteractor<T>
      * Update {@link Song}
      *
      * @param fieldsToUpdate Field to be updated
+     * @returns New updated {@link Song} object
      */
     update(fieldsToUpdate: Partial<Omit<Song<T>, 'id'>>): Song<T> {
         const newEntity = { ...this._entity, ...fieldsToUpdate };

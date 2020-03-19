@@ -1,4 +1,9 @@
 /**
+ * @packageDocumentation
+ * @module @uls/ukulele-common
+ */
+
+/**
  * Tones
  */
 export enum Tone {

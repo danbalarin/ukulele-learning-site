@@ -1,8 +1,13 @@
 import { Author } from '../entities/Author';
 import { EntityBase, Updatable } from '@uls/core-common';
+/**
+ * @packageDocumentation
+ * @module @uls/ukulele-common
+ */
 
 /**
  * Interactor for {@link Author} entity
+ *
  */
 export class AuthorInteractor implements EntityBase<Author>, Updatable<Author> {
     _entity: Author;
@@ -15,6 +20,7 @@ export class AuthorInteractor implements EntityBase<Author>, Updatable<Author> {
      * Update {@link Author}
      *
      * @param fieldsToUpdate Field to be updated
+     * @returns New updated {@link Author} object
      */
     update(fieldsToUpdate: Partial<Omit<Author, 'id'>>): Author {
         const newEntity: Author = { ...this._entity, ...fieldsToUpdate };

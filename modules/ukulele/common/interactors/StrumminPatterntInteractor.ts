@@ -1,5 +1,9 @@
-import { EntityBase, Updatable } from '../../../core/common';
+import { EntityBase, Updatable } from '@uls/core-common';
 import { StrummingPattern } from '../entities/StrummingPattern';
+/**
+ * @packageDocumentation
+ * @module @uls/ukulele-common
+ */
 
 /**
  * Interactor for {@link Song} entity
@@ -16,6 +20,7 @@ export class StrummingPatternInteractor
      * Update {@link StrummingPattern}
      *
      * @param fieldsToUpdate Field to be updated
+     * @returns New updated {@link StrummingPattern} object
      */
     update(
         fieldsToUpdate: Partial<Omit<StrummingPattern, 'id'>>

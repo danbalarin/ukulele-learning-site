@@ -1,4 +1,8 @@
 import { MetronomePreset } from './MetronomePreset';
+/**
+ * @packageDocumentation
+ * @module @uls/ukulele-common
+ */
 
 /**
  * D for Down

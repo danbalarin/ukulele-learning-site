@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module @uls/ukulele-common
+ */
+
 /** Entities */
 export { Author } from './entities/Author';
 export { ChordProgression } from './entities/ChordProgression';
