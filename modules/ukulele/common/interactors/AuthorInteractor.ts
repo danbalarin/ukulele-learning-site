@@ -1,9 +1,5 @@
 import { Author } from '../entities/Author';
 import { EntityBase, Updatable } from '@uls/core-common';
-/**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
 
 /**
  * Interactor for {@link Author} entity

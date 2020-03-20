@@ -4,12 +4,7 @@ import { StrummingPattern } from './StrummingPattern';
 import { Chord } from './Chords';
 
 /**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
-
-/**
- * Chord progression
+ * Chord progression model
  *
  * @typeparam T creator entity
  */

@@ -1,9 +1,9 @@
-import { Document, model, Schema, HookNextFunction } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 
-import { User, Role } from '@uls/user-common';
-import { HashFunction } from '@uls/core-nodejs';
+import { HashFunction } from '@uls/core-common';
+import { User, Role, UserInteractor } from '@uls/user-common';
 
-export interface UserModel extends Omit<User, '_id'>, Document {
+export interface UserModel extends User, Document {
     passwordConfirm: (passwordCandidate: string) => boolean;
 }
 
@@ -39,17 +39,19 @@ export const createUserModel = (hashFn: HashFunction) => {
         return isMatch;
     });
 
-    UserSchema.pre<UserModel>('save', async function(next) {
+    UserSchema.pre<UserModel>('save', async function(this: UserModel, next: () => void) {
         if (this.isModified('password')) {
-            this.password = hashFn(this.password as string);
+            const ui = new UserInteractor(this as User);
+            const newUser: User = ui.hashPassword(hashFn);
+            this.password = newUser.password;
         }
         next();
     });
 
     UserSchema.set('toJSON', {
-        transform: function(doc, ret, opt) {
-            delete ret['password'];
-            return ret;
+        transform: function(doc: any, ret: any, opt: any) {
+            const ui = new UserInteractor(ret as User);
+            return ui.stripUser();
         },
     });
 

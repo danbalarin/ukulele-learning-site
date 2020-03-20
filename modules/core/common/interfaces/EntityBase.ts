@@ -1,9 +1,4 @@
 /**
- * @packageDocumentation
- * @module @uls/core-common
- */
-
-/**
  * Provides entity field in interactors
  *
  * @param T Entity type

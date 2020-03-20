@@ -1,9 +1,5 @@
 import { EntityBase, Updatable } from '@uls/core-common';
 import { Song } from '../entities/Song';
-/**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
 
 /**
  * Interactor for {@link Song} entity

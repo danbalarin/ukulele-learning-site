@@ -1,3 +1,7 @@
+/**
+ * Provides interfacing layer between ULS and some UI library. Easyly swapable, all react submodules should use this.
+ */
+
 export {
     Input,
     InputGroup,

@@ -1,0 +1,15 @@
+{
+    "name": "Ukulele learning site",
+    "mode": "modules",
+    "out": "doc",
+    "theme": "default",
+    "ignoreCompilerErrors": "false",
+    "gitRemote": "https://github.com/danbalarin/ukulele-learning-site",
+    "preserveConstEnums": "true",
+    "exclude": "**/*+(index|.spec|.e2e).ts",
+    "externalPattern": "**/.yarn/**",
+    "excludeNotExported": true,
+    "excludeExternals": true,
+    "external-modulemap": "(?:(?:.*\/)(?:modules\/)?((?:[\\w]+)\/(?:react|nodejs|common)))",
+    "stripInternal": "false"
+}

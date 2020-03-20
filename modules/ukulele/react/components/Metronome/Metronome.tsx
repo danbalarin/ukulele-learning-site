@@ -51,6 +51,9 @@ const Dot = styled.span<DotProps>`
 `;
 
 interface Props {
+    /**
+     * Speed at which metronome operates, defaults to 100
+     */
     tempo?: number;
 }
 

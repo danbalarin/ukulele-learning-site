@@ -1,9 +1,5 @@
 import { EntityBase, Updatable } from '@uls/core-common';
 import { MetronomePreset } from '../entities/MetronomePreset';
-/**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
 
 /**
  * Interactor for {@link MetronomePreset} entity

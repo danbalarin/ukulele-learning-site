@@ -1,10 +1,5 @@
 /**
- * @packageDocumentation
- * @module @uls/core-common
- */
-
-/**
- * Provides interface for update method in interactors
+ * Provides interface for update method in interactors. Should create new, atleast shallow, copy of object
  *
  * @param T Entity type to be edited
  * @returns New edited copy of T

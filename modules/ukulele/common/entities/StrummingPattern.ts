@@ -1,14 +1,10 @@
 import { MetronomePreset } from './MetronomePreset';
-/**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
 
 /**
- * D for Down
- * U for Up
- * T for Tap
- * - for pause
+ * - D for Down
+ * - U for Up
+ * - T for Tap
+ * - \- for pause
  */
 export type Strum = 'D' | 'U' | 'T' | '-';
 

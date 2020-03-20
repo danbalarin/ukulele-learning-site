@@ -5,11 +5,6 @@ import { Chord } from './Chords';
 import { StrummingPattern } from './StrummingPattern';
 
 /**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
-
-/**
  * Song entity
  *
  * @typeparam T creator entity

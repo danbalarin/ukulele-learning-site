@@ -1,9 +1,5 @@
 import { EntityBase, Updatable } from '@uls/core-common';
 import { ChordProgression } from '../entities/ChordProgression';
-/**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
 
 /**
  * Interactor for {@link ChordProgression} entity

@@ -1,4 +1,4 @@
-name: github pages
+name: test
 
 on:
     push:
@@ -35,13 +35,5 @@ jobs:
 
             - run: yarn install
 
-            - name: Build
-              run: yarn run docs
-
-            - name: Deploy
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./doc
-                  publish_branch: gh-pages
-                  force_orphan: true
+            - name: Run tests
+              run: yarn run test

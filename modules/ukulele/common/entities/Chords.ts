@@ -1,11 +1,6 @@
 import { Tone } from './Tone';
 
 /**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
-
-/**
  * Chord
  */
 export interface Chord {

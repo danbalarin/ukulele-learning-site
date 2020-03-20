@@ -3,3 +3,4 @@
 .pnp.js
 node_modules
 doc
+coverage

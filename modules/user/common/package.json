@@ -4,6 +4,11 @@
     "main": "index.ts",
     "private": true,
     "dependencies": {
-        "@uls/core-common": "workspace:modules/core/common"
+        "@uls/core-common": "workspace:modules/core/common",
+        "@uls/core-nodejs": "workspace:modules/core/nodejs"
+    },
+    "devDependencies": {
+        "@types/jest": "^25.1.4",
+        "jest": "^25.1.0"
     }
 }

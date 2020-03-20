@@ -1,10 +1,5 @@
 /**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
-
-/**
- * Tones
+ * All possible tones
  */
 export enum Tone {
     'H#' = 0,

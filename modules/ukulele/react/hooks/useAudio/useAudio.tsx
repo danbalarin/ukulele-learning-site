@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react';
 
+/**
+ * React hook for playing audio on website. 
+ * 
+ * NOOP on SSR, since virtual dom doesn't have Audio object
+ * 
+ * @param url Audio url path
+ * @returns state of hook and method to play/pause
+ */
 const useAudio = (url: string): [boolean, () => void] => {
     // SSR check
     if (typeof window === 'undefined') {

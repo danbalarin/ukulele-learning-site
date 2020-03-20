@@ -1,13 +1,21 @@
 import { composeWithMongoose } from 'graphql-compose-mongoose';
 import { schemaComposer } from 'graphql-compose';
 
-import { HashFunction, ResolverErrors, TokenCreator } from '@uls/core-nodejs';
+import { HashFunction, TokenCreator } from '@uls/core-common';
+import { ResolverErrors } from '@uls/core-nodejs';
 import { Role, UserInteractor } from '@uls/user-common';
 
 import { authMiddleware } from './auth';
 import { createUserModel, UserModel } from './models/userModel';
 import { Model } from 'mongoose';
 
+/**
+ * Creates user graphql schema
+ * 
+ * @param hashFn Hash function
+ * @param param1 {@link ResolverErrors} errors to be thrown in specific cases 
+ * @param tokenCreator Function that creates token from object or stringified object
+ */
 export const createSchema = (
     hashFn: HashFunction,
     { authErr, inputErr }: ResolverErrors,
@@ -87,7 +95,7 @@ export const createSchema = (
     UserTC.removeField('password');
 
     schemaComposer.Query.addFields({
-        me: UserTC.getResolver('me', [authMiddleware(Role.ADMIN, authErr)]),
+        me: UserTC.getResolver('me', [authMiddleware(Role.USER, authErr)]),
         userById: UserTC.getResolver('findById', [
             authMiddleware(Role.ADMIN, authErr),
         ]),

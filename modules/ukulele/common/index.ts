@@ -1,6 +1,7 @@
 /**
+ * Provides entities and interactors for ukulele specific data manipulation. It's independent of any framework.
+ * 
  * @packageDocumentation
- * @module @uls/ukulele-common
  */
 
 /** Entities */

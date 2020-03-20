@@ -1,9 +1,4 @@
 /**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
-
-/**
  * Song author, artist or band
  */
 export interface Author {

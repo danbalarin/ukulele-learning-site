@@ -1,5 +1,8 @@
 {
   "name": "@uls/core-nodejs",
   "version": "0.1.0",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@uls/core-common": "workspace:modules/core/common"
+  }
 }

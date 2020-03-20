@@ -1,9 +1,5 @@
 import { EntityBase, Updatable } from '@uls/core-common';
 import { StrummingPattern } from '../entities/StrummingPattern';
-/**
- * @packageDocumentation
- * @module @uls/ukulele-common
- */
 
 /**
  * Interactor for {@link Song} entity

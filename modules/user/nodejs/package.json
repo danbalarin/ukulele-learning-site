@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@uls/core-common": "workspace:modules/core/common",
         "@uls/core-nodejs": "workspace:modules/core/nodejs",
         "@uls/user-common": "workspace:modules/user/common",
         "graphql": "^14.6.0",
@@ -11,6 +12,7 @@
         "mongoose": "^5.9.2"
     },
     "devDependencies": {
-        "@types/mongoose": "5.7.1"
+        "@types/graphql": "^14.5.0",
+        "@types/mongoose": "^5.7.7"
     }
 }
