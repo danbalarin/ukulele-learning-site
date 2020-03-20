@@ -6,3 +6,5 @@ This repository contains application and everything should be in english, and ev
 
 # PRs
 I will **NOT** merge any pull requests until the [thesis](https://github.com/danbalarin/bachelors-thesis) is fully submitted and my finals are over.
+
+# [Documentation](https://danbalarin.github.io/ukulele-learning-site/) ![github pages](https://github.com/danbalarin/ukulele-learning-site/workflows/github%20pages/badge.svg)
