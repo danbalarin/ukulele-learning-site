@@ -1,4 +1,4 @@
-name: test
+name: Tests
 
 on:
     push:
@@ -6,7 +6,7 @@ on:
             - master
 
 jobs:
-    deploy:
+    jest:
         runs-on: ubuntu-18.04
         steps:
             - uses: actions/checkout@v2
