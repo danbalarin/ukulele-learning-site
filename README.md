@@ -1,4 +1,4 @@
-# Ukulele learning site
+# Ukulele learning site ![Tests](https://github.com/danbalarin/ukulele-learning-site/workflows/Tests/badge.svg)
 
 :warning: **This is source code for my [bachelors thesis](https://github.com/danbalarin/bachelors-thesis) written in Czech** :czech_republic:
 
