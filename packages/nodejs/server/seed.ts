@@ -1,57 +1,17 @@
-// import server from './apollo';
-import connection from './database';
+import configChecker from './src/utils/configCheck';
+import { Seeder } from './src/utils/Seeder';
+import { Logger, LoggerLevel } from './src/utils/Logger';
 
 import { UserSeed } from './modules/user';
-import { Mongoose } from 'mongoose';
 
-const seedModel = async (
-    db: Mongoose,
-    seed: any[],
-    model: string,
-    drop = false
-) => {
-    const dbModel = db.model(model).collection;
-    if (drop) {
-        await dbModel
-            .deleteMany({})
-            .then(dropOk(model))
-            .catch(dropErr(model));
-    }
-    await dbModel
-        .insertMany(seed)
-        .then(seedOk(model))
-        .catch(seedErr(model));
-};
+(async function() {
+    const logger = new Logger(LoggerLevel.Info);
 
-connection.then(async db => {
-    await seedModel(db, UserSeed.data, UserSeed.model, true);
-    process.exit(0);
-});
+    configChecker(logger).check();
 
-const seedOk = (model: string, verbose = false) => {
-    return (res: any) => {
-        console.log(`${model} seeded`);
-        if (verbose) {
-            console.log(res);
-        }
-    };
-};
+    const seeder = new Seeder(logger);
 
-const seedErr = (model: string) => {
-    return (err: any) => {
-        console.log(`failed seeding ${model} `, err);
-    };
-};
+    await seeder.seed(UserSeed, true);
 
-const dropOk = (model: string, verbose = false) => {
-    return (res: any) => {
-        console.log(`${model} dropped`);
-        if (verbose) {
-            console.log(res);
-        }
-    };
-};
-
-const dropErr = (model: string) => {
-    return (err: any) => console.log(`failed dropping ${model} `, err);
-};
+    seeder.cleanup();
+})();

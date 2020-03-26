@@ -1,15 +1,7 @@
 import { AuthenticationError, UserInputError } from 'apollo-server';
-import faker from 'faker';
 
 import { userModule } from '@uls/user-nodejs';
-import { hashFn, tokenCreator } from '../utils';
-
-class CustomFaker {
-    username = () => faker.internet.userName();
-    password = () => faker.internet.password();
-    email = () => faker.internet.email();
-    number = () => faker.random.number();
-}
+import { hashFn, tokenCreator, Faker } from '../src/utils';
 
 export const UserSchema = userModule.createSchema(
     hashFn,
@@ -19,4 +11,4 @@ export const UserSchema = userModule.createSchema(
     },
     tokenCreator
 );
-export const UserSeed = userModule.createSeed(new CustomFaker(), hashFn);
+export const UserSeed = userModule.createSeed(new Faker(), hashFn);

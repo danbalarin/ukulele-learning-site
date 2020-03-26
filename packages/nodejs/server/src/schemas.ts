@@ -1,4 +1,4 @@
-import { UserSchema } from './modules/user';
+import { UserSchema } from '../modules/user';
 
 // todo
 const schemas = {
