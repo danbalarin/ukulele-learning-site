@@ -47,6 +47,8 @@ export class ConfigChecker {
 
     /**
      * Checks baseObject for values
+     *
+     * @returns boolean whether check was successfull
      */
     check(): boolean {
         this.initialize();
@@ -55,7 +57,7 @@ export class ConfigChecker {
             const found = this._baseObject && !!this._baseObject[value.name];
             if (!found) {
                 this.missingValue(value);
-                result = false;
+                result = result && !value.required;
             }
         }
         return result;

@@ -66,3 +66,16 @@ export abstract class Logger {
      */
     abstract showMessage(level: LoggerLevel, message: string): void;
 }
+
+/**
+ * No operation logger
+ *
+ * Each log function({@link debug}, {@link info}, {@link success}, {@link warning} and {@link error})
+ * will NOT output anything into stdout, errout or any file
+ */
+export class NoopLogger extends Logger {
+    showMessage(level: LoggerLevel, message: string): void {}
+    constructor() {
+        super(0);
+    }
+}

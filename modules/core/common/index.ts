@@ -8,7 +8,7 @@
 
 /** Classes */
 export { ConfigChecker } from './classes/ConfigChecker';
-export { Logger, LoggerLevel } from './classes/Logger';
+export { Logger, LoggerLevel, NoopLogger } from './classes/Logger';
 
 /** Interfaces */
 export { Creator } from './interfaces/Creator';
