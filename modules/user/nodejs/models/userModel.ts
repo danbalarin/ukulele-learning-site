@@ -1,13 +1,15 @@
 import { Document, model, Schema } from 'mongoose';
 
-import { HashFunction } from '@uls/core-common';
+import { ServerModuleOptions } from '@uls/core-nodejs';
 import { User, Role, UserInteractor } from '@uls/user-common';
 
 export interface UserModel extends User, Document {
     passwordConfirm: (passwordCandidate: string) => boolean;
 }
 
-export const createUserModel = (hashFn: HashFunction) => {
+export const MODEL_NAME = 'User';
+
+export const createUserModel = (options: ServerModuleOptions) => {
     const UserSchema = new Schema<UserModel>({
         username: {
             type: String,
@@ -35,14 +37,17 @@ export const createUserModel = (hashFn: HashFunction) => {
         this: UserModel,
         passwordCandidate: string
     ) {
-        const isMatch = this.password === hashFn(passwordCandidate);
-        return isMatch;
+        const ui = new UserInteractor(this);
+        return ui.matchPassword(passwordCandidate, options.hashFunction);
     });
 
-    UserSchema.pre<UserModel>('save', async function(this: UserModel, next: () => void) {
+    UserSchema.pre<UserModel>('save', async function(
+        this: UserModel,
+        next: () => void
+    ) {
         if (this.isModified('password')) {
-            const ui = new UserInteractor(this as User);
-            const newUser: User = ui.hashPassword(hashFn);
+            const ui = new UserInteractor(this);
+            const newUser: User = ui.hashPassword(options.hashFunction);
             this.password = newUser.password;
         }
         next();
@@ -50,10 +55,10 @@ export const createUserModel = (hashFn: HashFunction) => {
 
     UserSchema.set('toJSON', {
         transform: function(doc: any, ret: any, opt: any) {
-            const ui = new UserInteractor(ret as User);
+            const ui = new UserInteractor(ret);
             return ui.stripUser();
         },
     });
 
-    return model<UserModel>('User', UserSchema);
+    return model<UserModel>(MODEL_NAME, UserSchema);
 };

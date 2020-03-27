@@ -3351,6 +3351,7 @@ __metadata:
   resolution: "@uls/core-nodejs@workspace:modules/core/nodejs"
   dependencies:
     "@uls/core-common": "workspace:modules/core/common"
+    mongoose: ^5.9.6
   languageName: unknown
   linkType: soft
 
@@ -3401,6 +3402,7 @@ __metadata:
     dotenv: ^8.2.0
     faker: ^4.1.0
     graphql: ^14.6.0
+    graphql-compose: ^7.14.0
     html-loader: ^0.5.5
     jsonwebtoken: ^8.5.1
     mongoose: ^5.9.2
@@ -9123,7 +9125,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"graphql-compose@npm:^7.12.3":
+"graphql-compose@npm:^7.12.3, graphql-compose@npm:^7.14.0":
   version: 7.14.0
   resolution: "graphql-compose@npm:7.14.0"
   dependencies:
@@ -12611,6 +12613,23 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"mongodb@npm:3.5.5":
+  version: 3.5.5
+  resolution: "mongodb@npm:3.5.5"
+  dependencies:
+    bl: ^2.2.0
+    bson: ^1.1.1
+    denque: ^1.4.1
+    require_optional: ^1.0.1
+    safe-buffer: ^5.1.2
+    saslprep: ^1.0.0
+  dependenciesMeta:
+    saslprep:
+      optional: true
+  checksum: 98fa54e026374f2d89dfe85daa24ef5e736fea2ea3fb45262b5cca46994237add6b5b22f7ce09b44dcc727fc2090f10bb17ec33a8b5aff3f97223aec5c797ac1
+  languageName: node
+  linkType: hard
+
 "mongoose-legacy-pluralize@npm:1.0.2":
   version: 1.0.2
   resolution: "mongoose-legacy-pluralize@npm:1.0.2"
@@ -12636,6 +12655,25 @@ fsevents@^1.2.7:
     sift: 7.0.1
     sliced: 1.0.1
   checksum: 2/2b29b425f685b3c7c073ba259fc38cfbc38712972eb091e99714e720da3c1e748fc58b162d3a0b7e4500fa1673799f9bb68900ac9092da2c09359b6c0dbf2c60
+  languageName: node
+  linkType: hard
+
+"mongoose@npm:5.9.6, mongoose@npm:^5.9.6":
+  version: 5.9.6
+  resolution: "mongoose@npm:5.9.6"
+  dependencies:
+    bson: ~1.1.1
+    kareem: 2.3.1
+    mongodb: 3.5.5
+    mongoose-legacy-pluralize: 1.0.2
+    mpath: 0.6.0
+    mquery: 3.2.2
+    ms: 2.1.2
+    regexp-clone: 1.0.0
+    safe-buffer: 5.1.2
+    sift: 7.0.1
+    sliced: 1.0.1
+  checksum: 04e442f9d71f9531344c3e36722548409483b643929ed0270447a28e9970170fe227f5f036a63aa7f6640f73c50360127461ba2c51ad3904591611b6d2e1be0a
   languageName: node
   linkType: hard
 

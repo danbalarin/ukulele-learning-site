@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server';
 import jwt from 'jsonwebtoken';
 
-import schema from './schemas';
+import createSchema from './schemas';
 import createConnection from './database';
 
 export default () => {
@@ -12,7 +12,7 @@ export default () => {
         });
 
     return new ApolloServer({
-        schema: schema,
+        schema: createSchema(),
         plugins: [
             {
                 requestDidStart() {

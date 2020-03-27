@@ -1,8 +1,16 @@
-import { UserSchema } from '../modules/user';
+import { modules } from '../modules';
 
-// todo
-const schemas = {
-    userSchema: UserSchema,
+import { schemaComposer } from 'graphql-compose';
+
+const createSchema = () => {
+    for (const module of modules) {
+        for (const model of module.models) {
+            schemaComposer.Mutation.addFields(model.mutation);
+            schemaComposer.Query.addFields(model.query);
+        }
+    }
+
+    return schemaComposer.buildSchema();
 };
 
-export default UserSchema;
+export default createSchema;

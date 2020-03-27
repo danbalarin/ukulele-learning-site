@@ -20,6 +20,7 @@
         "dotenv": "^8.2.0",
         "faker": "^4.1.0",
         "graphql": "^14.6.0",
+        "graphql-compose": "^7.14.0",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.9.2",
         "nodets": "^0.0.1",

@@ -1,15 +1,24 @@
-import { GraphQLSchema } from 'graphql';
+import {
+    ServerModule,
+    ServerModuleResponse,
+    ServerModuleOptions,
+} from '@uls/core-nodejs';
 
-import { ServerModule } from '@uls/core-nodejs';
-import { User } from '@uls/user-common';
+import { createModels } from './models';
 
-import { createSchema } from './schema';
-import { createUserSeed } from './seeds/userSeed';
+const init = (options: ServerModuleOptions) => {
+    const models = createModels(options);
+
+    const res: ServerModuleResponse = {
+        models,
+    };
+
+    return res;
+};
 
 /**
  * Provides user and authentication related NodeJS parts of application.
  */
-export const userModule: ServerModule<User, GraphQLSchema> = {
-    createSeed: createUserSeed,
-    createSchema: createSchema,
+export const userModule: ServerModule = {
+    init,
 };

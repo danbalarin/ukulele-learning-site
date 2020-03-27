@@ -1,21 +1,29 @@
 import { TokenCreator, HashFunction } from '@uls/core-common';
+import { SeedFaker } from './SeedFaker';
 
-import { SeedFaker } from './Seed';
-import { SeedResult } from './Seed';
-import { ResolverErrors } from './ResolverErrors';
+export interface ServerModuleErrors {
+    authorizationError: any;
+    inputError: any;
+}
 
-/**
- * Server module interface.
- * 
- * Every NodeJS module should export two functions, seed creator and schema creator
- * @param T data returned by seed function
- * @param P created data schema
- */
-export interface ServerModule<T, P> {
-    createSeed: (faker: SeedFaker, hashFn: HashFunction) => SeedResult<T>;
-    createSchema: (
-        hashFn: HashFunction,
-        errors: ResolverErrors,
-        tokenCreator: TokenCreator
-    ) => P;
+export interface ServerModuleOptions {
+    errors: ServerModuleErrors;
+    tokenCreator: TokenCreator;
+    hashFunction: HashFunction;
+    seedFaker: SeedFaker;
+}
+
+export interface ServerModuleModel<T = any, M = any, Q = any> {
+    name: string;
+    mutation: { [key: string]: M };
+    query: { [key: string]: Q };
+    seed: T;
+}
+
+export interface ServerModuleResponse {
+    models: ServerModuleModel[];
+}
+
+export interface ServerModule {
+    init: (options: ServerModuleOptions) => ServerModuleResponse;
 }

@@ -1,6 +1,6 @@
 import { Mongoose } from 'mongoose';
 
-import { SeedResult } from '@uls/core-nodejs';
+import { ServerModuleResponse, ServerModuleModel } from '@uls/core-nodejs';
 
 import createConnection from '../database';
 import { Logger } from './Logger';
@@ -21,11 +21,11 @@ export class Seeder {
      * @param data model to be seeded
      * @param dropPrevious Flag whether previus data should be dropped before seed
      */
-    async seed(data: SeedResult<any>, dropPrevious?: boolean): Promise<void> {
+    async seed(model: ServerModuleModel, dropPrevious?: boolean): Promise<void> {
         if (!this._db) {
             this._db = await createConnection();
         }
-        return this.seedModel(data.data, data.model, dropPrevious);
+        return this.seedModel(model.seed, model.name, dropPrevious);
     }
 
     private async seedModel(

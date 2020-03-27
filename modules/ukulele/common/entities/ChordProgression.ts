@@ -22,5 +22,5 @@ export interface ChordProgression<T> extends Creator<T> {
     /**
      * Chord progression chords
      */
-    chords: Chord;
+    chords: Chord[];
 }

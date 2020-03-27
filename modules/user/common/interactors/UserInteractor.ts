@@ -51,4 +51,15 @@ export class UserInteractor implements EntityBase<User>, Updatable<User> {
         newUser.password = hashFn(newUser.password);
         return newUser;
     }
+
+    /**
+     * Matches stored password against provided
+     *
+     * @param password Tested password
+     * @param hashFn Hash function
+     * @returns Whether passwords match
+     */
+    matchPassword(password: string, hashFn: HashFunction): boolean {
+        return this._entity.password === hashFn(password);
+    }
 }
