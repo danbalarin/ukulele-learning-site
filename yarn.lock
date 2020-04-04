@@ -3340,6 +3340,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uls/auth-common@workspace:modules/auth/common":
+  version: 0.0.0-use.local
+  resolution: "@uls/auth-common@workspace:modules/auth/common"
+  languageName: unknown
+  linkType: soft
+
+"@uls/auth-nodejs@workspace:modules/auth/nodejs":
+  version: 0.0.0-use.local
+  resolution: "@uls/auth-nodejs@workspace:modules/auth/nodejs"
+  dependencies:
+    "@uls/auth-common": "workspace:modules/auth/common"
+  languageName: unknown
+  linkType: soft
+
 "@uls/core-common@workspace:modules/core/common":
   version: 0.0.0-use.local
   resolution: "@uls/core-common@workspace:modules/core/common"
@@ -3394,6 +3408,7 @@ __metadata:
     "@types/webpack-node-externals": 1.7.1
     "@uls/core-common": "workspace:modules/core/common"
     "@uls/core-nodejs": "workspace:modules/core/nodejs"
+    "@uls/ukulele-nodejs": "workspace:modules/ukulele/nodejs"
     "@uls/user-nodejs": "workspace:modules/user/nodejs"
     apollo-server: ^2.10.1
     chalk: ^3.0.0
@@ -3416,6 +3431,7 @@ __metadata:
     typescript: ^3.8.2
     webpack: ^4.41.6
     webpack-cli: ^3.3.11
+    webpack-modules: ^1.0.0
     webpack-node-externals: ^1.7.2
   languageName: unknown
   linkType: soft
@@ -3490,6 +3506,18 @@ __metadata:
 "@uls/ukulele-nodejs@workspace:modules/ukulele/nodejs":
   version: 0.0.0-use.local
   resolution: "@uls/ukulele-nodejs@workspace:modules/ukulele/nodejs"
+  dependencies:
+    "@types/graphql": ^14.5.0
+    "@types/mongoose": ^5.7.7
+    "@uls/auth-common": "workspace:modules/auth/common"
+    "@uls/auth-nodejs": "workspace:modules/auth/nodejs"
+    "@uls/core-common": "workspace:modules/core/common"
+    "@uls/core-nodejs": "workspace:modules/core/nodejs"
+    "@uls/ukulele-common": "workspace:modules/ukulele/common"
+    graphql: ^14.6.0
+    graphql-compose: ^7.12.3
+    graphql-compose-mongoose: ^7.3.4
+    mongoose: ^5.9.2
   languageName: unknown
   linkType: soft
 
@@ -3516,10 +3544,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@uls/user-common@workspace:modules/user/common"
   dependencies:
-    "@types/jest": ^25.1.4
+    "@uls/auth-common": "workspace:modules/auth/common"
     "@uls/core-common": "workspace:modules/core/common"
     "@uls/core-nodejs": "workspace:modules/core/nodejs"
-    jest: ^25.1.0
   languageName: unknown
   linkType: soft
 
@@ -3529,6 +3556,8 @@ __metadata:
   dependencies:
     "@types/graphql": ^14.5.0
     "@types/mongoose": ^5.7.7
+    "@uls/auth-common": "workspace:modules/auth/common"
+    "@uls/auth-nodejs": "workspace:modules/auth/nodejs"
     "@uls/core-common": "workspace:modules/core/common"
     "@uls/core-nodejs": "workspace:modules/core/nodejs"
     "@uls/user-common": "workspace:modules/user/common"
@@ -18605,6 +18634,13 @@ resolve@1.1.7:
     ansi-colors: ^3.0.0
     uuid: ^3.3.2
   checksum: 2/250db04c41e278aa15a4f452808ef32ca8eca0f7df9d4c7c28b3d94e45d2649fbeb90a0adbee1c675447209b6a35136e13c1fb31476c3ca81c972bb41f0535bb
+  languageName: node
+  linkType: hard
+
+"webpack-modules@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "webpack-modules@npm:1.0.0"
+  checksum: b85ac95bc24c51b52f0feae481e297ece5eb1b9e2a5434fb28526560b932f6bd47c23c9ce9e9617f00f6e1e2e86b07a3b4edb9559c6f57c15ae87be5bca969d8
   languageName: node
   linkType: hard
 

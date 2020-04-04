@@ -11,6 +11,7 @@ export interface ServerModuleOptions {
     tokenCreator: TokenCreator;
     hashFunction: HashFunction;
     seedFaker: SeedFaker;
+    creatorModel: string;
 }
 
 export interface ServerModuleModel<T = any, M = any, Q = any> {

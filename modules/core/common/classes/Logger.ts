@@ -26,35 +26,35 @@ export abstract class Logger {
     /**
      * Logs informative message.
      */
-    info(message: string): void {
+    info(message: string | object): void {
         this.showMessage(LoggerLevel.Info, message);
     }
 
     /**
      * Logs warning message
      */
-    warning(message: string): void {
+    warning(message: string | object): void {
         this.showMessage(LoggerLevel.Warning, message);
     }
 
     /**
      * Logs error message
      */
-    error(message: string): void {
+    error(message: string | object): void {
         this.showMessage(LoggerLevel.Error, message);
     }
 
     /**
      * Logs debug message
      */
-    debug(message: string): void {
+    debug(message: string | object): void {
         this.showMessage(LoggerLevel.Debug, message);
     }
 
     /**
      * Logs success message
      */
-    success(message: string): void {
+    success(message: string | object): void {
         this.showMessage(LoggerLevel.Success, message);
     }
 
@@ -64,7 +64,7 @@ export abstract class Logger {
      * @param level Message level
      * @param message Message content
      */
-    abstract showMessage(level: LoggerLevel, message: string): void;
+    abstract showMessage(level: LoggerLevel, message: string | object): void;
 }
 
 /**
@@ -74,7 +74,7 @@ export abstract class Logger {
  * will NOT output anything into stdout, errout or any file
  */
 export class NoopLogger extends Logger {
-    showMessage(level: LoggerLevel, message: string): void {}
+    showMessage(level: LoggerLevel, message: string | object): void {}
     constructor() {
         super(0);
     }

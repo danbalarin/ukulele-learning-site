@@ -1,5 +1,20 @@
 {
-  "name": "@uls/ukulele-nodejs",
-  "version": "0.1.0",
-  "private": true
+    "name": "@uls/ukulele-nodejs",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@uls/auth-common": "workspace:modules/auth/common",
+        "@uls/auth-nodejs": "workspace:modules/auth/nodejs",
+        "@uls/core-common": "workspace:modules/core/common",
+        "@uls/core-nodejs": "workspace:modules/core/nodejs",
+        "@uls/ukulele-common": "workspace:modules/ukulele/common",
+        "graphql": "^14.6.0",
+        "graphql-compose": "^7.12.3",
+        "graphql-compose-mongoose": "^7.3.4",
+        "mongoose": "^5.9.2"
+    },
+    "devDependencies": {
+        "@types/graphql": "^14.5.0",
+        "@types/mongoose": "^5.7.7"
+    }
 }

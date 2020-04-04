@@ -1,11 +1,4 @@
-/**
- * User role
- */
-export enum Role {
-    USER,
-    MODERATOR,
-    ADMIN,
-}
+import { Role } from '@uls/auth-common';
 
 /**
  * User object

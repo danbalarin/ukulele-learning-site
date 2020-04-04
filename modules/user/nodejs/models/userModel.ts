@@ -1,7 +1,8 @@
 import { Document, model, Schema } from 'mongoose';
 
 import { ServerModuleOptions } from '@uls/core-nodejs';
-import { User, Role, UserInteractor } from '@uls/user-common';
+import { User, UserInteractor } from '@uls/user-common';
+import { Role } from '@uls/auth-common';
 
 export interface UserModel extends User, Document {
     passwordConfirm: (passwordCandidate: string) => boolean;

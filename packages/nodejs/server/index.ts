@@ -8,7 +8,7 @@ import { Logger, LoggerLevel } from './src/utils/Logger';
 
     configChecker(logger).check();
 
-    createServer()
+    createServer(logger)
         .listen({ port: process?.env?.PORT })
         .then(({ url }) => {
             logger.success(`Server ready at ${url}`);

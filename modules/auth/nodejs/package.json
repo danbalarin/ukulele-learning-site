@@ -1,0 +1,9 @@
+{
+    "name": "@uls/auth-nodejs",
+    "version": "0.1.0",
+    "main": "index.ts",
+    "private": true,
+    "dependencies": {
+        "@uls/auth-common": "workspace:modules/auth/common"
+    }
+}

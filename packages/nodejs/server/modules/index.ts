@@ -1,4 +1,6 @@
-import { User } from './user';
 import { ServerModuleResponse } from '@uls/core-nodejs';
 
-export const modules: ServerModuleResponse[] = [User];
+import { User } from './user';
+import { Ukulele } from './ukulele';
+
+export const modules: ServerModuleResponse[] = [User, Ukulele];

@@ -5,9 +5,10 @@ import {
     ServerModuleModel,
     validateUnique,
 } from '@uls/core-nodejs';
-import { Role, UserInteractor } from '@uls/user-common';
+import { UserInteractor } from '@uls/user-common';
 
-import { authMiddleware } from '../auth';
+import { authMiddleware } from '@uls/auth-nodejs';
+import { Role } from '@uls/auth-common';
 import {
     createUserModel,
     UserModel,

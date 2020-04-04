@@ -6,7 +6,14 @@ import { MetronomePreset } from './MetronomePreset';
  * - T for Tap
  * - \- for pause
  */
-export type Strum = 'D' | 'U' | 'T' | '-';
+export enum Strum {
+    'D',
+    'U',
+    'T',
+    '-',
+}
+
+export type Strums = keyof typeof Strum;
 
 /**
  * Strumming pattern

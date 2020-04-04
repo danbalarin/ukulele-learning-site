@@ -11,10 +11,12 @@ SETTINGS[LoggerLevel.Warning] = { emote: '⚠', color: chalk.yellow };
 SETTINGS[LoggerLevel.Success] = { emote: '✔', color: chalk.green };
 
 class Logger extends ILogger {
-    showMessage(type: LoggerLevel, message: string) {
+    showMessage(type: LoggerLevel, message: string | object) {
+        const formattedMessage =
+            typeof message === 'string' ? message : JSON.stringify(message);
         if (type >= this._level) {
             const setting = SETTINGS[type];
-            console.log(setting.color(`${setting.emote} ${message}`));
+            console.log(setting.color(`${setting.emote} ${formattedMessage}`));
         }
     }
 }

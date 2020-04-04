@@ -1,18 +1,6 @@
-import { AuthenticationError, UserInputError } from 'apollo-server';
-
 import { userModule } from '@uls/user-nodejs';
-import { hashFn, tokenCreator, Faker } from '../src/utils';
-import { ServerModuleOptions } from '@uls/core-nodejs';
 
-const options: ServerModuleOptions = {
-    errors: {
-        inputError: UserInputError,
-        authorizationError: AuthenticationError,
-    },
-    hashFunction: hashFn,
-    tokenCreator,
-    seedFaker: new Faker(),
-};
+import { options } from './options';
 
 const User = userModule.init(options);
 
