@@ -12,9 +12,7 @@ import { Logger } from './utils/Logger';
 export default (logger: Logger) => {
     createConnection()
         .then((db: any) => db)
-        .catch((err: any) => {
-            console.log(err);
-        });
+        .catch(logger.error);
 
     return new ApolloServer({
         schema: createSchema(),

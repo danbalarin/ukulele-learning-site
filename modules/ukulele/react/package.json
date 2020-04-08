@@ -3,7 +3,9 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@uls/look-react": "workspace:modules/look/react"
+        "@apollo/client": "^3.0.0-beta.38",
+        "@uls/look-react": "workspace:modules/look/react",
+        "@uls/ukulele-common": "workspace:modules/ukulele/common"
     },
     "peerDependencies": {
         "@apollo/client": "^3.0.0-beta.38",

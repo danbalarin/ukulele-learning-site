@@ -15,7 +15,6 @@ function ApolloServer({ children }: Props): ReactElement {
     const client = new ApolloClient({
         link: createHttpLink({
             uri: process?.env?.API_URL,
-            credentials: 'same-origin',
             fetch: fetch as any,
         }),
         ssrMode: false,

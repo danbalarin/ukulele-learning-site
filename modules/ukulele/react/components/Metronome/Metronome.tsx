@@ -55,26 +55,38 @@ interface Props {
      * Speed at which metronome operates, defaults to 100
      */
     tempo?: number;
+    /**
+     * Callback called every halftick
+     */
+    halfTick?: (halfTickNumber?: number) => void;
 }
 
-function Metronome({ tempo }: Props): ReactElement {
+function Metronome({ tempo, halfTick }: Props): ReactElement {
     const [isOn, setIsOn] = useState(false);
     const [activeDot, setActiveDot] = useState(0);
     const [actualTempo, setActualTempo] = useState(tempo || 100);
     const { colorMode } = useColorMode();
-    const [playing, toggle] = useAudio(tick);
+    const [playing, playTick] = useAudio(tick);
+
+    let isHalfTick = false;
 
     useInterval(
         function() {
-            setActiveDot((activeDot + 1) % 4);
-            toggle();
+            halfTick &&
+                halfTick((activeDot * 2 + (isHalfTick ? 1 : 0) + 1) % 8);
+            isHalfTick = !isHalfTick;
+            if (!isHalfTick) {
+                setActiveDot((activeDot + 1) % 4);
+                playTick();
+            }
         },
-        isOn ? (1000 * 60) / actualTempo : null
+        isOn ? (1000 * 60) / actualTempo / 2 : null
     );
 
     const startStop = () => {
         if (isOn) {
             setActiveDot(0);
+            halfTick && halfTick(0);
         }
         setIsOn(!isOn);
     };
@@ -100,6 +112,7 @@ function Metronome({ tempo }: Props): ReactElement {
                     name="tempo"
                     max="300"
                     min="30"
+                    style={{ minWidth: 0 }}
                 />
                 <Button onClick={startStop} variant="solid">
                     <Icon name={isOn ? 'close' : 'check'} />

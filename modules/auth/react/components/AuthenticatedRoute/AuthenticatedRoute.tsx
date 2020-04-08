@@ -1,13 +1,33 @@
 import React from 'react';
 
-import { Role } from '@uls/user-common';
-import { useUserLocalQuery } from '../../graphql/user';
+import { Role } from '@uls/auth-common';
 
 interface Props {
+    /**
+     * Minimal required role
+     */
     requiredRole: Role;
+
+    /**
+     * Have to be exact role
+     * {@default false}
+     */
     exact?: boolean;
+
+    /**
+     * Component to show in case of success
+     */
     component: React.ReactNode;
+
+    /**
+     * Component to show in case of unpriviliged access
+     */
     unauthenticatedComponent: React.ReactNode;
+
+    /**
+     * GraphQL query to get user role
+     */
+    userQuery: () => { data?: { user?: { role?: Role } } };
 }
 
 function AuthenticatedRoute({
@@ -15,9 +35,10 @@ function AuthenticatedRoute({
     exact,
     component,
     unauthenticatedComponent,
+    userQuery,
 }: Props): any {
-    const userQuery = useUserLocalQuery();
-    const role = userQuery?.data?.user?.role;
+    const userQueryResult = userQuery();
+    const role = userQueryResult?.data?.user?.role;
 
     if (role === undefined) {
         return unauthenticatedComponent;
