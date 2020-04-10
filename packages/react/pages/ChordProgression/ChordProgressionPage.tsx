@@ -1,5 +1,5 @@
-import React, { ReactElement, useState, useRef } from 'react';
-import styled from 'styled-components';
+import React, { ReactElement, useRef } from 'react';
+import styled from '@emotion/styled';
 
 import { ComponentWrapper } from '@uls/look-react';
 import {

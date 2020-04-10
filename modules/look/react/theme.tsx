@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { css } from '@emotion/core';
 import { theme, DefaultTheme } from '@chakra-ui/core';
 
 import { ModalTheme } from './components/Modal';
@@ -8,10 +8,14 @@ import { CardTheme } from './components/Card/Card';
 import gothamRounded from './fonts/GothamRounded';
 import ubuntuMono from './fonts/UbuntuMono';
 
+import bg from './images/bg.png';
+
 type Breakpoints = { breakpoints: string[] };
 
 interface ModeTheme {
     background?: string;
+    containerBackground?: string;
+    topbarBackground?: string;
     color?: string;
     primary?: string;
     secondary?: string;
@@ -108,13 +112,17 @@ const fonts = {
 
 const modes: ModesTheme = {
     light: {
-        background: '#f3ffbd',
-        color: colors.gray[700],
+        background: '#F2D785',
+        containerBackground: '#F2A057',
+        topbarBackground: '#444059',
+        color: '#A66C4B',
         primary: colors.orange[500],
     },
     dark: {
-        background: colors.purple[600],
-        color: colors.white,
+        background: '#2F0459',
+        containerBackground: '#57078C',
+        topbarBackground: '#0A2740',
+        color: '#890ABF',
         primary: colors.purple[600],
     },
 };
@@ -133,22 +141,13 @@ const customTheme: Omit<DefaultTheme, 'breakpoints'> &
     contentMinWidth: breakpoints[1],
 };
 
-interface GlobalStyleProps {
-    colorsMode: string;
-}
-
-const getValue = (value: keyof ModeTheme) => {
-    return (props: GlobalStyleProps & any) => {
-        return customTheme.modes?.[props.colorMode]?.[value];
-    };
-};
-
-export const GlobalStyle = createGlobalStyle<{ colorMode: string }>`
+export const createGlobalStyle = (colorMode: string) => css`
     ${gothamRounded}
     ${ubuntuMono}
-    body{
-        background: ${getValue('background')};
-        color:${getValue('color')};
+    body {
+        background: ${customTheme.modes?.[colorMode].background};
+        background-image: url(${bg});
+        color: ${customTheme.modes?.[colorMode].color};
         min-width: ${customTheme.contentMinWidth};
     }
 `;

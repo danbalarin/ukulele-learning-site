@@ -33,5 +33,12 @@ export { useColorMode } from './hooks/useColorMode';
 export { useDisclosure } from './hooks/useDisclosure';
 export { useInterval } from './hooks/useInterval';
 
-export { GlobalStyle } from './theme';
+export { createGlobalStyle } from './theme';
 export { default as Theme } from './theme';
+
+// setup font awesome
+import {dom, config} from '@fortawesome/fontawesome-svg-core'
+config.autoAddCss = false;
+const inlineCSS = dom.css();
+
+export {inlineCSS}

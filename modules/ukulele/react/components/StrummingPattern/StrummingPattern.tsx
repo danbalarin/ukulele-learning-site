@@ -5,17 +5,11 @@ import React, {
     forwardRef,
     useEffect,
 } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import {
-    Input,
-    InputGroup,
-    Button,
-    Icon,
-    InputLeftAddon,
     useColorMode,
     Theme,
-    useInterval,
 } from '@uls/look-react';
 import { StrummingPattern, Strum } from '@uls/ukulele-common';
 

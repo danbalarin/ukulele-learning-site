@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import { ComponentWrapper } from '@uls/look-react';
 import { Metronome } from '@uls/ukulele-react';

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
-import { Icon, Heading, Theme } from '@uls/look-react';
+import { Heading } from '@uls/look-react';
 
 const Wrapper = styled.div`
     display: flex;

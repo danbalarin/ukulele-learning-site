@@ -4,6 +4,8 @@
     "version": "0.1.0",
     "dependencies": {
         "@apollo/client": "^3.0.0-beta.38",
+        "@emotion/core": "^10.0.28",
+        "@emotion/styled": "^10.0.27",
         "@uls/auth-common": "workspace:modules/auth/common",
         "@uls/look-react": "workspace:modules/look/react",
         "@uls/user-common": "workspace:modules/user/common",
@@ -14,25 +16,18 @@
         "yup": "^0.28.1"
     },
     "devDependencies": {
-        "@storybook/addon-actions": "6.0.0-alpha.27",
-        "@storybook/addon-knobs": "6.0.0-alpha.27",
-        "@storybook/react": "6.0.0-alpha.27",
+        "@storybook/addon-actions": "6.0.0-alpha.31",
+        "@storybook/addon-knobs": "6.0.0-alpha.31",
+        "@storybook/react": "6.0.0-alpha.31",
         "@types/jsonwebtoken": "8.3.8",
         "@types/react": "16.9.19",
         "@types/react-dom": "16.9.5",
-        "@types/styled-components": "5.0.1",
         "@types/yup": "0.26.32"
-    },
-    "dependenciesMeta": {
-        "@chakra-ui": {
-            "unplugged": true
-        }
     },
     "peerDependencies": {
         "@apollo/client": "^3.0.0-beta.38",
         "graphql": "^14.6.0",
         "react": "^16.12.0",
-        "react-dom": "^16.12.0",
-        "styled-components": "*"
+        "react-dom": "^16.12.0"
     }
 }

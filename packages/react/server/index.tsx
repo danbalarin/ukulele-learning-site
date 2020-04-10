@@ -2,11 +2,12 @@ import React from 'react';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router';
-
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 import configChecker from '../utils/configChecker';
 import { Logger, LoggerLevel } from '../utils/Logger';
+
+import { inlineCSS } from '@uls/look-react';
 
 import App from '../App';
 import html from './html';
@@ -25,19 +26,15 @@ import ApolloServer from './ApolloServer';
     server.get('/*', (req, res) => {
         const context: any = {};
 
-        const sheet = new ServerStyleSheet();
+        const helmet = Helmet.renderStatic();
+
         const body = renderToString(
             <ApolloServer>
                 <Router location={req.url} context={context}>
-                    <StyleSheetManager sheet={sheet.instance}>
-                        <App />
-                    </StyleSheetManager>
+                    <App />
                 </Router>
             </ApolloServer>
         );
-
-        const styleTags = sheet.getStyleTags();
-        sheet.seal();
 
         if (context.url) {
             res.writeHead(301, {
@@ -45,7 +42,7 @@ import ApolloServer from './ApolloServer';
             });
             res.end();
         } else {
-            res.send(html({ body, helmet: {}, styles: styleTags }));
+            res.send(html({ body, helmet, style: inlineCSS }));
         }
     });
 

@@ -13,6 +13,8 @@
     },
     "dependencies": {
         "@apollo/client": "^3.0.0-beta.38",
+        "@emotion/core": "^10.0.28",
+        "@emotion/styled": "^10.0.27",
         "@uls/auth-common": "workspace:modules/auth/common",
         "@uls/auth-react": "workspace:modules/auth/react",
         "@uls/core-common": "workspace:modules/core/common",
@@ -30,9 +32,9 @@
         "node-fetch": "^2.6.0",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
+        "react-helmet": "^5.0.1",
         "react-router": "^5.1.2",
         "react-router-dom": "^5.1.2",
-        "styled-components": "^5.0.1",
         "typescript": "^3.7.5"
     },
     "devDependencies": {
@@ -46,10 +48,10 @@
         "@types/nodemon": "1.19.0",
         "@types/react": "16.9.19",
         "@types/react-dom": "16.9.5",
+        "@types/react-helmet": "^5.0.15",
         "@types/react-redux": "7.1.7",
         "@types/react-router": "5.1.4",
         "@types/react-router-dom": "5.1.3",
-        "@types/styled-components": "5.0.1",
         "@types/webpack": "4.41.6",
         "@types/webpack-dev-middleware": "2.0.3",
         "@types/webpack-env": "^1.15.1",
@@ -57,20 +59,21 @@
         "@types/webpack-node-externals": "1.7.1",
         "clean-webpack-plugin": "^3.0.0",
         "cross-env": "^7.0.0",
+        "css-loader": "^3.5.2",
+        "isomorphic-style-loader": "^5.1.0",
+        "node-sass": "^4.13.1",
         "nodemon": "^2.0.2",
         "npm-run-all": "^4.1.5",
         "pnp-webpack-plugin": "^1.6.4",
         "react-hot-loader": "^4.12.19",
+        "sass-loader": "^8.0.2",
+        "style-loader": "^1.1.3",
         "ts-loader": "^6.2.1",
-        "typescript-plugin-styled-components": "^1.4.4",
-        "webpack": "^4.41.6",
+        "webpack": "^4.42.1",
         "webpack-cli": "^3.3.11",
         "webpack-dev-middleware": "^3.7.2",
         "webpack-hot-middleware": "^2.25.0",
         "webpack-node-externals": "^1.7.2"
-    },
-    "peerDependencies": {
-        "styled-components": "^5.0.1"
     },
     "engines": {
         "yarn": "^2.0.0"

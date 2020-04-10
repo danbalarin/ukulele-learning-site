@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import theme from '../../theme';
 import { Paddings, BorderTheme, BackgroundTheme } from '../../utils';

@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import Metronome from './Metronome';
 

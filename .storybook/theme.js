@@ -1,15 +1,15 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { GlobalStyle } from '../modules/look/react';
+import { Global } from '@emotion/core';
 
+import { createGlobalStyle } from '../modules/look/react';
 import { ThemeProvider } from '../modules/look/react';
 
 const ThemeDecorator = storyFn => {
-
     return (
         <ApolloProvider client={{}}>
             <ThemeProvider>
-                <GlobalStyle colorMode={'dark'} />
+                <Global styles={createGlobalStyle('dark')} />
                 <>{storyFn()}</>
             </ThemeProvider>
         </ApolloProvider>

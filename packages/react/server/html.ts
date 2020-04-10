@@ -1,30 +1,19 @@
-// const html = (helmet: any, body: string) => `
-//     <!doctype html>
-//     <html ${helmet.htmlAttributes.toString()}>
-//         <head>
-//             ${helmet.title.toString()}
-//             ${helmet.meta.toString()}
-//             ${helmet.link.toString()}
-//         </head>
-//         <body ${helmet.bodyAttributes.toString()}>
-//             <div id="app">${body}</div>
-//         </body>
-//     </html>
-// `;
-
 interface Props {
     helmet: any;
     body: string;
-    styles: any;
+    style: string;
 }
 
-const html = ({ helmet, body, styles }: Props) => `
+const html = ({ helmet, body, style }: Props) => `
     <!doctype html>
-    <html>
+    <html ${helmet.htmlAttributes.toString()}>
         <head>
-            ${styles}
+            ${helmet.title.toString()}
+            ${helmet.meta.toString()}
+            ${helmet.link.toString()}
+            <style>${style}</style>
         </head>
-        <body >
+        <body ${helmet.bodyAttributes.toString()}>
             <div id="app">${body}</div>
             <script type="application/javascript" src="bundle.js"></script>
         </body>

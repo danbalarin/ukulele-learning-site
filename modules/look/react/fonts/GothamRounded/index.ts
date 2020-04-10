@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css } from '@emotion/core';
 
 import gothamBold from './GothamRounded-Bold.otf';
 import gothamMedium from './GothamRounded-Medium.otf';
