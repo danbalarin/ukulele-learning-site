@@ -10,7 +10,7 @@
         "modules/**/react"
     ],
     "scripts": {
-        "storybook": "start-storybook",
+        "storybook": "start-storybook -p 4200",
         "docs": "typedoc --plugin 'typedoc-plugin-external-module-map' ./",
         "test": "jest",
         "test:watch": "jest --watch",

@@ -31,6 +31,10 @@ const webpack = {
                     },
                 ],
             },
+            {
+                test: /\.(png|jpg|gif|mp3)$/,
+                use: 'file-loader',
+            },
         ],
     },
 };

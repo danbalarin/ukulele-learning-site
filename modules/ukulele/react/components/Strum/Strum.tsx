@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import styled from 'styled-components';
 
 import { Icon } from '@uls/look-react';
 import { Strum } from '@uls/ukulele-common';
@@ -16,29 +15,20 @@ interface Props {
     color?: string;
 }
 
-interface StrumWrapperProps {
-    color: string;
-}
-
-const StrumWrapper = styled.span<StrumWrapperProps>`
-    color: ${props => props.color};
-`;
-
 function StrumComponent({ strum, color }: Props): ReactElement {
     let component = <></>;
-    console.log(color)
     switch (strum) {
         case Strum.D:
-            component = <Icon color={color} name="arrow-down" size="24px" />;
+            component = <Icon color={color} name="chevron-down" size="2x" />;
             break;
         case Strum.U:
-            component = <Icon color={color} name="arrow-up" size="24px" />;
+            component = <Icon color={color} name="chevron-up" size="2x" />;
             break;
         case Strum.T:
-            component = <StrumWrapper color={color || ''}>T</StrumWrapper>;
+            component = <Icon color={color} name="hand-paper" size="2x" />;
             break;
         case Strum['-']:
-            component = <Icon color={color} name="arrow-minus" size="24px" />;
+            component = <Icon color={color} name="minus" size="2x" />;
             break;
     }
     return component;

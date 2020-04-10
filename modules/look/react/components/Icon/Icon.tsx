@@ -1,17 +1,41 @@
 import React, { ReactElement } from 'react';
 
-import { Icon as ChakraIcon } from '@chakra-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconName, SizeProp } from '@fortawesome/fontawesome-svg-core';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+    faChevronDown,
+    faChevronUp,
+    faTimes,
+    faSun,
+    faMoon,
+    faHandPaper,
+    faMinus,
+    faCheck,
+} from '@fortawesome/free-solid-svg-icons';
+
+library.add(
+    faChevronDown,
+    faChevronUp,
+    faTimes,
+    faSun,
+    faMoon,
+    faHandPaper,
+    faMinus,
+    faCheck
+);
 
 interface Props {
     /**
      * Icon name
      */
-    name: string;
+    name: IconName;
 
     /**
      * Icon size, all css atributes acceptable
      */
-    size?: string;
+    size?: SizeProp;
 
     /**
      * Icon color
@@ -19,10 +43,8 @@ interface Props {
     color?: string;
 }
 
-function Icon(props: Props): ReactElement {
-    // ts ignore because of custom icons
-    // @ts-ignore
-    return <ChakraIcon {...props} />;
+function Icon({ name, ...props }: Props): ReactElement {
+    return <FontAwesomeIcon {...props} icon={name} />;
 }
 
 export default Icon;

@@ -83,7 +83,10 @@ function StrummingPatternComponent(
         tick,
     }));
 
-    const activeColor = colorMode === 'dark' ? 'purple.800' : 'orange.500';
+    const activeColor =
+        colorMode === 'dark'
+            ? Theme.colors.purple['800']
+            : Theme.colors.orange['500'];
 
     return (
         <Wrapper>
