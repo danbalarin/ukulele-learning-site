@@ -10,6 +10,7 @@ const CONFIG_VALUES = [
     { name: 'MONGODB_URI', required: true },
     { name: 'MONGODB_URI_LOCAL', required: false },
     { name: 'JWT_SECRET', required: true },
+    { name: 'FRONTEND_URI', required: true },
 ];
 
 const createConfigChecker = (logger: Logger) => {

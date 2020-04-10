@@ -20,6 +20,14 @@ const webpack = {
                 },
             },
             {
+                test: /\.s[ac]ss$/i,
+                use: [
+                  'style-loader',
+                  'css-loader',
+                  'sass-loader',
+                ],
+            },
+            {
                 test: /\.(woff(2)?|ttf|otf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
                 use: [
                     {
@@ -30,6 +38,10 @@ const webpack = {
                         },
                     },
                 ],
+            },
+            {
+                test: /\.(png|jpg|gif|mp3)$/,
+                use: 'file-loader',
             },
         ],
     },

@@ -5,72 +5,71 @@ import {
     ApolloClient,
     ApolloProvider,
     InMemoryCache,
-    HttpLink,
+    createHttpLink,
     ApolloLink,
     from,
 } from '@apollo/client';
 import { clientMutations } from '@uls/user-react';
+import { LocalStorage } from '../utils/LocaStorage';
 
-const authLink = new ApolloLink((operation, forward) => {
-    const token = localStorage.getItem('token');
-    token &&
-        operation.setContext(({ headers }: any) => ({
-            headers: {
-                ...headers,
-                authorization: token,
-            },
-        }));
-    return forward(operation).map(res => {
-        const token = res.data?.login?.token || res.data?.signup?.token; // TODO temp hack
-        if (token) {
-            localStorage.setItem('token', token as string);
-        }
-        return res;
+const createLinks = () => {
+    const authLink = new ApolloLink((operation, forward) => {
+        const token = localStorage.getItem('token');
+        token &&
+            operation.setContext(({ headers }: any) => ({
+                headers: {
+                    ...headers,
+                    authorization: token,
+                },
+            }));
+        return forward(operation).map(res => {
+            const token = res.data?.login?.token || res.data?.signup?.token; // TODO temp hack
+            if (token) {
+                localStorage.setItem('token', token as string);
+            }
+            return res;
+        });
     });
-});
 
-const httpLink = new HttpLink({
-    credentials: 'same-origin',
-    uri: process.env.API_URL,
-});
+    const httpLink = createHttpLink({
+        uri: process.env.API_URL,
+        fetch: fetch as any,
+    });
 
-const cache = new InMemoryCache();
+    return from([authLink, httpLink]);
+};
 
-class LocalStorage {
-    getItem(key: string): string | null {
-        return sessionStorage.getItem(key);
-    }
+const createCache = () => {
+    const cache = new InMemoryCache();
+    persistCache({
+        cache,
+        storage: new LocalStorage(),
+    });
 
-    setItem(key: string, value?: any) {
-        value && sessionStorage.setItem(key, value);
-    }
-
-    removeItem(key: string) {
-        sessionStorage.removeItem(key);
-    }
-}
-
-persistCache({
-    cache,
-    storage: new LocalStorage(),
-});
+    return cache;
+};
 
 interface Props {
     children: React.ReactNode;
 }
 
-function ApolloClientApp({ children }: Props): ReactElement {
-    const client = new ApolloClient({
-        cache: cache,
-        link: from([authLink, httpLink]),
-        resolvers: {
-            Mutation: {
-                ...clientMutations,
+const createApolloClientApp = () => {
+    const cache = createCache();
+    const link = createLinks();
+
+    return function ApolloClientApp({ children }: Props): ReactElement {
+        const client = new ApolloClient({
+            cache,
+            link,
+            resolvers: {
+                Mutation: {
+                    ...clientMutations,
+                },
             },
-        },
-    });
+        });
 
-    return <ApolloProvider client={client} children={children} />;
-}
+        return <ApolloProvider client={client} children={children} />;
+    };
+};
 
-export default ApolloClientApp;
+export default createApolloClientApp;

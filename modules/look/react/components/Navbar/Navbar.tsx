@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { Flex } from '@chakra-ui/core';
-import customTheme from '../../theme';
+import Theme from '../../theme';
 import { useColorMode } from '../../hooks/useColorMode';
 
 interface Props {
@@ -20,11 +20,7 @@ function Navbar({
     ...props
 }: Props): ReactElement {
     const { colorMode } = useColorMode();
-    const color = {
-        dark: customTheme.colors.purple[700],
-        light: customTheme.colors.teal[500],
-    };
-    const bgColor = variantColor || color[colorMode];
+    const bgColor = variantColor || Theme.modes?.[colorMode]?.topbarBackground;
 
     return (
         <Flex
@@ -38,9 +34,9 @@ function Navbar({
             position="fixed"
             zIndex={10}
         >
-            <Flex children={left} />
-            <Flex children={center} />
-            <Flex children={right} />
+            <Flex children={left} flex="1" justifyContent="flex-start" />
+            <Flex children={center} flex="1" justifyContent="center" />
+            <Flex children={right} flex="1" justifyContent="flex-end" />
         </Flex>
     );
 }

@@ -1,5 +1,7 @@
+import { Role } from '@uls/auth-common';
+
 import { UserInteractor } from './UserInteractor';
-import { User, Role } from '../entities/User';
+import { User } from '../entities/User';
 
 let ui: UserInteractor;
 

@@ -11,4 +11,10 @@ storiesOf('Package/Error', module)
         const subtitle = text('Subtitle', 'Not found');
         const icon = text('Icon', 'cross');
         return <Error title={title} subtitle={subtitle} icon={icon} />;
+    })
+    .add('With image', () => {
+        const title = text('Title', '404');
+        const subtitle = text('Subtitle', 'Not found');
+        const image = text('Image', 'http://google.com');
+        return <Error title={title} subtitle={subtitle} image={image} />;
     });

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { User, Role } from '@uls/user-common';
+import { Role } from '@uls/auth-common';
 import {
     PasswordInput,
     Input,

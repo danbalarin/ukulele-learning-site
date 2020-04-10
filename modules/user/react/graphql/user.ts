@@ -11,7 +11,7 @@ interface LoginData {
 }
 
 const LOGIN = gql`
-    mutation Login($username: String!, $password: String!) {
+    mutation login($username: String!, $password: String!) {
         login(username: $username, password: $password) {
             token
         }
@@ -28,7 +28,7 @@ interface SignupData {
 }
 
 const SIGNUP = gql`
-    mutation Signup($username: String!, $password: String!, $email: String!) {
+    mutation signup($username: String!, $password: String!, $email: String!) {
         signup(username: $username, password: $password, email: $email) {
             token
         }

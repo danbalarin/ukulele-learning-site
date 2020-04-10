@@ -4,12 +4,6 @@ const nodeExternals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const createStyledComponentsTransformer = require('typescript-plugin-styled-components')
-    .default;
-const styledComponentsTransformer = createStyledComponentsTransformer({
-    ssr: true,
-});
-
 var config = {
     mode: 'development',
     // plugins: [new webpack.HotModuleReplacementPlugin()],
@@ -18,11 +12,6 @@ var config = {
             {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
-                options: {
-                    getCustomTransformers: () => ({
-                        before: [styledComponentsTransformer],
-                    }),
-                },
             },
             {
                 test: /\.mjs$/,
@@ -44,6 +33,14 @@ var config = {
                             outputPath: 'fonts/',
                         },
                     },
+                ],
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                  'isomorphic-style-loader',
+                  'css-loader',
+                  'sass-loader',
                 ],
             },
             {

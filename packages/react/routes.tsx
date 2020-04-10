@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { AuthenticatedRoute } from '@uls/user-react';
-import { Role } from '@uls/user-common';
+import { AuthenticatedRoute } from '@uls/auth-react';
+import { Role } from '@uls/auth-common';
+import { useUserLocalQuery } from '@uls/user-react';
 
 import { ProfilePage } from './pages/Profile';
 import { HomePage } from './pages/Home';
@@ -9,6 +10,7 @@ import { HomePage } from './pages/Home';
 import { NotFound } from './pages/NotFound';
 import { Unauthorized } from './pages/Unauthorized';
 import { MetronomePage } from './pages/Metronome';
+import { ChordProgressionPage } from './pages/ChordProgression';
 
 export interface RouteProps {
     path: string;
@@ -28,12 +30,17 @@ export const routes: RouteProps[] = [
         component: MetronomePage,
     },
     {
+        path: '/chordprogression/:id?',
+        component: ChordProgressionPage,
+    },
+    {
         path: '/profile',
         children: (
             <AuthenticatedRoute
                 requiredRole={Role.USER}
                 component={<ProfilePage />}
                 unauthenticatedComponent={<Unauthorized />}
+                userQuery={useUserLocalQuery}
             />
         ),
     },
