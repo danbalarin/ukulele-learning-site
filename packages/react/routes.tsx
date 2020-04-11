@@ -11,6 +11,7 @@ import { NotFound } from './pages/NotFound';
 import { Unauthorized } from './pages/Unauthorized';
 import { MetronomePage } from './pages/Metronome';
 import { ChordProgressionPage } from './pages/ChordProgression';
+import { SearchPage } from './pages/Search';
 
 export interface RouteProps {
     path: string;
@@ -32,6 +33,10 @@ export const routes: RouteProps[] = [
     {
         path: '/chordprogression/:id?',
         component: ChordProgressionPage,
+    },
+    {
+        path: '/search',
+        component: SearchPage,
     },
     {
         path: '/profile',

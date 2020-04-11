@@ -23,6 +23,11 @@ export { Table } from './components/Table';
 export { Heading } from './components/Heading';
 export { ColorSwitch } from './components/ColorSwitch';
 export { Icon } from './components/Icon';
+export {
+    SearchInput,
+    SearchGroup,
+    SearchOption,
+} from './components/SearchInput';
 // export { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/core';
 // export { Menu, MenuButton, MenuList } from './components/Menu';
 
@@ -37,8 +42,8 @@ export { createGlobalStyle } from './theme';
 export { default as Theme } from './theme';
 
 // setup font awesome
-import {dom, config} from '@fortawesome/fontawesome-svg-core'
+import { dom, config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 const inlineCSS = dom.css();
 
-export {inlineCSS}
+export { inlineCSS };

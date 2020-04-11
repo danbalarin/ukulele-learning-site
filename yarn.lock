@@ -3563,7 +3563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:16.9.5, @types/react-dom@npm:^16.8.3, @types/react-dom@npm:^16.9.5":
+"@types/react-dom@npm:*, @types/react-dom@npm:16.9.5, @types/react-dom@npm:^16.8.3, @types/react-dom@npm:^16.9.5":
   version: 16.9.5
   resolution: "@types/react-dom@npm:16.9.5"
   dependencies:
@@ -3614,6 +3614,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-select@npm:^3.0.11":
+  version: 3.0.11
+  resolution: "@types/react-select@npm:3.0.11"
+  dependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    "@types/react-transition-group": "*"
+  checksum: 24986f6775a130d2a520f6489a4d961154cfef86ade02080049330ab5f533b717013fcd54e342d94e2aa5aa6fb7a5fb83d3f26455f82f20475253762d82356d7
+  languageName: node
+  linkType: hard
+
 "@types/react-syntax-highlighter@npm:11.0.4":
   version: 11.0.4
   resolution: "@types/react-syntax-highlighter@npm:11.0.4"
@@ -3629,6 +3640,15 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: 2/84818571e491aa508235c5523940f4322af63c39727df7a7513821100929f90f2f76d7cc40a1522c5ff0bd7fc8083baac1c517675be7ca83fc1dc7b25bdfc421
+  languageName: node
+  linkType: hard
+
+"@types/react-transition-group@npm:*":
+  version: 4.2.4
+  resolution: "@types/react-transition-group@npm:4.2.4"
+  dependencies:
+    "@types/react": "*"
+  checksum: 2112df6d71b200677fdbc96834f8851ddf62055cd4e320fae10d5399e68a99aaa47c602c6cfc79e856b2d4ba160242d274c84f72c602896f3774ec26883e44ee
   languageName: node
   linkType: hard
 
@@ -3895,8 +3915,10 @@ __metadata:
     "@storybook/addon-knobs": 6.0.0-alpha.31
     "@storybook/react": 6.0.0-alpha.31
     "@types/react": 16.9.19
+    "@types/react-select": ^3.0.11
     emotion-theming: ^10.0.27
     react-data-table-component: ^6.3.0
+    react-select: ^3.1.0
   peerDependencies:
     react: ^16.12.0
   languageName: unknown
@@ -7773,7 +7795,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^2.2.0, csstype@npm:^2.5.7, csstype@npm:^2.6.4":
+"csstype@npm:^2.2.0, csstype@npm:^2.5.7, csstype@npm:^2.6.4, csstype@npm:^2.6.7":
   version: 2.6.9
   resolution: "csstype@npm:2.6.9"
   checksum: 2/fb00716951a932ac3450546c65d761a75c133091b44db9aec0be07c2ca06a38141d6e059ad839035feea9abb0faee90aadcad6b73e7be0250c66602fd7a49f3a
@@ -8199,6 +8221,16 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.1.2
   checksum: 2/7625598dbfef65a50801e194b88f277ab398dd92c27398280fd8d69294326f05d9b0588922560ba50e10d9fe5ee8096f90995d679b7db2b776afd579d495b962
+  languageName: node
+  linkType: hard
+
+"dom-helpers@npm:^5.0.1":
+  version: 5.1.4
+  resolution: "dom-helpers@npm:5.1.4"
+  dependencies:
+    "@babel/runtime": ^7.8.7
+    csstype: ^2.6.7
+  checksum: 3b0b658610a58303862ecf35d2a04bf0a53e42b853bf119c70c5c17ed61d99c94327a5c6e2da667121015b382c3e69b7cbfd1320c3f8d145772d46bb458b7f68
   languageName: node
   linkType: hard
 
@@ -16409,6 +16441,25 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-select@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "react-select@npm:3.1.0"
+  dependencies:
+    "@babel/runtime": ^7.4.4
+    "@emotion/cache": ^10.0.9
+    "@emotion/core": ^10.0.9
+    "@emotion/css": ^10.0.9
+    memoize-one: ^5.0.0
+    prop-types: ^15.6.0
+    react-input-autosize: ^2.2.2
+    react-transition-group: ^4.3.0
+  peerDependencies:
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  checksum: 6a3558fa295b42fd1dd9f1af5492f9a4cae1f918294bb3081e9caca0e82ecac7a515c77fb4183d0b73c92c06164336b3845130350fc1e889389127b319ebdc14
+  languageName: node
+  linkType: hard
+
 "react-side-effect@npm:^1.1.0":
   version: 1.2.0
   resolution: "react-side-effect@npm:1.2.0"
@@ -16487,6 +16538,21 @@ fsevents@^1.2.7:
     react: ">=15.0.0"
     react-dom: ">=15.0.0"
   checksum: 2/eefed08c48a0d377b5fac3ac7fac54ed986d5dcdd4494f36075954c9d2d257072a9d18cc02c6d8e6698034722b1ff9419ad0c24ef068dea742edcff9f8ea4ba9
+  languageName: node
+  linkType: hard
+
+"react-transition-group@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "react-transition-group@npm:4.3.0"
+  dependencies:
+    "@babel/runtime": ^7.5.5
+    dom-helpers: ^5.0.1
+    loose-envify: ^1.4.0
+    prop-types: ^15.6.2
+  peerDependencies:
+    react: ">=16.6.0"
+    react-dom: ">=16.6.0"
+  checksum: 2ce975dfa41b8b15be8980323f551efda758ba1cb45e5b305d25eb230de8272a1fa04469ff7b2846588c6a728030c27f52bce25a7d92956382435352edd3aa37
   languageName: node
   linkType: hard
 

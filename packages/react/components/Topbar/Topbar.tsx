@@ -1,8 +1,10 @@
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Navbar, Input, Heading } from '@uls/look-react';
+import { Navbar, Heading } from '@uls/look-react';
+
 import AuthenticationTopbar from './AuthenticationTopbar';
+import { Search } from '../Search';
 
 interface Props {}
 
@@ -15,7 +17,7 @@ function Topbar({}: Props): ReactElement {
                         <Heading size="lg">EasyUKU</Heading>
                     </Link>
                 }
-                center={<Input placeholder="Search..." />}
+                center={<Search />}
                 right={<AuthenticationTopbar />}
             />
         </>

@@ -122,7 +122,7 @@ const modes: ModesTheme = {
         background: '#2F0459',
         containerBackground: '#57078C',
         topbarBackground: '#0A2740',
-        color: '#890ABF',
+        color: '#FF13FE',
         primary: colors.purple[600],
     },
 };

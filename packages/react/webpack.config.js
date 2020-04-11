@@ -37,15 +37,19 @@ var config = {
             },
             {
                 test: /\.s[ac]ss$/i,
-                use: [
-                  'isomorphic-style-loader',
-                  'css-loader',
-                  'sass-loader',
-                ],
+                use: ['isomorphic-style-loader', 'css-loader', 'sass-loader'],
             },
             {
                 test: /\.(png|jpg|gif|mp3)$/,
-                use: 'file-loader',
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'assets/',
+                        },
+                    },
+                ],
             },
         ],
     },
