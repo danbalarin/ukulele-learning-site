@@ -1,9 +1,9 @@
 {
-  "name": "@uls/core-nodejs",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@uls/core-common": "workspace:modules/core/common",
-    "mongoose": "^5.9.6"
-  }
+    "name": "@uls/core-nodejs",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@uls/core-common": "workspace:modules/core/common",
+        "mongoose": "^5.9.6"
+    }
 }

@@ -12,3 +12,5 @@ export {
     ServerModuleOptions,
     ServerModuleResponse,
 } from './interfaces/ServerModule';
+
+export { SearchOption, SearchGroup } from './interfaces/SearchGroup';

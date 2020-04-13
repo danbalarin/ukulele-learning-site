@@ -1,44 +1,93 @@
-import React, { ReactElement } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { ReactElement, useState } from 'react';
+import gql from 'graphql-tag';
+import { useApolloClient } from '@apollo/client';
 
-import { SearchInput, SearchOption } from '@uls/look-react';
+import { SearchGroup, SearchOption } from '@uls/look-react';
 
-const searchFn = async (input: string) => [
-    {
-        label: 'Search',
-        options: [{ label: input, value: input, isSearch: true }],
-    },
-    {
-        label: 'Songs',
-        options: [
-            {
-                label: 'Riptide - Joy Vance',
-                value: 'riptide-joy-vance',
-                pathPrefix: '/song/',
-            },
-        ],
-    },
-];
+import SearchPresenter from './SearchPresenter';
+
+const SEARCH_QUERY = gql`
+    query search($query: String!) {
+        search(query: $query) {
+            label
+            options {
+                label
+                value
+            }
+        }
+    }
+`;
+interface GroupMapping {
+    label: string;
+    pathPrefix: string;
+    limit: number;
+}
+
+const groupsMapping: {
+    [key: string]: GroupMapping;
+} = {
+    User: { label: 'User', pathPrefix: 'user/', limit: 3 },
+};
+
+const transformGroups = (groups: SearchGroup[]): SearchGroup[] => {
+    const reduceOptions = (mapping: GroupMapping) => (
+        result: SearchOption[],
+        option: SearchOption,
+        index: number
+    ) => {
+        if (index < mapping?.limit) {
+            result.push({ ...option, pathPrefix: mapping?.pathPrefix });
+        }
+        return result;
+    };
+
+    const mapGroups = (group: SearchGroup): SearchGroup => ({
+        label: groupsMapping[group.label]?.label,
+        options: group.options.reduce(
+            reduceOptions(groupsMapping[group.label]),
+            []
+        ),
+    });
+
+    return groups.map(mapGroups);
+};
 
 interface Props {}
 
 function Search({}: Props): ReactElement {
-    let history = useHistory();
+    const client = useApolloClient();
+    const [loading, setLoading] = useState(false);
 
-    const searchRedirect = (value: string) =>
-        history.push({ pathname: '/search', search: `?query=${value}` });
+    const searchFn = async (input: string) => {
+        setLoading(true);
+        const res: SearchGroup[] = [
+            {
+                label: 'Search',
+                options: [{ label: input, value: input, isSearch: true }],
+            },
+        ];
 
-    const valueRedirect = (value: string) => history.push(value);
+        let data: any;
+        try {
+            data = await client.query<
+                { search: SearchGroup[] },
+                { query: string }
+            >({
+                query: SEARCH_QUERY,
+                variables: { query: input },
+            });
+        } catch (err) {}
 
-    const handleChange = (value: SearchOption) => {
-        if (value.isSearch) {
-            searchRedirect(value.value);
-        } else {
-            valueRedirect(`${value.pathPrefix}${value.value}`);
+        if (data?.data?.search?.length > 0) {
+            const transformed = transformGroups(data.data.search);
+            res.push(...transformed);
         }
+        console.log(res);
+        setLoading(false);
+        return res;
     };
 
-    return <SearchInput loadResults={searchFn} onChange={handleChange} />;
+    return <SearchPresenter loadResults={searchFn} loading={loading} />;
 }
 
 export default Search;

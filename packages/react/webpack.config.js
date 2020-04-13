@@ -3,16 +3,19 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const LoadablePlugin = require('@loadable/webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin;
+
+var commonPlugins = [
+    new Dotenv(),
+    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+];
 
 var config = {
     mode: 'development',
-    // plugins: [new webpack.HotModuleReplacementPlugin()],
     module: {
         rules: [
-            {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
-            },
             {
                 test: /\.mjs$/,
                 include: /node_modules/,
@@ -30,7 +33,7 @@ var config = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            outputPath: 'fonts/',
+                            outputPath: 'static/fonts/',
                         },
                     },
                 ],
@@ -46,8 +49,27 @@ var config = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            outputPath: 'assets/',
+                            outputPath: 'static/assets/',
                         },
+                    },
+                ],
+            },
+            {
+                test: /\.tsx?$/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                // '@babel/env',
+                                // '@babel/typescript',
+                                '@babel/react',
+                            ],
+                            plugins: ['@loadable/babel-plugin'],
+                        },
+                    },
+                    {
+                        loader: 'ts-loader',
                     },
                 ],
             },
@@ -61,10 +83,6 @@ var config = {
     resolveLoader: {
         plugins: [PnpWebpackPlugin.moduleLoader(module)],
     },
-    plugins: [
-        new Dotenv(),
-        new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-    ],
     stats: {
         hash: false,
         version: false,
@@ -89,24 +107,34 @@ var client = Object.assign({}, config, {
         // 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
         path.resolve(__dirname, './client/index.tsx'),
     ],
+    plugins: commonPlugins.concat([
+        new LoadablePlugin(),
+        // new BundleAnalyzerPlugin({
+        //     analyzerMode: 'static',
+        //     generateStatsFile: true,
+        // }),
+    ]),
     output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'build'),
+        filename: 'static/js/[name].[hash].bundle.js',
+        path: path.resolve(__dirname, 'build/client/'),
         hotUpdateChunkFilename: 'hot/hot-update-client.js',
         hotUpdateMainFilename: 'hot/hot-update-client.json',
+        publicPath: '/',
     },
 });
 
 var server = Object.assign({}, config, {
     name: 'server',
     target: 'node',
+    plugins: commonPlugins,
     externals: [nodeExternals()],
     entry: [path.resolve(__dirname, './server/index.tsx')],
     output: {
         filename: 'server.js',
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'build/server/'),
         hotUpdateChunkFilename: 'hot/hot-update-server.js',
         hotUpdateMainFilename: 'hot/hot-update-server.json',
+        publicPath: '/',
     },
 });
 

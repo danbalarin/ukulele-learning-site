@@ -4,6 +4,7 @@ import {
     ServerModuleOptions,
     ServerModuleModel,
     validateUnique,
+    SearchGroup,
 } from '@uls/core-nodejs';
 import { UserInteractor } from '@uls/user-common';
 
@@ -77,6 +78,23 @@ export const createUserSchema = (options: ServerModuleOptions) => {
         },
     });
 
+    UserTC.addResolver<UserModel[]>({
+        name: 'search',
+        args: { query: 'String!' },
+        type: [SearchGroup],
+        resolve: async (req: any) => {
+            const { query } = req.args;
+            const found = await UserModel.find({
+                username: { $regex: query },
+            });
+            const result = found.map(user => ({
+                label: user.username,
+                value: user.username,
+            }));
+            return { label: USER_MODEL_NAME, options: result };
+        },
+    });
+
     UserTC.removeField('password');
 
     const authenticated = authMiddleware(options.errors.authorizationError);
@@ -101,10 +119,15 @@ export const createUserSchema = (options: ServerModuleOptions) => {
         login: UserTC.getResolver('login'),
     };
 
+    const searchQuery = UserTC.getResolver('search', [
+        authenticated(Role.ADMIN),
+    ]);
+
     const model: Omit<ServerModuleModel, 'seed'> = {
         mutation,
         query,
         name: USER_MODEL_NAME,
+        searchQuery,
     };
 
     return model;

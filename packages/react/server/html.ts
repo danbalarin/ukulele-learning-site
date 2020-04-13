@@ -2,12 +2,15 @@ interface Props {
     helmet: any;
     body: string;
     style: string;
+    scripts: string;
+    links: string;
 }
 
-const html = ({ helmet, body, style }: Props) => `
+const html = ({ helmet, body, style, scripts, links }: Props) => `
     <!doctype html>
     <html ${helmet.htmlAttributes.toString()}>
         <head>
+            ${links}
             ${helmet.title.toString()}
             ${helmet.meta.toString()}
             ${helmet.link.toString()}
@@ -15,7 +18,7 @@ const html = ({ helmet, body, style }: Props) => `
         </head>
         <body ${helmet.bodyAttributes.toString()}>
             <div id="app">${body}</div>
-            <script type="application/javascript" src="bundle.js"></script>
+            ${scripts}
         </body>
     </html>
 `;

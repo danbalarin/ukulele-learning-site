@@ -1,8 +1,10 @@
 import React from 'react';
 import express from 'express';
+import path from 'path';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router';
 import { Helmet } from 'react-helmet';
+import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 
 import configChecker from '../utils/configChecker';
 import { Logger, LoggerLevel } from '../utils/Logger';
@@ -21,20 +23,27 @@ import ApolloServer from './ApolloServer';
     const port = 3000;
     const server = express();
 
-    server.use(express.static('build'));
-
-    server.get('/*', (req, res) => {
+    server.use('/static', express.static('build/client/static/'));
+    server.get('*', (req, res) => {
         const context: any = {};
+
+        const statsFile = path.resolve('build/client/loadable-stats.json');
+        const extractor = new ChunkExtractor({ statsFile });
 
         const helmet = Helmet.renderStatic();
 
         const body = renderToString(
-            <ApolloServer>
-                <Router location={req.url} context={context}>
-                    <App />
-                </Router>
-            </ApolloServer>
+            <ChunkExtractorManager extractor={extractor}>
+                <ApolloServer>
+                    <Router location={req.url} context={context}>
+                        <App />
+                    </Router>
+                </ApolloServer>
+            </ChunkExtractorManager>
         );
+
+        const scriptTags = extractor.getScriptTags();
+        const linkTags = extractor.getLinkTags();
 
         if (context.url) {
             res.writeHead(301, {
@@ -42,7 +51,15 @@ import ApolloServer from './ApolloServer';
             });
             res.end();
         } else {
-            res.send(html({ body, helmet, style: inlineCSS }));
+            res.send(
+                html({
+                    body,
+                    helmet,
+                    style: inlineCSS,
+                    scripts: scriptTags,
+                    links: linkTags,
+                })
+            );
         }
     });
 

@@ -34,6 +34,8 @@ export const createUserModel = (options: ServerModuleOptions) => {
         },
     });
 
+    UserSchema.index({ username: 'text' });
+
     UserSchema.method('passwordConfirm', function(
         this: UserModel,
         passwordCandidate: string

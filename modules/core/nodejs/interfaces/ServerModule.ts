@@ -19,6 +19,7 @@ export interface ServerModuleModel<T = any, M = any, Q = any> {
     mutation: { [key: string]: M };
     query: { [key: string]: Q };
     seed: T;
+    searchQuery?: any;
 }
 
 export interface ServerModuleResponse {

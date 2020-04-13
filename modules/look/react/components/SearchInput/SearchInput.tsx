@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useRef } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { ActionMeta } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
@@ -52,7 +52,6 @@ function SearchInput({
 }: Props): ReactElement {
     const { colorMode } = useColorMode();
     const [value, setValue] = useState<string>('');
-    const selectRef = useRef<any>();
 
     const createContainerStyles = (provided: any, state: any) => {
         const opacity = state.isDisabled ? 0.5 : 1;
@@ -89,7 +88,6 @@ function SearchInput({
             onChange={(value, action) => {
                 value && onChange(value as SearchOption, action);
                 setValue('');
-                console.log(selectRef);
             }}
             isMulti={false}
             inputValue={value}
@@ -104,7 +102,7 @@ function SearchInput({
                 input: createInputStyles,
                 singleValue: createInputStyles,
             }}
-            ref={selectRef}
+            noOptionsMessage={text => 'Start typing'}
         />
     );
 }
