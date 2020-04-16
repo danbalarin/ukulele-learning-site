@@ -1,6 +1,8 @@
+import { EntityID } from '@uls/core-common';
 import { ServerModuleOptions, ServerModuleModel } from '@uls/core-nodejs';
 
 import { Author } from '@uls/ukulele-common';
+import { Types } from 'mongoose';
 
 /**
  * Seeds {@link Author} model in database
@@ -10,7 +12,14 @@ import { Author } from '@uls/ukulele-common';
 export const createAuthorSeed = (
     options: ServerModuleOptions
 ): Pick<ServerModuleModel, 'seed'> => {
-    const authors: Author[] = [];
+    const authors: (Author & EntityID<Types.ObjectId>)[] = [
+        { name: 'Various Artists' },
+        { name: 'Vance Joy' },
+        {
+            name: 'Twenty One Pilots',
+            members: [{ name: 'Tyler Joseph' }, { name: 'Josh Dun' }],
+        },
+    ];
 
     return { seed: authors };
 };

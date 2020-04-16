@@ -22,11 +22,11 @@ import {
  * @param options
  */
 export const createUserSchema = (options: ServerModuleOptions) => {
-    const UserModel = createUserModel(options);
+    const UserModelCreated = createUserModel(options);
 
     const customizationOptions = {};
 
-    const UserTC = composeWithMongoose(UserModel, customizationOptions);
+    const UserTC = composeWithMongoose(UserModelCreated, customizationOptions);
 
     UserTC.addResolver({
         name: 'login',
@@ -34,7 +34,7 @@ export const createUserSchema = (options: ServerModuleOptions) => {
         type: `type LoginResponse { token: String! }`,
         resolve: async (req: any) => {
             const { username, password } = req.args;
-            const user = await UserModel.findOne({ username });
+            const user = await UserModelCreated.findOne({ username });
             if (!user || !user.passwordConfirm(password)) {
                 throw new options.errors.authorizationError(
                     'Invalid credentials'
@@ -56,10 +56,14 @@ export const createUserSchema = (options: ServerModuleOptions) => {
 
             await validateUnique(options.errors.inputError)(
                 [{ username }, { email }],
-                UserModel
+                UserModelCreated
             );
 
-            const user = await UserModel.create({ username, password, email });
+            const user = await UserModelCreated.create({
+                username,
+                password,
+                email,
+            });
             if (!user) {
                 throw new Error('Something went wrong');
             }
@@ -73,19 +77,19 @@ export const createUserSchema = (options: ServerModuleOptions) => {
         type: UserTC,
         resolve: async (req: any) => {
             const id = req.context.user._id;
-            const user = await UserModel.findById(id);
+            const user = await UserModelCreated.findById(id);
             return user;
         },
     });
 
-    UserTC.addResolver<UserModel[]>({
+    UserTC.addResolver({
         name: 'search',
         args: { query: 'String!' },
         type: [SearchGroup],
         resolve: async (req: any) => {
             const { query } = req.args;
-            const found = await UserModel.find({
-                username: { $regex: query },
+            const found = await UserModelCreated.find({
+                username: { $regex: query, $options: 'i' },
             });
             const result = found.map(user => ({
                 label: user.username,

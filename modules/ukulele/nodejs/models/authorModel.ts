@@ -20,5 +20,7 @@ export const createAuthorModel = (options: ServerModuleOptions) => {
         },
     });
 
+    AuthorSchema.index({ name: 'text' });
+
     return model<AuthorModel>(MODEL_NAME, AuthorSchema);
 };

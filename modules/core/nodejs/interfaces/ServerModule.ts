@@ -14,6 +14,10 @@ export interface ServerModuleOptions {
     creatorModel: string;
 }
 
+export interface SeedContext {
+    [key: string]: any;
+}
+
 export interface ServerModuleModel<T = any, M = any, Q = any> {
     name: string;
     mutation: { [key: string]: M };

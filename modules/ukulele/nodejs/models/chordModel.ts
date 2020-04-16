@@ -20,5 +20,7 @@ export const createChordModel = (options: ServerModuleOptions) => {
         },
     });
 
+    ChordSchema.index({ name: 'text' });
+
     return model<ChordModel>(MODEL_NAME, ChordSchema);
 };

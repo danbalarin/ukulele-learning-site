@@ -1,6 +1,12 @@
-import { ServerModuleOptions, ServerModuleModel } from '@uls/core-nodejs';
+import {
+    ServerModuleOptions,
+    ServerModuleModel,
+    SeedContext,
+} from '@uls/core-nodejs';
 import { Role } from '@uls/auth-common';
 import { User } from '@uls/user-common';
+import { EntityID } from '@uls/core-common';
+import { Types } from 'mongoose';
 
 /**
  * Creates basic user seed, one admin, one moderator and buch of basic users
@@ -10,7 +16,17 @@ import { User } from '@uls/user-common';
 export const createUserSeed = (
     options: ServerModuleOptions
 ): Pick<ServerModuleModel, 'seed'> => {
-    const res: User[] = [];
+    const res: (User & EntityID<Types.ObjectId>)[] = [];
+
+    const adminId = Types.ObjectId();
+    const moderatorId = Types.ObjectId();
+    const userId = Types.ObjectId();
+
+    // context.user = {
+    //     admin: adminId,
+    //     moderator: moderatorId,
+    //     user: userId,
+    // };
 
     res.push(
         {
@@ -18,18 +34,21 @@ export const createUserSeed = (
             password: options.hashFunction('123'),
             email: 'admin@test.com',
             role: Role.ADMIN,
+            _id: adminId,
         },
         {
             username: 'moderator',
             password: options.hashFunction('123'),
             email: 'moderator@test.com',
             role: Role.MODERATOR,
+            _id: moderatorId,
         },
         {
             username: 'user',
             password: options.hashFunction('123'),
             email: 'user@test.com',
             role: Role.USER,
+            _id: userId,
         }
     );
 

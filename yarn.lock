@@ -1985,6 +1985,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fortawesome/free-regular-svg-icons@npm:^5.13.0":
+  version: 5.13.0
+  resolution: "@fortawesome/free-regular-svg-icons@npm:5.13.0"
+  dependencies:
+    "@fortawesome/fontawesome-common-types": ^0.2.28
+  checksum: f5deb28ea0b9a3e75d73bb8275934c6ac0e0fe0ff16111fb3f2c006d5075e8379bb47854b6cc6fce078de08238befc70caada139b5b8deaff6d002e520fd626c
+  languageName: node
+  linkType: hard
+
 "@fortawesome/free-solid-svg-icons@npm:^5.13.0":
   version: 5.13.0
   resolution: "@fortawesome/free-solid-svg-icons@npm:5.13.0"
@@ -4450,6 +4459,7 @@ __metadata:
     "@emotion/core": ^10.0.28
     "@emotion/styled": ^10.0.27
     "@fortawesome/fontawesome-svg-core": ^1.2.28
+    "@fortawesome/free-regular-svg-icons": ^5.13.0
     "@fortawesome/free-solid-svg-icons": ^5.13.0
     "@fortawesome/react-fontawesome": ^0.1.9
     "@storybook/addon-actions": 6.0.0-alpha.31

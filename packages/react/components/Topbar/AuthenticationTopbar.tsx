@@ -1,5 +1,6 @@
 import React, { ReactElement, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useApolloClient } from '@apollo/client';
 
 import { Button, useDisclosure, Stack, ColorSwitch } from '@uls/look-react';
 
@@ -13,16 +14,19 @@ interface Props {}
 
 function AuthenticationTopbar({}: Props): ReactElement {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const client = useApolloClient();
     const userQuery = useUserLocalQuery();
     const modalRef = useRef<any>();
     const [writeUserLocal, { data }] = useUserLocalMutation();
 
     const onLogin = (token: string) => {
+        client.resetStore();
         writeUserLocal({ variables: { token } });
         onClose();
     };
 
     const onRegister = (token: string) => {
+        client.resetStore();
         writeUserLocal({ variables: { token } });
         onClose();
     };

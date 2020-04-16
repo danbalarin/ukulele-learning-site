@@ -15,6 +15,8 @@ import {
     faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { faFrown } from '@fortawesome/free-regular-svg-icons';
+
 library.add(
     faChevronDown,
     faChevronUp,
@@ -23,8 +25,11 @@ library.add(
     faMoon,
     faHandPaper,
     faMinus,
-    faCheck
+    faCheck,
+    faFrown
 );
+
+export { IconName };
 
 interface Props {
     /**

@@ -22,7 +22,7 @@ export { Modal } from './components/Modal';
 export { Table } from './components/Table';
 export { Heading } from './components/Heading';
 export { ColorSwitch } from './components/ColorSwitch';
-export { Icon } from './components/Icon';
+export { Icon, IconName } from './components/Icon';
 export {
     SearchInput,
     SearchGroup,

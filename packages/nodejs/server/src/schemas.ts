@@ -49,7 +49,7 @@ const createSchema = () => {
                     }
                 })
             );
-            return result.filter(val => !!val);
+            return result.filter(val => !!val && !!val.options);
         },
     });
 

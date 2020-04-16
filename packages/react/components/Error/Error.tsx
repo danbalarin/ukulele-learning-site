@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from '@emotion/styled';
 
-import { Heading } from '@uls/look-react';
+import { Heading, Icon, IconName } from '@uls/look-react';
 
 const Wrapper = styled.div`
     display: flex;
@@ -31,24 +31,21 @@ interface BaseProps {
 }
 
 interface IconProps extends BaseProps {
-    icon: string;
+    icon: IconName;
 }
 
 interface ImageProps extends BaseProps {
     image: string;
 }
 
-function Error(props: ImageProps | IconProps): ReactElement {
+function Error(props: ImageProps | IconProps | BaseProps): ReactElement {
     const { title, subtitle } = props;
     let leftContent = <></>;
-    // TODO: Icon and image support
-    // if ((props as IconProps).icon) {
-    //     leftContent = (
-    //         <Icon size={Theme.sizes[56]} name={(props as IconProps).icon} />
-    //     );
-    // } else {
-    //     leftContent = <img src={(props as ImageProps).image} />;
-    // }
+    if ((props as IconProps).icon) {
+        leftContent = <Icon size="4x" name={(props as IconProps).icon} />;
+    } else if ((props as ImageProps).image) {
+        leftContent = <img src={(props as ImageProps).image} />;
+    }
     return (
         <Wrapper>
             <ImageWrapper>{leftContent}</ImageWrapper>

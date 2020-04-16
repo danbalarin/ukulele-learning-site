@@ -27,7 +27,7 @@ function ProfilePage({}: Props): ReactElement {
 
     const user = userQuery?.data?.user;
     if (!user) {
-        return <Error title="404" subtitle="User not found" icon="" />;
+        return <Error title="404" subtitle="User not found" />;
     }
 
     return (

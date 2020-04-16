@@ -14,6 +14,8 @@ import { createChordProgressionSeed } from './seeds/chordProgressionSeed';
 
 import { createAuthorSchema } from './models/authorSchema';
 import { createAuthorSeed } from './seeds/authorSeed';
+import { createSongSchema } from './models/songSchema';
+import { createSongSeed } from './seeds/songSeed';
 
 export const createModels = (
     options: ServerModuleOptions
@@ -47,5 +49,19 @@ export const createModels = (
         ...authorSeed,
     };
 
-    return [chord, metronomePreset, strummingPattern, chordProgression, author];
+    const songModel = createSongSchema(options);
+    const songSeed = createSongSeed(options);
+    const song = {
+        ...songModel,
+        ...songSeed,
+    };
+
+    return [
+        chord,
+        metronomePreset,
+        strummingPattern,
+        chordProgression,
+        author,
+        song,
+    ];
 };

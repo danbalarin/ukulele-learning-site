@@ -1,32 +1,29 @@
 import React, { ReactElement, useState } from 'react';
-import gql from 'graphql-tag';
 import { useApolloClient } from '@apollo/client';
 
 import { SearchGroup, SearchOption } from '@uls/look-react';
 
 import SearchPresenter from './SearchPresenter';
+import {
+    SEARCH_QUERY,
+    SEARCH_QUERY_RESULT,
+    SEARCH_QUERY_VARIABLES,
+} from '../../graphql/search';
 
-const SEARCH_QUERY = gql`
-    query search($query: String!) {
-        search(query: $query) {
-            label
-            options {
-                label
-                value
-            }
-        }
-    }
-`;
 interface GroupMapping {
     label: string;
     pathPrefix: string;
     limit: number;
+    order: number;
 }
 
 const groupsMapping: {
     [key: string]: GroupMapping;
 } = {
-    User: { label: 'User', pathPrefix: 'user/', limit: 3 },
+    Song: { label: 'Song', pathPrefix: 'song/', limit: 3, order: 0 },
+    User: { label: 'User', pathPrefix: 'user/', limit: 3, order: 10 },
+    Author: { label: 'Author', pathPrefix: 'author/', limit: 3, order: 2 },
+    Chord: { label: 'Chord', pathPrefix: 'chord/', limit: 3, order: 1 },
 };
 
 const transformGroups = (groups: SearchGroup[]): SearchGroup[] => {
@@ -49,7 +46,12 @@ const transformGroups = (groups: SearchGroup[]): SearchGroup[] => {
         ),
     });
 
-    return groups.map(mapGroups);
+    return groups
+        .map(mapGroups)
+        .sort(
+            (a, b) =>
+                groupsMapping[a.label].order - groupsMapping[b.label].order
+        );
 };
 
 interface Props {}
@@ -70,8 +72,8 @@ function Search({}: Props): ReactElement {
         let data: any;
         try {
             data = await client.query<
-                { search: SearchGroup[] },
-                { query: string }
+                SEARCH_QUERY_RESULT,
+                SEARCH_QUERY_VARIABLES
             >({
                 query: SEARCH_QUERY,
                 variables: { query: input },
@@ -79,10 +81,10 @@ function Search({}: Props): ReactElement {
         } catch (err) {}
 
         if (data?.data?.search?.length > 0) {
+            console.log(data.data.search);
             const transformed = transformGroups(data.data.search);
             res.push(...transformed);
         }
-        console.log(res);
         setLoading(false);
         return res;
     };

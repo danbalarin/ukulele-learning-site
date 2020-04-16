@@ -11,6 +11,7 @@ export {
     ServerModuleModel,
     ServerModuleOptions,
     ServerModuleResponse,
+    SeedContext,
 } from './interfaces/ServerModule';
 
 export { SearchOption, SearchGroup } from './interfaces/SearchGroup';

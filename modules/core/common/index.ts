@@ -15,6 +15,7 @@ export { Creator } from './interfaces/Creator';
 export { CreationDate } from './interfaces/CreationDate';
 export { UpdateDate } from './interfaces/UpdateDate';
 export { EntityBase } from './interfaces/EntityBase';
+export { EntityID } from './interfaces/EntityID';
 export { HashFunction } from './interfaces/HashFunction';
 export { TokenCreator } from './interfaces/TokenCreator';
 export { Updatable } from './interfaces/Updatable';
