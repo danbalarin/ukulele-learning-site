@@ -2,57 +2,17 @@ import React, { ReactElement, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 
 import { SearchGroup, SearchOption } from '@uls/look-react';
+import { Song, Author, Chord } from '@uls/ukulele-common';
+import { User } from '@uls/user-common';
 
 import SearchPresenter from './SearchPresenter';
 import {
     SEARCH_QUERY,
     SEARCH_QUERY_RESULT,
     SEARCH_QUERY_VARIABLES,
+    SearchUnionType,
 } from '../../graphql/search';
-
-interface GroupMapping {
-    label: string;
-    pathPrefix: string;
-    limit: number;
-    order: number;
-}
-
-const groupsMapping: {
-    [key: string]: GroupMapping;
-} = {
-    Song: { label: 'Song', pathPrefix: 'song/', limit: 3, order: 0 },
-    User: { label: 'User', pathPrefix: 'user/', limit: 3, order: 10 },
-    Author: { label: 'Author', pathPrefix: 'author/', limit: 3, order: 2 },
-    Chord: { label: 'Chord', pathPrefix: 'chord/', limit: 3, order: 1 },
-};
-
-const transformGroups = (groups: SearchGroup[]): SearchGroup[] => {
-    const reduceOptions = (mapping: GroupMapping) => (
-        result: SearchOption[],
-        option: SearchOption,
-        index: number
-    ) => {
-        if (index < mapping?.limit) {
-            result.push({ ...option, pathPrefix: mapping?.pathPrefix });
-        }
-        return result;
-    };
-
-    const mapGroups = (group: SearchGroup): SearchGroup => ({
-        label: groupsMapping[group.label]?.label,
-        options: group.options.reduce(
-            reduceOptions(groupsMapping[group.label]),
-            []
-        ),
-    });
-
-    return groups
-        .map(mapGroups)
-        .sort(
-            (a, b) =>
-                groupsMapping[a.label].order - groupsMapping[b.label].order
-        );
-};
+import { WithID, transformSearchResult } from './searchUtils';
 
 interface Props {}
 
@@ -60,31 +20,34 @@ function Search({}: Props): ReactElement {
     const client = useApolloClient();
     const [loading, setLoading] = useState(false);
 
+    const getDefaultOptions = (input: string) => [
+        {
+            label: 'Search',
+            options: [{ label: input, value: input, isSearch: true }],
+        },
+    ];
+
+    const callSearch = async (input: string) => {
+        const res = await client.query<
+            SEARCH_QUERY_RESULT,
+            SEARCH_QUERY_VARIABLES
+        >({
+            query: SEARCH_QUERY,
+            variables: { query: input },
+            fetchPolicy: 'no-cache',
+        });
+        return res;
+    };
+
     const searchFn = async (input: string) => {
         setLoading(true);
-        const res: SearchGroup[] = [
-            {
-                label: 'Search',
-                options: [{ label: input, value: input, isSearch: true }],
-            },
-        ];
+        const res: SearchGroup[] = getDefaultOptions(input);
 
-        let data: any;
-        try {
-            data = await client.query<
-                SEARCH_QUERY_RESULT,
-                SEARCH_QUERY_VARIABLES
-            >({
-                query: SEARCH_QUERY,
-                variables: { query: input },
-            });
-        } catch (err) {}
+        let { data } = await callSearch(input);
 
-        if (data?.data?.search?.length > 0) {
-            console.log(data.data.search);
-            const transformed = transformGroups(data.data.search);
-            res.push(...transformed);
-        }
+        const transformed = transformSearchResult(data, searchResultMapping);
+
+        res.push(...transformed);
         setLoading(false);
         return res;
     };
@@ -93,3 +56,22 @@ function Search({}: Props): ReactElement {
 }
 
 export default Search;
+
+const searchResultMapping = {
+    Song: (song: Song<any> & WithID): SearchOption => ({
+        label: song.title,
+        value: song._id,
+    }),
+    User: (user: User & WithID): SearchOption => ({
+        label: user.username,
+        value: user._id,
+    }),
+    Author: (author: Author & WithID): SearchOption => ({
+        label: author.name,
+        value: author._id,
+    }),
+    Chord: (chord: Chord & WithID): SearchOption => ({
+        label: chord.name,
+        value: chord._id,
+    }),
+};

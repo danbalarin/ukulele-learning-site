@@ -19,7 +19,9 @@ const LOGIN = gql`
 `;
 
 export const useLoginMutation = () =>
-    useMutation<{ login: LoginData }, LoginVars>(LOGIN);
+    useMutation<{ login: LoginData }, LoginVars>(LOGIN, {
+        fetchPolicy: 'no-cache',
+    });
 
 type SignupVars = Pick<User, 'username' | 'password' | 'email'>;
 
@@ -36,13 +38,15 @@ const SIGNUP = gql`
 `;
 
 export const useSignupMutation = () =>
-    useMutation<{ signup: SignupData }, SignupVars>(SIGNUP);
+    useMutation<{ signup: SignupData }, SignupVars>(SIGNUP, {
+        fetchPolicy: 'no-cache',
+    });
 
 interface UserLocalData extends Pick<User, 'username' | 'email' | 'role'> {
     token: string;
 }
 
-const USER_LOCAL_QUERY = gql`
+export const USER_LOCAL_QUERY = gql`
     {
         user @client {
             token
@@ -53,18 +57,24 @@ const USER_LOCAL_QUERY = gql`
     }
 `;
 
+export type USER_LOCAL_QUERY_RETURN = { user: UserLocalData };
+
 export const useUserLocalQuery = () => {
-    return useQuery<{ user: UserLocalData }>(USER_LOCAL_QUERY, { ssr: false });
+    return useQuery<USER_LOCAL_QUERY_RETURN>(USER_LOCAL_QUERY, { ssr: false });
 };
 
-const USER_LOCAL_MUTATION = gql`
+export type USER_LOCAL_MUTATION_VARIABLES = { token: string };
+
+export const USER_LOCAL_MUTATION = gql`
     mutation writeUser($token: String!) {
         writeUser(token: $token) @client
     }
 `;
 
 export const useUserLocalMutation = () => {
-    return useMutation<null, { token: string }>(USER_LOCAL_MUTATION);
+    return useMutation<null, USER_LOCAL_MUTATION_VARIABLES>(
+        USER_LOCAL_MUTATION
+    );
 };
 
 export const writeUserMutation: Resolver = async (
@@ -73,16 +83,28 @@ export const writeUserMutation: Resolver = async (
     { cache }: any
 ) => {
     const user = jwt.decode(token) as User;
+    const data = { user: {} };
+    if (user) {
+        data.user = {
+            username: user.username,
+            email: user.email,
+            role: user.role,
+            token,
+        };
+    }
     cache.writeQuery({
         query: USER_LOCAL_QUERY,
-        data: {
-            user: {
-                username: user.username,
-                email: user.email,
-                role: user.role,
-                token,
-            },
-        },
+        data,
     });
     return null;
 };
+
+export type USER_TOKEN_LOCAL_QUERY_RETURN = { user: { token: string } };
+
+export const USER_TOKEN_LOCAL_QUERY = gql`
+    {
+        user @client {
+            token
+        }
+    }
+`;

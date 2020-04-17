@@ -1,3 +1,4 @@
+import { ObjectTypeComposer } from 'graphql-compose';
 import { Document, Schema, model } from 'mongoose';
 
 import { ServerModuleOptions } from '@uls/core-nodejs';
@@ -7,7 +8,9 @@ export interface AuthorModel extends Author, Document {}
 
 export const MODEL_NAME = 'Author';
 
-export const createAuthorModel = (options: ServerModuleOptions) => {
+export const createAuthorModel = (
+    options: ServerModuleOptions<ObjectTypeComposer>
+) => {
     const AuthorSchema = new Schema<AuthorModel>({
         name: {
             type: String,

@@ -1,3 +1,4 @@
+import { Resolver, ObjectTypeComposer } from 'graphql-compose';
 import { composeWithMongoose } from 'graphql-compose-mongoose';
 
 import { ServerModuleOptions, ServerModuleModel } from '@uls/core-nodejs';
@@ -10,7 +11,9 @@ import {
 } from './chordProgressionModel';
 import { creator } from '../utils';
 
-export const createChordProgressionSchema = (options: ServerModuleOptions) => {
+export const createChordProgressionSchema = (
+    options: ServerModuleOptions<ObjectTypeComposer>
+) => {
     const ChordProgressionModel = createChordProgressionModel(options);
 
     const ChordProgressionTC = composeWithMongoose(ChordProgressionModel, {});
@@ -46,10 +49,14 @@ export const createChordProgressionSchema = (options: ServerModuleOptions) => {
         ),
     };
 
-    const model: Omit<ServerModuleModel, 'seed'> = {
+    const model: Omit<
+        ServerModuleModel<any, Resolver, ObjectTypeComposer>,
+        'seed'
+    > = {
         mutation,
         query,
         name: CHORDPROGRESSION_MODEL_NAME,
+        typeComposer: ChordProgressionTC,
     };
 
     return model;

@@ -1,3 +1,4 @@
+import { Resolver, ObjectTypeComposer } from 'graphql-compose';
 import { composeWithMongoose } from 'graphql-compose-mongoose';
 
 import { ServerModuleOptions, ServerModuleModel } from '@uls/core-nodejs';
@@ -9,7 +10,9 @@ import {
     MODEL_NAME as METRONOME_PRESET_MODEL_NAME,
 } from './metronomePresetModel';
 
-export const createMetronomePresetSchema = (options: ServerModuleOptions) => {
+export const createMetronomePresetSchema = (
+    options: ServerModuleOptions<ObjectTypeComposer>
+) => {
     const MetronomePresetModel = createMetronomePresetModel(options);
 
     const MetronomePresetTC = composeWithMongoose(MetronomePresetModel, {});
@@ -51,10 +54,14 @@ export const createMetronomePresetSchema = (options: ServerModuleOptions) => {
         ]),
     };
 
-    const model: Omit<ServerModuleModel, 'seed'> = {
+    const model: Omit<
+        ServerModuleModel<any, Resolver, ObjectTypeComposer>,
+        'seed'
+    > = {
         mutation,
         query,
         name: METRONOME_PRESET_MODEL_NAME,
+        typeComposer: MetronomePresetTC,
     };
 
     return model;

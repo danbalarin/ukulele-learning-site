@@ -3895,6 +3895,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/jsonwebtoken@npm:^8.3.9":
+  version: 8.3.9
+  resolution: "@types/jsonwebtoken@npm:8.3.9"
+  dependencies:
+    "@types/node": "*"
+  checksum: 518ad1e3a2bbca267c4b1858dfc5a097820238180c10def08c4de73c7c534f6ad816c613f5186256a15877d4a1fd9bc2a7b82cd8e226a124072b41f38b1b6c1e
+  languageName: node
+  linkType: hard
+
 "@types/keygrip@npm:*":
   version: 1.0.2
   resolution: "@types/keygrip@npm:1.0.2"
@@ -4537,6 +4546,7 @@ __metadata:
     "@types/dotenv-webpack": 1.7.0
     "@types/express": 4.17.2
     "@types/file-loader": 4.2.0
+    "@types/jsonwebtoken": ^8.3.9
     "@types/loadable__component": ^5.10.0
     "@types/loadable__server": ^5.12.1
     "@types/node-fetch": 2.5.5
@@ -4556,6 +4566,7 @@ __metadata:
     "@uls/auth-react": "workspace:modules/auth/react"
     "@uls/core-common": "workspace:modules/core/common"
     "@uls/look-react": "workspace:modules/look/react"
+    "@uls/ukulele-common": "workspace:modules/ukulele/common"
     "@uls/ukulele-react": "workspace:modules/ukulele/react"
     "@uls/user-common": "workspace:modules/user/common"
     "@uls/user-react": "workspace:modules/user/react"
@@ -4572,6 +4583,7 @@ __metadata:
     graphql: ^14.6.0
     graphql-tag: ^2.10.3
     isomorphic-style-loader: ^5.1.0
+    jsonwebtoken: ^8.5.1
     node-fetch: ^2.6.0
     node-sass: ^4.13.1
     nodemon: ^2.0.2

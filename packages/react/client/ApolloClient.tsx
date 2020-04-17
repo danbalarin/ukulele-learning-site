@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { persistCache } from 'apollo-cache-persist';
+import jwt from 'jsonwebtoken';
 
 import {
     ApolloClient,
@@ -9,26 +10,61 @@ import {
     ApolloLink,
     from,
 } from '@apollo/client';
-import { clientMutations } from '@uls/user-react';
+import {
+    clientMutations,
+    USER_TOKEN_LOCAL_QUERY,
+    USER_TOKEN_LOCAL_QUERY_RETURN,
+} from '@uls/user-react';
+
 import { LocalStorage } from '../utils/LocaStorage';
 
 const createLinks = () => {
     const authLink = new ApolloLink((operation, forward) => {
-        const token = localStorage.getItem('token');
-        token &&
-            operation.setContext(({ headers }: any) => ({
-                headers: {
-                    ...headers,
-                    authorization: token,
-                },
-            }));
-        return forward(operation).map(res => {
-            const token = res.data?.login?.token || res.data?.signup?.token; // TODO temp hack
-            if (token) {
-                localStorage.setItem('token', token as string);
+        const {
+            cache,
+        }: { cache: InMemoryCache } = operation.getContext() as any;
+        let data;
+        try {
+            data = cache.readQuery<USER_TOKEN_LOCAL_QUERY_RETURN>({
+                query: USER_TOKEN_LOCAL_QUERY,
+            });
+        } catch (err) {}
+
+        const token = data?.user.token;
+        if (token) {
+            const { exp } = jwt.decode(token) as { [key: string]: any };
+            if (Date.now() < exp * 1000) {
+                operation.setContext(({ headers }: any) => ({
+                    headers: {
+                        ...headers,
+                        Authorization: token,
+                    },
+                }));
+            } else {
+                // console.log(cache.evict('ROOT_QUERY', 'user'));
+                clientMutations.writeUser(null, { token: '' }, { cache });
+                // debugger;
+                // console.log(
+                //     cache.modify('ROOT_QUERY', (value, details) => {
+                //         if(details.fieldName === 'user') {
+                //             return {}
+                //         }
+                //         console.log(value, details);
+                //         return value;
+                //     })
+                // );
+                // cache.reset();
+                // client.resetStore();
             }
-            return res;
-        });
+        }
+        return forward(operation);
+        // .map(res => {
+        //     const token = res.data?.login?.token || res.data?.signup?.token; // TODO temp hack
+        //     if (token) {
+        //         clientMutations.writeUser(null, { token }, { cache });
+        //     }
+        //     return res;
+        // });
     });
 
     const httpLink = createHttpLink({

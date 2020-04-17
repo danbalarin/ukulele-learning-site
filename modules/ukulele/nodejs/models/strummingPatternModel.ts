@@ -1,3 +1,4 @@
+import { ObjectTypeComposer } from 'graphql-compose';
 import { Document, Schema, model } from 'mongoose';
 
 import { ServerModuleOptions } from '@uls/core-nodejs';
@@ -9,7 +10,9 @@ export interface StrummingPatternModel extends StrummingPattern, Document {}
 
 export const MODEL_NAME = 'StrummingPattern';
 
-export const createStrummingPatternModel = (options: ServerModuleOptions) => {
+export const createStrummingPatternModel = (
+    options: ServerModuleOptions<ObjectTypeComposer>
+) => {
     const StrummingPatternSchema = new Schema<StrummingPatternModel>({
         pattern: {
             type: [Number],

@@ -1,3 +1,4 @@
+import { ObjectTypeComposer } from 'graphql-compose';
 import { Document, Schema, model } from 'mongoose';
 
 import { ServerModuleOptions } from '@uls/core-nodejs';
@@ -5,12 +6,17 @@ import { Song } from '@uls/ukulele-common';
 
 import { MODEL_NAME as CHORD_MODEL_NAME } from './chordModel';
 import { MODEL_NAME as STRUMMING_PATTERN_MODEL_NAME } from './strummingPatternModel';
+import { MODEL_NAME as AUTHOR_MODEL_NAME } from './authorModel';
 
-export interface SongModel extends Song<any>, Document {}
+export interface SongModel extends Song<any>, Document {
+    creatorId: Schema.Types.ObjectId;
+}
 
 export const MODEL_NAME = 'Song';
 
-export const createSongModel = (options: ServerModuleOptions) => {
+export const createSongModel = (
+    options: ServerModuleOptions<ObjectTypeComposer>
+) => {
     const SongSchema = new Schema<SongModel>({
         title: {
             type: String,
@@ -21,17 +27,21 @@ export const createSongModel = (options: ServerModuleOptions) => {
             type: String,
             required: true,
         },
-        chords: {
+        chordsIds: {
             type: [Schema.Types.ObjectId],
             ref: CHORD_MODEL_NAME,
         },
-        strummingPattern: {
+        strummingPatternId: {
             type: Schema.Types.ObjectId,
             ref: STRUMMING_PATTERN_MODEL_NAME,
         },
-        creator: {
+        creatorId: {
             type: Schema.Types.ObjectId,
-            ref: options.creatorModel,
+            ref: options.creatorModel?.getTypeName(),
+        },
+        authorId: {
+            type: Schema.Types.ObjectId,
+            ref: AUTHOR_MODEL_NAME,
         },
     });
 

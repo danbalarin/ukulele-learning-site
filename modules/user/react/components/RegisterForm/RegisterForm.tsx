@@ -67,7 +67,7 @@ function RegisterForm({
         onRegister(data.signup.token);
     }
 
-    const invalidFields = error?.graphQLErrors[0]?.extensions
+    const invalidFields = error?.graphQLErrors?.[0]?.extensions
         ?.invalidArgs as string[];
 
     return (

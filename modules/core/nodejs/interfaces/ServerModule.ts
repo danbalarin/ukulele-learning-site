@@ -6,24 +6,29 @@ export interface ServerModuleErrors {
     inputError: any;
 }
 
-export interface ServerModuleOptions {
+export interface ServerModuleOptions<STypeComposer = any> {
     errors: ServerModuleErrors;
     tokenCreator: TokenCreator;
     hashFunction: HashFunction;
     seedFaker: SeedFaker;
-    creatorModel: string;
+    creatorModel?: STypeComposer;
 }
 
 export interface SeedContext {
     [key: string]: any;
 }
 
-export interface ServerModuleModel<T = any, M = any, Q = any> {
+export interface ServerModuleModel<
+    TSeed = any,
+    RResolver = any,
+    STypeComposer = any
+> {
     name: string;
-    mutation: { [key: string]: M };
-    query: { [key: string]: Q };
-    seed: T;
-    searchQuery?: any;
+    mutation: { [key: string]: RResolver };
+    query: { [key: string]: RResolver };
+    seed: TSeed;
+    searchQuery?: RResolver;
+    typeComposer: STypeComposer;
 }
 
 export interface ServerModuleResponse {

@@ -9,7 +9,7 @@ storiesOf('Package/Error', module)
     .add('With icon', () => {
         const title = text('Title', '404');
         const subtitle = text('Subtitle', 'Not found');
-        const icon = text('Icon', 'cross');
+        const icon = text('Icon', 'times');
         return <Error title={title} subtitle={subtitle} icon={icon} />;
     })
     .add('With image', () => {

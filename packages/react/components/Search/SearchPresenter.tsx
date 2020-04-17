@@ -18,11 +18,10 @@ function SearchPresenter({ loadResults, loading }: Props): ReactElement {
     const valueRedirect = (value: string) => history.push(value);
 
     const handleChange = (value: SearchOption) => {
-        console.log(value);
         if (value.isSearch) {
             searchRedirect(value.value);
         } else {
-            valueRedirect(`${value.pathPrefix}${value.value}`);
+            valueRedirect(value.value);
         }
     };
     return (

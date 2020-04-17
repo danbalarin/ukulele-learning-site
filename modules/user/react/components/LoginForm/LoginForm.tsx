@@ -78,7 +78,7 @@ function LoginForm({ onLogin, isLoading }: Props): ReactElement {
                 </FormControl>
                 {!!error ? (
                     <FormControl isInvalid={true}>
-                        {error?.graphQLErrors.map(
+                        {error?.graphQLErrors?.map(
                             ({ message }: any, i: number) => (
                                 <FormErrorMessage key={i}>
                                     {message}

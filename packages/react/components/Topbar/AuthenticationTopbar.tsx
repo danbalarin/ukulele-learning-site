@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement, useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
 
@@ -8,16 +8,33 @@ import {
     useUserLocalQuery,
     useUserLocalMutation,
     AuthenticationModal,
+    USER_LOCAL_QUERY,
+    USER_LOCAL_QUERY_RETURN,
+    USER_TOKEN_LOCAL_QUERY_RETURN,
 } from '@uls/user-react';
 
 interface Props {}
 
 function AuthenticationTopbar({}: Props): ReactElement {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [userData, setUserData] = useState<USER_LOCAL_QUERY_RETURN>();
     const client = useApolloClient();
-    const userQuery = useUserLocalQuery();
     const modalRef = useRef<any>();
     const [writeUserLocal, { data }] = useUserLocalMutation();
+
+    useEffect(() => {
+        const sub = client
+            .watchQuery<USER_LOCAL_QUERY_RETURN, null>({
+                query: USER_LOCAL_QUERY,
+            })
+            .subscribe(data => {
+                console.log(data);
+                setUserData(data.data);
+            });
+        return () => {
+            // sub.unsubscribe();
+        };
+    }, []);
 
     const onLogin = (token: string) => {
         client.resetStore();
@@ -31,7 +48,7 @@ function AuthenticationTopbar({}: Props): ReactElement {
         onClose();
     };
 
-    const username = userQuery?.data?.user.username;
+    const username = userData?.user.username;
 
     return (
         <>

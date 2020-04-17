@@ -1,3 +1,4 @@
+import { ObjectTypeComposer } from 'graphql-compose';
 import { Document, Schema, model } from 'mongoose';
 
 import { ServerModuleOptions } from '@uls/core-nodejs';
@@ -12,7 +13,9 @@ export interface ChordProgressionModel extends ChordProgression<any>, Document {
 
 export const MODEL_NAME = 'ChordProgression';
 
-export const createChordProgressionModel = (options: ServerModuleOptions) => {
+export const createChordProgressionModel = (
+    options: ServerModuleOptions<ObjectTypeComposer>
+) => {
     const ChordProgressionSchema = new Schema<ChordProgressionModel>({
         name: {
             type: String,
@@ -25,7 +28,7 @@ export const createChordProgressionModel = (options: ServerModuleOptions) => {
         },
         creator: {
             type: Schema.Types.ObjectId,
-            ref: options.creatorModel,
+            ref: options.creatorModel?.getTypeName(),
             required: true,
         },
         strummingPattern: {

@@ -1,60 +1,57 @@
-import { schemaComposer, Resolver } from 'graphql-compose';
-
-import { SearchGroup, SearchOption } from '@uls/core-nodejs';
+import { schemaComposer, Resolver, ObjectTypeComposer } from 'graphql-compose';
+import gql from 'graphql';
 
 import { modules } from '../modules';
 
-interface SearchQuery {
-    resolver: Resolver;
-}
-
 const createSchema = () => {
-    const searchQueries: SearchQuery[] = [];
+    const searchResolvers: Resolver[] = [];
+    const searchTypes: ObjectTypeComposer[] = [];
     for (const module of modules) {
         for (const model of module.models) {
             schemaComposer.Mutation.addFields(model.mutation);
             schemaComposer.Query.addFields(model.query);
-            model.searchQuery &&
-                searchQueries.push({
-                    resolver: model.searchQuery,
-                });
+            if (!!model.searchQuery) {
+                searchResolvers.push(model.searchQuery);
+                searchTypes.push(model.typeComposer);
+            }
         }
     }
 
-    const SearchOptionTC = schemaComposer.createObjectTC(SearchOption);
+    const SearchResultTC = schemaComposer.createUnionTC({
+        name: 'SearchResult',
+        types: searchTypes,
+    });
 
-    const SearchGroupTC = schemaComposer.createObjectTC(SearchGroup);
-
-    SearchGroupTC.addResolver({
+    const searchResolver = schemaComposer.createResolver({
         kind: 'query',
         name: 'search',
+        type: [SearchResultTC],
         args: {
             query: 'String!',
         },
-        type: [SearchGroupTC],
         resolve: async ({ source, args, context, info }: any) => {
-            const result = await Promise.all(
-                searchQueries.map(async ({ resolver }) => {
-                    let group = undefined;
+            const searchResults = await Promise.all(
+                searchResolvers.map(async resolver => {
                     try {
-                        group = await resolver.resolve({
+                        const results = await resolver.resolve({
                             source,
                             args,
                             context,
                             info,
                         });
+                        results;
+                        return results;
                     } catch (err) {
-                    } finally {
-                        return group;
+                        return [];
                     }
                 })
             );
-            return result.filter(val => !!val && !!val.options);
+            return searchResults.flat();
         },
     });
 
     schemaComposer.Query.addFields({
-        search: SearchGroupTC.getResolver('search'),
+        search: searchResolver,
     });
 
     return schemaComposer.buildSchema();

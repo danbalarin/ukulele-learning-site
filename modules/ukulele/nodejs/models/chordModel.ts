@@ -1,3 +1,4 @@
+import { ObjectTypeComposer } from 'graphql-compose';
 import { Document, Schema, model } from 'mongoose';
 
 import { ServerModuleOptions } from '@uls/core-nodejs';
@@ -7,7 +8,9 @@ export interface ChordModel extends Chord, Document {}
 
 export const MODEL_NAME = 'Chord';
 
-export const createChordModel = (options: ServerModuleOptions) => {
+export const createChordModel = (
+    options: ServerModuleOptions<ObjectTypeComposer>
+) => {
     const ChordSchema = new Schema<ChordModel>({
         name: {
             type: String,

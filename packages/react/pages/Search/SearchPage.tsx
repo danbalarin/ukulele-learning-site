@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { useQuery } from '@apollo/client';
 import styled from '@emotion/styled';
 
-import { Heading, Theme } from '@uls/look-react';
+import { Heading, Theme, SearchGroup } from '@uls/look-react';
 import {
     SEARCH_QUERY,
     SEARCH_QUERY_RESULT,
@@ -11,6 +11,14 @@ import {
 } from '../../graphql/search';
 import { Error } from '../../components/Error';
 import { Loading } from '../../components/Loading';
+import SearchResultGroup from './SearchResultGroup';
+import { Song, Author, Chord } from '../../../../modules/ukulele/common';
+import {
+    transformSearchResult,
+    WithID,
+    CommonSearchOption,
+} from '../../components/Search/searchUtils';
+import { User } from '../../../../modules/user/common';
 
 interface Props extends RouteComponentProps {}
 
@@ -35,14 +43,50 @@ function SearchPage({ ...props }: Props): ReactElement {
         SEARCH_QUERY_RESULT,
         SEARCH_QUERY_VARIABLES
     >(SEARCH_QUERY, { variables: { query: search } });
+
+    let transformed: SearchGroup[] = [];
+
+    if (data) {
+        transformed = transformSearchResult(data, searchResultMapping);
+    }
+
     return (
         <Wrapper>
-            <Heading size="xl">{`Searched term: ${search}`}</Heading>
-            <div>
-                {loading ? <Loading /> : data?.search.map(group => group.label)}
-            </div>
+            <Heading size="md">{`Searched term: ${search}`}</Heading>
+            {loading ? (
+                <Loading />
+            ) : (
+                transformed?.map(group => (
+                    <SearchResultGroup
+                        title={group.label}
+                        results={group.options}
+                    />
+                ))
+            )}
         </Wrapper>
     );
 }
+
+type SearchPageResult = CommonSearchOption & { description?: string };
+
+const searchResultMapping = {
+    Song: (song: Song<any> & WithID): SearchPageResult => ({
+        label: song.title,
+        value: song._id,
+        description: `by ${song.author?.name}`,
+    }),
+    User: (user: User & WithID): SearchPageResult => ({
+        label: user.username,
+        value: user._id,
+    }),
+    Author: (author: Author & WithID): SearchPageResult => ({
+        label: author.name,
+        value: author._id,
+    }),
+    Chord: (chord: Chord & WithID): SearchPageResult => ({
+        label: chord.name,
+        value: chord._id,
+    }),
+};
 
 export default SearchPage;

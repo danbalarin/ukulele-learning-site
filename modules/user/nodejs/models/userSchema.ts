@@ -1,10 +1,10 @@
+import { Resolver, ObjectTypeComposer } from 'graphql-compose';
 import { composeWithMongoose } from 'graphql-compose-mongoose';
 
 import {
     ServerModuleOptions,
     ServerModuleModel,
     validateUnique,
-    SearchGroup,
 } from '@uls/core-nodejs';
 import { UserInteractor } from '@uls/user-common';
 
@@ -27,6 +27,13 @@ export const createUserSchema = (options: ServerModuleOptions) => {
     const customizationOptions = {};
 
     const UserTC = composeWithMongoose(UserModelCreated, customizationOptions);
+
+    // !important here is side effect, adding TypeComposer to options
+    options.creatorModel = UserTC;
+
+    UserTC.setIsTypeOf((obj, context, info) => {
+        return obj instanceof UserModelCreated;
+    });
 
     UserTC.addResolver({
         name: 'login',
@@ -85,17 +92,13 @@ export const createUserSchema = (options: ServerModuleOptions) => {
     UserTC.addResolver({
         name: 'search',
         args: { query: 'String!' },
-        type: [SearchGroup],
+        type: [UserTC],
         resolve: async (req: any) => {
             const { query } = req.args;
             const found = await UserModelCreated.find({
                 username: { $regex: query, $options: 'i' },
             });
-            const result = found.map(user => ({
-                label: user.username,
-                value: user.username,
-            }));
-            return { label: USER_MODEL_NAME, options: result };
+            return found;
         },
     });
 
@@ -127,11 +130,15 @@ export const createUserSchema = (options: ServerModuleOptions) => {
         authenticated(Role.ADMIN),
     ]);
 
-    const model: Omit<ServerModuleModel, 'seed'> = {
+    const model: Omit<
+        ServerModuleModel<any, Resolver, ObjectTypeComposer>,
+        'seed'
+    > = {
         mutation,
         query,
         name: USER_MODEL_NAME,
-        searchQuery,
+        typeComposer: UserTC,
+        searchQuery: searchQuery,
     };
 
     return model;

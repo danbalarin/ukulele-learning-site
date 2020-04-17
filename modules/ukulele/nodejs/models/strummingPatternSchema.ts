@@ -1,3 +1,4 @@
+import { Resolver, ObjectTypeComposer } from 'graphql-compose';
 import { composeWithMongoose } from 'graphql-compose-mongoose';
 
 import { ServerModuleOptions, ServerModuleModel } from '@uls/core-nodejs';
@@ -9,7 +10,9 @@ import {
     MODEL_NAME as STRUMMING_PATTERN_MODEL_NAME,
 } from './strummingPatternModel';
 
-export const createStrummingPatternSchema = (options: ServerModuleOptions) => {
+export const createStrummingPatternSchema = (
+    options: ServerModuleOptions<ObjectTypeComposer>
+) => {
     const StrummingPatternModel = createStrummingPatternModel(options);
 
     const StrummingPatternTC = composeWithMongoose(StrummingPatternModel, {});
@@ -37,10 +40,14 @@ export const createStrummingPatternSchema = (options: ServerModuleOptions) => {
         ),
     };
 
-    const model: Omit<ServerModuleModel, 'seed'> = {
+    const model: Omit<
+        ServerModuleModel<any, Resolver, ObjectTypeComposer>,
+        'seed'
+    > = {
         mutation,
         query,
         name: STRUMMING_PATTERN_MODEL_NAME,
+        typeComposer: StrummingPatternTC,
     };
 
     return model;
