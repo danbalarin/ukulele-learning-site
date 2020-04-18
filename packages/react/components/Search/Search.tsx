@@ -70,8 +70,8 @@ const searchResultMapping = {
         label: author.name,
         value: author._id,
     }),
-    Chord: (chord: Chord & WithID): SearchOption => ({
+    Chord: (chord: Chord): SearchOption => ({
         label: chord.name,
-        value: chord._id,
+        value: chord.name,
     }),
 };

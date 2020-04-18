@@ -7,7 +7,8 @@
         "@emotion/core": "^10.0.28",
         "@emotion/styled": "^10.0.27",
         "@uls/look-react": "workspace:modules/look/react",
-        "@uls/ukulele-common": "workspace:modules/ukulele/common"
+        "@uls/ukulele-common": "workspace:modules/ukulele/common",
+        "graphql-tag": "^2.10.3"
     },
     "peerDependencies": {
         "@apollo/client": "^3.0.0-beta.38",

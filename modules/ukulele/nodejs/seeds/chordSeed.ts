@@ -99,7 +99,7 @@ export const createChordSeed = (
     const chordsG: Chord[] = [
         {
             name: 'G',
-            strings: [G, D, Gb, B],
+            strings: [G, D, G, H],
         },
     ];
 

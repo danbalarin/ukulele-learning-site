@@ -83,9 +83,9 @@ const searchResultMapping = {
         label: author.name,
         value: author._id,
     }),
-    Chord: (chord: Chord & WithID): SearchPageResult => ({
+    Chord: (chord: Chord): SearchPageResult => ({
         label: chord.name,
-        value: chord._id,
+        value: chord.name,
     }),
 };
 
