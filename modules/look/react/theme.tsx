@@ -31,6 +31,20 @@ interface InternalTheme {
     contentMinWidth?: string;
 }
 
+const fontSizes = {
+    ...theme.fontSizes,
+    xs: '12px',
+    sm: '14px',
+    md: '16px',
+    lg: '18px',
+    xl: '20px',
+    '2xl': '24px',
+    '3xl': '28px',
+    '4xl': '36px',
+    '5xl': '48px',
+    '6xl': '64px',
+};
+
 const colors = {
     ...theme.colors,
     blue: {
@@ -123,7 +137,7 @@ const modes: ModesTheme = {
         containerBackground: '#57078C',
         topbarBackground: '#0A2740',
         color: '#FF13FE',
-        primary: colors.purple[600],
+        primary: '#00bcb8',
     },
 };
 
@@ -131,6 +145,7 @@ const customTheme: Omit<DefaultTheme, 'breakpoints'> &
     Breakpoints &
     InternalTheme = {
     ...theme,
+    fontSizes,
     colors,
     breakpoints,
     modal,

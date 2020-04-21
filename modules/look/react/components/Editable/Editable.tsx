@@ -7,7 +7,7 @@ import { EditableInput } from './EditableInput';
 interface Props
     extends Pick<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
     value?: string;
-    onSubmit?: () => void;
+    onSubmit?: (newValue: string | any) => void;
 }
 
 function Editable({ value, onSubmit, type }: Props): ReactElement {

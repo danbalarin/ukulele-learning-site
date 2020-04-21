@@ -95,6 +95,7 @@ const createApolloClientApp = () => {
 
     return function ApolloClientApp({ children }: Props): ReactElement {
         const client = new ApolloClient({
+            connectToDevTools: true,
             cache,
             link,
             resolvers: {

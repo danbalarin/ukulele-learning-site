@@ -4,6 +4,9 @@ import { useQuery } from '@apollo/client';
 import styled from '@emotion/styled';
 
 import { Heading, Theme, SearchGroup } from '@uls/look-react';
+import { Song, Author, Chord } from '@uls/ukulele-common';
+import { User } from '@uls/user-common';
+
 import {
     SEARCH_QUERY,
     SEARCH_QUERY_RESULT,
@@ -12,13 +15,11 @@ import {
 import { Error } from '../../components/Error';
 import { Loading } from '../../components/Loading';
 import SearchResultGroup from './SearchResultGroup';
-import { Song, Author, Chord } from '../../../../modules/ukulele/common';
 import {
     transformSearchResult,
     WithID,
     CommonSearchOption,
 } from '../../components/Search/searchUtils';
-import { User } from '../../../../modules/user/common';
 
 interface Props extends RouteComponentProps {}
 
@@ -58,6 +59,7 @@ function SearchPage({ ...props }: Props): ReactElement {
             ) : (
                 transformed?.map(group => (
                     <SearchResultGroup
+                        key={group.label}
                         title={group.label}
                         results={group.options}
                     />

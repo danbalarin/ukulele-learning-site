@@ -4,7 +4,7 @@
 __metadata:
   version: 4
 
-"@apollo/client@npm:^3.0.0-beta.38":
+"@apollo/client@npm:^3.0.0-beta.44":
   version: 3.0.0-james.33.0
   resolution: "@apollo/client@npm:3.0.0-james.33.0"
   dependencies:
@@ -4429,7 +4429,7 @@ __metadata:
     "@types/yup": 0.26.32
     "@uls/auth-common": "workspace:modules/auth/common"
   peerDependencies:
-    "@apollo/client": ^3.0.0-beta.38
+    "@apollo/client": ^3.0.0-beta.44
     graphql: ^14.6.0
     react: ^16.12.0
     react-dom: ^16.12.0
@@ -4529,7 +4529,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@uls/react-package@workspace:packages/react"
   dependencies:
-    "@apollo/client": ^3.0.0-beta.38
+    "@apollo/client": ^3.0.0-beta.44
     "@babel/core": ^7.9.0
     "@babel/preset-env": ^7.9.5
     "@babel/preset-react": ^7.9.4
@@ -4639,7 +4639,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@uls/ukulele-react@workspace:modules/ukulele/react"
   dependencies:
-    "@apollo/client": ^3.0.0-beta.38
+    "@apollo/client": ^3.0.0-beta.44
     "@emotion/core": ^10.0.28
     "@emotion/styled": ^10.0.27
     "@storybook/addon-actions": 6.0.0-alpha.31
@@ -4649,9 +4649,8 @@ __metadata:
     "@uls/look-react": "workspace:modules/look/react"
     "@uls/ukulele-common": "workspace:modules/ukulele/common"
     graphql-tag: ^2.10.3
-    react-konva: ^16.13.0-0
   peerDependencies:
-    "@apollo/client": ^3.0.0-beta.38
+    "@apollo/client": ^3.0.0-beta.44
     graphql: ^14.6.0
     react: ^16.12.0
     react-dom: ^16.12.0
@@ -4690,7 +4689,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@uls/user-react@workspace:modules/user/react"
   dependencies:
-    "@apollo/client": ^3.0.0-beta.38
+    "@apollo/client": ^3.0.0-beta.44
     "@emotion/core": ^10.0.28
     "@emotion/styled": ^10.0.27
     "@storybook/addon-actions": 6.0.0-alpha.31
@@ -4709,7 +4708,7 @@ __metadata:
     react-spring: ^8.0.27
     yup: ^0.28.1
   peerDependencies:
-    "@apollo/client": ^3.0.0-beta.38
+    "@apollo/client": ^3.0.0-beta.44
     graphql: ^14.6.0
     react: ^16.12.0
     react-dom: ^16.12.0
@@ -17003,20 +17002,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-konva@npm:^16.13.0-0":
-  version: 16.13.0-0
-  resolution: "react-konva@npm:16.13.0-0"
-  dependencies:
-    react-reconciler: ^0.25.1
-    scheduler: ^0.19.1
-  peerDependencies:
-    konva: ^3.2.5 || ^4.0.3
-    react: 16.13.x
-    react-dom: 16.13.x
-  checksum: f5fde33b1507cbd1658ee68819451d627eec0dcbbfda6359a2f292281453cdcbd6ac184596eae1bcf1a1a1d9c5836125b02b4268400e498266772e23331d7f6e
-  languageName: node
-  linkType: hard
-
 "react-lifecycles-compat@npm:^3.0.4":
   version: 3.0.4
   resolution: "react-lifecycles-compat@npm:3.0.4"
@@ -17064,20 +17049,6 @@ fsevents@^1.2.7:
   peerDependencies:
     react: 0.14.x || ^15.0.0 || ^16.0.0
   checksum: 2/09ef58054bd9d449283939af861cbb205aee771289884fa62e30a6927163fab53e865593c0e014364d807a8e219d9642be6d34ae58b1e4f2f0530ffc9b289e5a
-  languageName: node
-  linkType: hard
-
-"react-reconciler@npm:^0.25.1":
-  version: 0.25.1
-  resolution: "react-reconciler@npm:0.25.1"
-  dependencies:
-    loose-envify: ^1.1.0
-    object-assign: ^4.1.1
-    prop-types: ^15.6.2
-    scheduler: ^0.19.1
-  peerDependencies:
-    react: ^16.13.1
-  checksum: 2952a7d59eee5c9f1ff323ea854640e24934a4d7818c19de2663cc87b1fc9f795b8e49ae8af771c8444bd24a3dd7e9c0dfb8d490741f0b8bdc8a258da59c1838
   languageName: node
   linkType: hard
 
@@ -18141,16 +18112,6 @@ resolve@1.1.7:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
   checksum: 2/2d74649be33a1e825e0d4b0a05d1bd0675cb0980768fc9b0d5fa6e258450d6dff7a520ccb02595124420738a8f8669afedf4351773b3cc8c5b84d52fa781155a
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.19.1":
-  version: 0.19.1
-  resolution: "scheduler@npm:0.19.1"
-  dependencies:
-    loose-envify: ^1.1.0
-    object-assign: ^4.1.1
-  checksum: 799b2c0e5935b098531cf8f5f524b9ed6c70d55648e1234b8f8ed7fad7880e44eda65983229235da4719fffad049157b6f9e6fcd132dfa969892c4a9cb265a92
   languageName: node
   linkType: hard
 
@@ -20080,7 +20041,7 @@ resolve@1.1.7:
   version: 0.0.0-use.local
   resolution: "ukulele-learning-site@workspace:."
   dependencies:
-    "@apollo/client": ^3.0.0-beta.38
+    "@apollo/client": ^3.0.0-beta.44
     "@babel/core": ^7.8.4
     "@babel/preset-react": ^7.8.3
     "@emotion/core": ^10.0.28

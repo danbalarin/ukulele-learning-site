@@ -1,9 +1,6 @@
-import React, { ReactElement, useState } from 'react';
-import { ActionMeta } from 'react-select';
-import AsyncSelect from 'react-select/async';
+import React, { ReactElement } from 'react';
 
-import { useColorMode } from '../../hooks/useColorMode';
-import Theme from '../../theme';
+import { AsyncSelect, SelectActionMeta } from '../AsyncSelect';
 
 export interface SearchOption {
     label: string;
@@ -26,7 +23,7 @@ interface Props {
     /**
      * Callback function called after change
      */
-    onChange: (value: SearchOption, action: ActionMeta) => void;
+    onChange: (value: SearchOption, action: SelectActionMeta) => void;
 
     /**
      * Placeholder in input
@@ -39,69 +36,21 @@ interface Props {
     loading?: boolean;
 }
 
-const bg = {
-    light: Theme.colors.gray['100'],
-    dark: Theme.colors.whiteAlpha['50'],
-};
-
 function SearchInput({
     loadResults,
     onChange,
     placeholder,
     loading,
 }: Props): ReactElement {
-    const { colorMode } = useColorMode();
-    const [value, setValue] = useState<string>('');
-
-    const createContainerStyles = (provided: any, state: any) => {
-        const opacity = state.isDisabled ? 0.5 : 1;
-        const transition = 'opacity 300ms';
-
-        return {
-            ...provided,
-            opacity,
-            transition,
-            width: '100%',
-        };
-    };
-
-    const createControlStyles = (provided: any, state: any) => {
-        return {
-            ...provided,
-            backgroundColor: bg[colorMode],
-            borderColor: 'transparent',
-        };
-    };
-
-    const createInputStyles = (provided: any, state: any) => {
-        return {
-            ...provided,
-            color: Theme?.modes?.[colorMode]?.color,
-        };
-    };
-
     return (
-        <AsyncSelect
-            instanceId={onChange.toString()}
-            components={{ DropdownIndicator: null, IndicatorSeparator: null }}
-            onInputChange={value => setValue(value)}
-            onChange={(value, action) => {
-                value && onChange(value as SearchOption, action);
-                setValue('');
-            }}
-            isMulti={false}
-            inputValue={value}
-            isClearable={true}
+        <AsyncSelect<any>
+            onChange={(value, action) =>
+                value && onChange(value as SearchOption, action)
+            }
+            clearOnChange={true}
             loadOptions={loadResults}
             placeholder={placeholder || 'Search...'}
-            // defaultValue={{ label: '', value: '' }}
-            isLoading={loading}
-            styles={{
-                container: createContainerStyles,
-                control: createControlStyles,
-                input: createInputStyles,
-                singleValue: createInputStyles,
-            }}
+            loading={loading}
             noOptionsMessage={text => 'Start typing'}
         />
     );

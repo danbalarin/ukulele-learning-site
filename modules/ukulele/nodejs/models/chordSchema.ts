@@ -38,6 +38,7 @@ export const createChordSchema = (
         chordMany: ChordTC.getResolver('findMany'),
         chordCount: ChordTC.getResolver('count'),
         chordPagination: ChordTC.getResolver('pagination'),
+        chordSearch: ChordTC.getResolver('search'),
     };
 
     const authenticated = authMiddleware(options.errors.authorizationError);

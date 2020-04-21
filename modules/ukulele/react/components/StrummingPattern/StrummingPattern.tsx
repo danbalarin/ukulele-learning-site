@@ -7,10 +7,7 @@ import React, {
 } from 'react';
 import styled from '@emotion/styled';
 
-import {
-    useColorMode,
-    Theme,
-} from '@uls/look-react';
+import { useColorMode, Theme } from '@uls/look-react';
 import { StrummingPattern, Strum } from '@uls/ukulele-common';
 
 import { Strum as StrumComponent } from '../Strum';
@@ -77,11 +74,6 @@ function StrummingPatternComponent(
         tick,
     }));
 
-    const activeColor =
-        colorMode === 'dark'
-            ? Theme.colors.purple['800']
-            : Theme.colors.orange['500'];
-
     return (
         <Wrapper>
             <StrumWrapper>
@@ -89,7 +81,11 @@ function StrummingPatternComponent(
                     <StrumComponent
                         strum={strum}
                         key={i}
-                        color={position === i ? activeColor : ''}
+                        color={
+                            position === i
+                                ? Theme.modes?.[colorMode]?.primary
+                                : ''
+                        }
                     />
                 ))}
             </StrumWrapper>

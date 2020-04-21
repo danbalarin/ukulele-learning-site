@@ -60,7 +60,10 @@ export const USER_LOCAL_QUERY = gql`
 export type USER_LOCAL_QUERY_RETURN = { user: UserLocalData };
 
 export const useUserLocalQuery = () => {
-    return useQuery<USER_LOCAL_QUERY_RETURN>(USER_LOCAL_QUERY, { ssr: false });
+    return useQuery<USER_LOCAL_QUERY_RETURN>(USER_LOCAL_QUERY, {
+        ssr: false,
+        fetchPolicy: 'cache-only',
+    });
 };
 
 export type USER_LOCAL_MUTATION_VARIABLES = { token: string };
@@ -77,7 +80,7 @@ export const useUserLocalMutation = () => {
     );
 };
 
-export const writeUserMutation: Resolver = async (
+export const writeUserResolver: Resolver = async (
     _root: any,
     { token }: any,
     { cache }: any
@@ -99,6 +102,28 @@ export const writeUserMutation: Resolver = async (
     return null;
 };
 
+export const USER_LOGOUT_LOCAL_MUTATION = gql`
+    mutation logoutUser {
+        logoutUser @client
+    }
+`;
+
+export const useUserLogoutLocalMutation = () => {
+    return useMutation<null, null>(USER_LOGOUT_LOCAL_MUTATION);
+};
+
+export const logoutUserResolver: Resolver = async (
+    _root: any,
+    data: any,
+    { cache }: any
+) => {
+    await cache.writeQuery({
+        query: USER_LOCAL_QUERY,
+        data: { user: {} },
+    });
+    return null;
+};
+
 export type USER_TOKEN_LOCAL_QUERY_RETURN = { user: { token: string } };
 
 export const USER_TOKEN_LOCAL_QUERY = gql`
@@ -108,3 +133,8 @@ export const USER_TOKEN_LOCAL_QUERY = gql`
         }
     }
 `;
+
+export const clientMutations = {
+    writeUser: writeUserResolver,
+    logoutUser: logoutUserResolver,
+};

@@ -2,6 +2,7 @@ import React, { ReactElement, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 
 import { Chord, Tone } from '@uls/ukulele-common';
+import { useColorMode, Theme } from '@uls/look-react';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -24,6 +25,8 @@ function ChordComponent({
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const parentDivRef = useRef<HTMLDivElement>(null);
+    const { colorMode } = useColorMode();
+
     let ctx: CanvasRenderingContext2D | null;
     useEffect(() => {
         if (canvasRef.current) {
@@ -33,21 +36,38 @@ function ChordComponent({
     }, []);
 
     const imperfection = 4;
-    const fretHeight = 30;
+    const fretHeight = 24;
     const lineBoxSize = 20;
     const fontSize = 20;
+    const headerHeight = 24;
     const defaultWidth = lineBoxSize * 4;
-    const defaultHeight = fretHeight * 5 + 2 * imperfection;
+    const defaultHeight = headerHeight + fretHeight * 4 + 2 * imperfection;
+
+    const themeColors = Theme.modes?.[colorMode];
+    const fretColor = themeColors?.background || 'gray';
+    const strumColor = themeColors?.color || 'black';
+    const strumToneColor = themeColors?.color || 'black';
+    const fingerColor = themeColors?.primary || 'red';
 
     const drawStrum = (nth: number, tone: string, holdFret: number) => {
-        if (ctx) {
-            ctx.font = `${fontSize}px Gotham Rounded`;
-            ctx.textAlign = 'center';
-            ctx.fillStyle = 'black';
+        if (!ctx) {
+            return;
         }
+
+        ctx.font = `${fontSize}px Gotham Rounded`;
+        ctx.textAlign = 'center';
+
         const x = lineBoxSize * nth + lineBoxSize / 2;
-        ctx?.fillText(tone, x, fontSize, lineBoxSize);
-        ctx?.fillRect(x, 24, 2, defaultHeight - 24);
+        // Draw strum tone
+        ctx.fillStyle = strumToneColor;
+        ctx.fillText(tone, x, fontSize, lineBoxSize);
+
+        // Draw strum
+        ctx.fillStyle = strumColor;
+        ctx.fillRect(x, headerHeight, 2, defaultHeight - 24);
+
+        // Draw finger position circle
+        ctx.fillStyle = fingerColor;
         if (holdFret === 0) {
             return;
         }
@@ -55,19 +75,21 @@ function ChordComponent({
             holdFret += 12;
         }
         if (holdFret > 0 && holdFret < 5) {
-            const y = fretHeight / 2 + holdFret * fretHeight;
-            ctx?.beginPath();
-            ctx?.arc(x + 1, y, 6, 0, Math.PI * 2);
-            ctx?.fill();
+            const y =
+                headerHeight + (holdFret - 0.5) * fretHeight + imperfection;
+            ctx.beginPath();
+            ctx.arc(x + 1, y, 6, 0, Math.PI * 2);
+            ctx.fill();
         }
     };
 
     const drawFret = (nth: number) => {
-        if (ctx) {
-            ctx.fillStyle = 'gray';
+        if (!ctx) {
+            return;
         }
+        ctx.fillStyle = fretColor;
         const y = fretHeight * nth + 24 + imperfection;
-        ctx?.fillRect(
+        ctx.fillRect(
             lineBoxSize / 2 - imperfection,
             y,
             lineBoxSize * 3 + imperfection * 2,

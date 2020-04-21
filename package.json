@@ -18,7 +18,7 @@
         "coverage:watch": "jest --coverage --watch"
     },
     "dependencies": {
-        "@apollo/client": "^3.0.0-beta.38",
+        "@apollo/client": "^3.0.0-beta.44",
         "@emotion/core": "^10.0.28",
         "@emotion/styled": "^10.0.27",
         "@yarnpkg/pnpify": "^2.0.0-rc.18",
