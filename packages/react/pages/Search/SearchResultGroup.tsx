@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import { Theme, useColorMode } from '@uls/look-react';
+import { Theme, useColorMode, Heading } from '@uls/look-react';
 
 interface SearchResultProps {
     label: string;
@@ -65,14 +65,10 @@ function SearchResultGroup({
         flex-flow: row wrap;
         align-content: flex-end;
     `;
-    const Title = styled.div`
-        font-weight: ${Theme.fontWeights.bold};
-        font-size: ${Theme.fontSizes['2xl']};
-    `;
 
     return (
         <Wrapper>
-            <Title>{title}</Title>
+            <Heading size="lg">{title}</Heading>
             <ResultWrapper>
                 {results.map((result, i) => (
                     <SearchResult

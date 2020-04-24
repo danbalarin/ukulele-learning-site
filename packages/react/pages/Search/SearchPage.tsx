@@ -53,7 +53,7 @@ function SearchPage({ ...props }: Props): ReactElement {
 
     return (
         <Wrapper>
-            <Heading size="md">{`Searched term: ${search}`}</Heading>
+            <Heading size="lg">{`Searched term: ${search}`}</Heading>
             {loading ? (
                 <Loading />
             ) : (
