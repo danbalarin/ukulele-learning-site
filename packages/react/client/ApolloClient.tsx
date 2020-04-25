@@ -41,20 +41,7 @@ const createLinks = () => {
                     },
                 }));
             } else {
-                // console.log(cache.evict('ROOT_QUERY', 'user'));
-                clientMutations.writeUser(null, { token: '' }, { cache });
-                // debugger;
-                // console.log(
-                //     cache.modify('ROOT_QUERY', (value, details) => {
-                //         if(details.fieldName === 'user') {
-                //             return {}
-                //         }
-                //         console.log(value, details);
-                //         return value;
-                //     })
-                // );
-                // cache.reset();
-                // client.resetStore();
+                clientMutations.logoutUser(null, null, { cache });
             }
         }
         return forward(operation);
@@ -75,9 +62,9 @@ const createLinks = () => {
     return from([authLink, httpLink]);
 };
 
-const createCache = () => {
+const createCache = async () => {
     const cache = new InMemoryCache();
-    persistCache({
+    await persistCache({
         cache,
         storage: new LocalStorage(),
     });
@@ -89,8 +76,8 @@ interface Props {
     children: React.ReactNode;
 }
 
-const createApolloClientApp = () => {
-    const cache = createCache();
+const createApolloClientApp = async () => {
+    const cache = await createCache();
     const link = createLinks();
 
     return function ApolloClientApp({ children }: Props): ReactElement {

@@ -13,9 +13,12 @@ import {
     faHandPaper,
     faMinus,
     faCheck,
+    faUser,
+    faSignOutAlt,
+    faFrown,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { faFrown } from '@fortawesome/free-regular-svg-icons';
+// import { faFrown } from '@fortawesome/free-regular-svg-icons';
 
 library.add(
     faChevronDown,
@@ -26,7 +29,9 @@ library.add(
     faHandPaper,
     faMinus,
     faCheck,
-    faFrown
+    faFrown,
+    faUser,
+    faSignOutAlt
 );
 
 export { IconName };

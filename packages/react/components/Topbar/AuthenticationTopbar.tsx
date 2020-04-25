@@ -1,7 +1,19 @@
 import React, { ReactElement, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import styled from '@emotion/styled';
 
-import { Button, useDisclosure, Stack, ColorSwitch } from '@uls/look-react';
+import {
+    Button,
+    useDisclosure,
+    Stack,
+    ColorSwitch,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    MenuGroup,
+    Icon,
+} from '@uls/look-react';
 import {
     useUserLocalQuery,
     useUserLocalMutation,
@@ -35,10 +47,7 @@ function AuthenticationTopbar({}: Props): ReactElement {
             <Stack inline={true} spacing={4} alignItems="center">
                 <ColorSwitch size={'sm'} />
                 {username ? (
-                    <>
-                        <button onClick={() => logoutUser()}>test</button>
-                        <Logged username={username} />
-                    </>
+                    <Logged username={username} onLogout={() => logoutUser()} />
                 ) : (
                     <NotLogged onOpen={onOpen} modalRef={modalRef} />
                 )}
@@ -83,14 +92,42 @@ function NotLogged({ modalRef, onOpen }: NotLoggedProps): ReactElement {
 }
 
 interface LoggedProps {
+    /**
+     * Users username
+     */
     username: string;
+
+    /**
+     * Callback called after user clicking on logout button
+     */
+    onLogout: () => void;
 }
 
-function Logged({ username }: LoggedProps): ReactElement {
+function Logged({ username, onLogout }: LoggedProps): ReactElement {
+    const TextWrapper = styled.span`
+        margin-left: 10px;
+    `;
+
     return (
-        <Link to="/profile">
-            <Button variant="link">{username}</Button>
-        </Link>
+        <Menu>
+            <MenuButton variant="link">{username}</MenuButton>
+            <MenuList>
+                <MenuGroup>
+                    <Link to="/profile">
+                        <MenuItem>
+                            <Icon name="user" />
+                            <TextWrapper children="Profile" />
+                        </MenuItem>
+                    </Link>
+                </MenuGroup>
+                <MenuGroup>
+                    <MenuItem onClick={onLogout}>
+                        <Icon name="sign-out-alt" />
+                        <TextWrapper children="Sign out" />
+                    </MenuItem>
+                </MenuGroup>
+            </MenuList>
+        </Menu>
     );
 }
 

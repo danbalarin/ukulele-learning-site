@@ -1,3 +1,5 @@
 export { default as Menu } from './Menu';
-export { MenuButton } from './MenuButton';
-export { MenuList } from './MenuList';
+export { default as MenuButton } from './MenuButton';
+export { default as MenuList } from './MenuList';
+export { default as MenuItem } from './MenuItem';
+export { default as MenuGroup } from './MenuGroup';

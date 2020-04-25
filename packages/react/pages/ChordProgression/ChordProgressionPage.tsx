@@ -165,6 +165,7 @@ function AddChord({ onSelect }: AddChordProps): ReactElement {
 
     return (
         <AsyncSelect
+            keyName="chordpage select"
             loadOptions={findChords}
             onChange={value => value && onSelect(value.value as Chord)}
             clearOnChange={true}

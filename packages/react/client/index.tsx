@@ -6,11 +6,11 @@ import dotenv from 'dotenv';
 import createApolloClient from './ApolloClient';
 import App from '../App';
 
-const render = () => {
+const render = async () => {
     // const renderMethod = !module.hot ? ReactDOM.render : ReactDOM.hydrate;
     dotenv.config();
 
-    const ApolloClient = createApolloClient();
+    const ApolloClient = await createApolloClient();
 
     ReactDOM.hydrate(
         <ApolloClient>

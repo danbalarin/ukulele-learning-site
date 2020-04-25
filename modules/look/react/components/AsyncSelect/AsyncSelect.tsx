@@ -19,6 +19,11 @@ interface Props<T> {
     onChange: (value: T, action: SelectActionMeta) => void;
 
     /**
+     * Unique identifier
+     */
+    keyName: string;
+
+    /**
      * Is loading flag
      */
     loading?: boolean;
@@ -51,6 +56,7 @@ function AsyncSelect<T>({
     placeholder,
     loading,
     noOptionsMessage,
+    keyName,
 }: Props<T>): ReactElement {
     const { colorMode } = useColorMode();
     const [value, setValue] = useState<string>('');
@@ -95,7 +101,7 @@ function AsyncSelect<T>({
 
     return (
         <Async
-            instanceId={onChange.toString()}
+            instanceId={keyName}
             loadOptions={loadOptions}
             onChange={onChangeWrapped}
             onInputChange={value => setValue(value)}

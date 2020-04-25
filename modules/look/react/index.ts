@@ -2,13 +2,7 @@
  * Provides interfacing layer between ULS and some UI library. Easyly swapable, all react submodules should use this.
  */
 
-export {
-    Input,
-    InputGroup,
-    PasswordInput,
-    InputLeftAddon,
-    InputRightAddon,
-} from './components/Input';
+export * from './components/Input';
 export { Editable } from './components/Editable';
 export { AsyncSelect } from './components/AsyncSelect';
 export { DisplayBox } from './components/DisplayBox';
@@ -25,13 +19,8 @@ export { Table } from './components/Table';
 export { Heading } from './components/Heading';
 export { ColorSwitch } from './components/ColorSwitch';
 export { Icon, IconName } from './components/Icon';
-export {
-    SearchInput,
-    SearchGroup,
-    SearchOption,
-} from './components/SearchInput';
-// export { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/core';
-// export { Menu, MenuButton, MenuList } from './components/Menu';
+export * from './components/SearchInput';
+export * from './components/Menu';
 
 export { ThemeProvider } from './components/ThemeProvider';
 export { ColorModeProvider } from './components/ColorModeProvider';

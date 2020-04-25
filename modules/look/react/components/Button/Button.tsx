@@ -9,7 +9,7 @@ export interface ButtonTheme {
     outline: { border?: BorderTheme };
 }
 
-type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'link';
+export type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'link';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     size?: Sizes;

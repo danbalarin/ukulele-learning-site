@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { InputGroup as ChakraInputGroup } from '@chakra-ui/core';
 
-import { Sizes } from '../../../utils';
+import { Sizes } from '../../utils';
 
 interface Props {
     children: React.ReactNode;

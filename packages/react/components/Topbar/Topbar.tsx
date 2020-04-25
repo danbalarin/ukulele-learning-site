@@ -17,7 +17,7 @@ function Topbar({}: Props): ReactElement {
                         <Heading size="lg">EasyUKU</Heading>
                     </Link>
                 }
-                center={<Search />}
+                center={<Search keyName="topbar search" />}
                 right={<AuthenticationTopbar />}
             />
         </>

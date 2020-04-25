@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import styled from '@emotion/styled';
 
 import { Heading, Button, Theme } from '@uls/look-react';
+
 import { Search } from '../../components/Search';
 
 interface Props {}
@@ -40,7 +41,7 @@ function HomePage({}: Props): ReactElement {
         <Wrapper>
             <Heading size="lg">Welcome, try searching in the box below</Heading>
             <SearchBox>
-                <Search />
+                <Search keyName="homepage search" />
             </SearchBox>
             <Heading size="md">or try one of these categories</Heading>
             <ButtonBox>

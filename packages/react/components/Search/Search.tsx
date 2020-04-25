@@ -10,13 +10,14 @@ import {
     SEARCH_QUERY,
     SEARCH_QUERY_RESULT,
     SEARCH_QUERY_VARIABLES,
-    SearchUnionType,
 } from '../../graphql/search';
 import { WithID, transformSearchResult } from './searchUtils';
 
-interface Props {}
+interface Props {
+    keyName: string;
+}
 
-function Search({}: Props): ReactElement {
+function Search({ keyName }: Props): ReactElement {
     const client = useApolloClient();
     const [loading, setLoading] = useState(false);
 
@@ -52,7 +53,13 @@ function Search({}: Props): ReactElement {
         return res;
     };
 
-    return <SearchPresenter loadResults={searchFn} loading={loading} />;
+    return (
+        <SearchPresenter
+            keyName={keyName}
+            loadResults={searchFn}
+            loading={loading}
+        />
+    );
 }
 
 export default Search;

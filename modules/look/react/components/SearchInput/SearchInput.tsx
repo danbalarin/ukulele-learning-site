@@ -26,6 +26,11 @@ interface Props {
     onChange: (value: SearchOption, action: SelectActionMeta) => void;
 
     /**
+     * Unique identifier
+     */
+    keyName: string;
+
+    /**
      * Placeholder in input
      */
     placeholder?: string;
@@ -41,9 +46,11 @@ function SearchInput({
     onChange,
     placeholder,
     loading,
+    keyName,
 }: Props): ReactElement {
     return (
         <AsyncSelect<any>
+            keyName={keyName}
             onChange={(value, action) =>
                 value && onChange(value as SearchOption, action)
             }

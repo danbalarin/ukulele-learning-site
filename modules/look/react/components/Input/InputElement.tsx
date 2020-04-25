@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { InputRightElement, InputLeftElement } from '@chakra-ui/core';
-import { Spacing } from '../../../utils';
+import { Spacing } from '../../utils';
 
 interface Props {
     alignment: 'left' | 'right';

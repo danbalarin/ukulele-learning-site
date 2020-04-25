@@ -6,10 +6,16 @@ import { SearchInput, SearchOption, SearchGroup } from '@uls/look-react';
 interface Props {
     loadResults: (searchTerm: string) => Promise<SearchGroup[]>;
 
+    keyName: string;
+
     loading?: boolean;
 }
 
-function SearchPresenter({ loadResults, loading }: Props): ReactElement {
+function SearchPresenter({
+    loadResults,
+    loading,
+    keyName,
+}: Props): ReactElement {
     let history = useHistory();
 
     const searchRedirect = (value: string) =>
@@ -26,6 +32,7 @@ function SearchPresenter({ loadResults, loading }: Props): ReactElement {
     };
     return (
         <SearchInput
+            keyName={keyName}
             loadResults={loadResults}
             onChange={handleChange}
             loading={loading}
