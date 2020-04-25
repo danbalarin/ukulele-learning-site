@@ -13,6 +13,8 @@ const Unauthorized = loadable(() =>
 );
 const MetronomePage = loadable(() => import('./pages/Metronome/MetronomePage'));
 const ChordPage = loadable(() => import('./pages/Chord/ChordPage'));
+const SongListPage = loadable(() => import('./pages/SongList/SongListPage'));
+const SongPage = loadable(() => import('./pages/Song/SongPage'));
 const ChordListPage = loadable(() => import('./pages/ChordList/ChordListPage'));
 const ChordProgressionPage = loadable(() =>
     import('./pages/ChordProgression/ChordProgressionPage')
@@ -51,6 +53,14 @@ export const routes: RouteProps[] = [
     {
         path: '/search',
         component: SearchPage,
+    },
+    {
+        path: '/songs',
+        component: SongListPage,
+    },
+    {
+        path: '/song/:id',
+        component: SongPage,
     },
     {
         path: '/profile',

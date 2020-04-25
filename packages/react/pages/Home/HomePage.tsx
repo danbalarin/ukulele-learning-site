@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 import { Heading, Button, Theme } from '@uls/look-react';
@@ -45,8 +46,16 @@ function HomePage({}: Props): ReactElement {
             </SearchBox>
             <Heading size="md">or try one of these categories</Heading>
             <ButtonBox>
-                <Button>Songs</Button>
-                <Button>Chords</Button>
+                <Link to="/songs">
+                    <Button variantColor="blue" variant="solid">
+                        Songs
+                    </Button>
+                </Link>
+                <Link to="/chords">
+                    <Button variantColor="green" variant="solid">
+                        Chords
+                    </Button>
+                </Link>
             </ButtonBox>
         </Wrapper>
     );
