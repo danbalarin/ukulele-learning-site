@@ -14,12 +14,12 @@ interface DataTableProps<T> {
     /**
      * Data to be displayed
      */
-    data: T;
+    data: T[];
 
     /**
      * Column definition
      */
-    columns: DataTableColumn<T>;
+    columns: DataTableColumn<T>[];
 }
 
 function DataTable<T = any>({ ...props }: DataTableProps<T>): ReactElement {

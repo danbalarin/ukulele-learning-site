@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { MenuGroup as ChakraMenuGroup } from '@chakra-ui/core';
 
 interface Props {
-    label?: string;
+    title?: string;
     children: React.ReactNode;
 }
 

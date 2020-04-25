@@ -13,6 +13,7 @@ import {
     MenuItem,
     MenuGroup,
     Icon,
+    IconName,
 } from '@uls/look-react';
 import {
     useUserLocalQuery,
@@ -20,6 +21,7 @@ import {
     AuthenticationModal,
 } from '@uls/user-react';
 import { useUserLogoutLocalMutation } from '@uls/user-react';
+import { Role } from '../../../../modules/auth/common';
 
 interface Props {}
 
@@ -40,14 +42,16 @@ function AuthenticationTopbar({}: Props): ReactElement {
         onClose();
     };
 
-    const username = data?.user.username;
-
     return (
         <>
             <Stack inline={true} spacing={4} alignItems="center">
                 <ColorSwitch size={'sm'} />
-                {username ? (
-                    <Logged username={username} onLogout={() => logoutUser()} />
+                {data ? (
+                    <Logged
+                        username={data.user.username}
+                        onLogout={() => logoutUser()}
+                        role={data.user.role}
+                    />
                 ) : (
                     <NotLogged onOpen={onOpen} modalRef={modalRef} />
                 )}
@@ -93,7 +97,7 @@ function NotLogged({ modalRef, onOpen }: NotLoggedProps): ReactElement {
 
 interface LoggedProps {
     /**
-     * Users username
+     * User's username
      */
     username: string;
 
@@ -101,12 +105,35 @@ interface LoggedProps {
      * Callback called after user clicking on logout button
      */
     onLogout: () => void;
+
+    /**
+     * User's role
+     */
+    role: Role;
 }
 
-function Logged({ username, onLogout }: LoggedProps): ReactElement {
+function Logged({ username, onLogout, role }: LoggedProps): ReactElement {
     const TextWrapper = styled.span`
         margin-left: 10px;
     `;
+
+    const adminGroup = [
+        role >= Role.MODERATOR && {
+            link: '/admin/authors',
+            icon: 'microphone-alt',
+            text: 'Authors',
+        },
+        role >= Role.MODERATOR && {
+            link: '/admin/songs',
+            icon: 'music',
+            text: 'Songs',
+        },
+        role >= Role.ADMIN && {
+            link: '/admin/users',
+            icon: 'users',
+            text: 'Users',
+        },
+    ];
 
     return (
         <Menu>
@@ -126,6 +153,25 @@ function Logged({ username, onLogout }: LoggedProps): ReactElement {
                         <TextWrapper children="Sign out" />
                     </MenuItem>
                 </MenuGroup>
+                {role >= Role.MODERATOR ? (
+                    <MenuGroup title="Administration">
+                        {adminGroup.map(
+                            data =>
+                                data && (
+                                    <Link to={data.link}>
+                                        <MenuItem>
+                                            <Icon
+                                                name={data.icon as IconName}
+                                            />
+                                            <TextWrapper children={data.text} />
+                                        </MenuItem>
+                                    </Link>
+                                )
+                        )}
+                    </MenuGroup>
+                ) : (
+                    <></>
+                )}
             </MenuList>
         </Menu>
     );

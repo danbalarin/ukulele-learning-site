@@ -16,6 +16,9 @@ import {
     faUser,
     faSignOutAlt,
     faFrown,
+    faMicrophoneAlt,
+    faMusic,
+    faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 
 // import { faFrown } from '@fortawesome/free-regular-svg-icons';
@@ -31,7 +34,10 @@ library.add(
     faCheck,
     faFrown,
     faUser,
-    faSignOutAlt
+    faSignOutAlt,
+    faMicrophoneAlt,
+    faMusic,
+    faUsers
 );
 
 export { IconName };
