@@ -3,6 +3,7 @@
  */
 
 export * from './components/Input';
+export * from './components/DataTable';
 export { Editable } from './components/Editable';
 export { AsyncSelect } from './components/AsyncSelect';
 export { DisplayBox } from './components/DisplayBox';

@@ -4477,7 +4477,7 @@ __metadata:
     "@types/react": 16.9.19
     "@types/react-select": ^3.0.11
     emotion-theming: ^10.0.27
-    react-data-table-component: ^6.3.0
+    react-data-table-component: ^6.8.0
     react-select: ^3.1.0
   peerDependencies:
     react: ^16.12.0
@@ -16779,9 +16779,9 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-data-table-component@npm:^6.3.0":
-  version: 6.3.1
-  resolution: "react-data-table-component@npm:6.3.1"
+"react-data-table-component@npm:^6.8.0":
+  version: 6.8.0
+  resolution: "react-data-table-component@npm:6.8.0"
   dependencies:
     deepmerge: ^4.2.2
     lodash.orderby: ^4.6.0
@@ -16789,7 +16789,7 @@ fsevents@^1.2.7:
   peerDependencies:
     react: "*"
     styled-components: "*"
-  checksum: 2/47139e88d40d798b53272ed059915d35daa875ba94ac9aa803b3ce915169e1638806a1d1fc758d272812bb8d1a4830a711cc5fc8cd2f69d74eb5877e6f4f8d27
+  checksum: 974d51fb6ba2a1149560b421b9d0338276e6dc16a15f393bbd1b2f3fb3b7fd21293f8ba9d5c414ac3c714f8f4f67191f47ca697b1ce5df52cca6f0561c87c769
   languageName: node
   linkType: hard
 
@@ -20096,6 +20096,8 @@ resolve@1.1.7:
     apollo-utilities:
       unplugged: true
     jest:
+      unplugged: true
+    react-data-table-component:
       unplugged: true
     typedoc-plugin-external-module-map:
       unplugged: true

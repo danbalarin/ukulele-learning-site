@@ -20,6 +20,15 @@ const ChordProgressionPage = loadable(() =>
     import('./pages/ChordProgression/ChordProgressionPage')
 );
 const SearchPage = loadable(() => import('./pages/Search/SearchPage'));
+const AdminUsersPage = loadable(() =>
+    import('./pages/AdminUsers/AdminUsersPage')
+);
+const AdminAuthorsPage = loadable(() =>
+    import('./pages/AdminAuthors/AdminAuthorsPage')
+);
+const AdminSongsPage = loadable(() =>
+    import('./pages/AdminSongs/AdminSongsPage')
+);
 
 export interface RouteProps {
     path: string;
@@ -61,6 +70,39 @@ export const routes: RouteProps[] = [
     {
         path: '/song/:id',
         component: SongPage,
+    },
+    {
+        path: '/admin/authors',
+        children: (
+            <AuthenticatedRoute
+                requiredRole={Role.MODERATOR}
+                component={<AdminAuthorsPage />}
+                unauthenticatedComponent={<Unauthorized />}
+                userQuery={useUserLocalQuery}
+            />
+        ),
+    },
+    {
+        path: '/admin/songs',
+        children: (
+            <AuthenticatedRoute
+                requiredRole={Role.MODERATOR}
+                component={<AdminSongsPage />}
+                unauthenticatedComponent={<Unauthorized />}
+                userQuery={useUserLocalQuery}
+            />
+        ),
+    },
+    {
+        path: '/admin/users',
+        children: (
+            <AuthenticatedRoute
+                requiredRole={Role.ADMIN}
+                component={<AdminUsersPage />}
+                unauthenticatedComponent={<Unauthorized />}
+                userQuery={useUserLocalQuery}
+            />
+        ),
     },
     {
         path: '/profile',

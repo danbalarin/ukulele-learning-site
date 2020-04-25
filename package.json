@@ -87,6 +87,9 @@
         "jest": {
             "unplugged": true
         },
+        "react-data-table-component": {
+            "unplugged": true
+        },
         "typedoc-plugin-external-module-map": {
             "unplugged": true
         },
