@@ -101,7 +101,6 @@ function ChordComponent({
         if (canvasRef.current && parentDivRef.current && ctx) {
             const scaleX = parentDivRef.current.clientWidth / defaultWidth;
             const scaleY = parentDivRef.current.clientHeight / defaultHeight;
-            console.log(scaleY, scaleX);
             if (scaleX > scaleY) {
                 canvasRef.current.width = defaultWidth * scaleY;
                 canvasRef.current.height = defaultHeight * scaleY;
