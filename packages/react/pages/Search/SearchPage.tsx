@@ -14,27 +14,27 @@ import {
 } from '../../graphql/search';
 import { Error } from '../../components/Error';
 import { Loading } from '../../components/Loading';
-import SearchResultGroup from './SearchResultGroup';
 import {
     transformSearchResult,
     WithID,
     CommonSearchOption,
 } from '../../components/Search/searchUtils';
+import { List } from '../../components/List';
 
 interface Props extends RouteComponentProps {}
 
-const Wrapper = styled.div`
-    @media (min-width: ${Theme.breakpoints[0]}) {
-        padding-top: 1em;
-    }
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-`;
-
 function SearchPage({ ...props }: Props): ReactElement {
     const search = props.location.search.split('&')[0].split('=')[1];
+
+    const Wrapper = styled.div`
+        @media (min-width: ${Theme.breakpoints[0]}) {
+            padding-top: 1em;
+        }
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    `;
 
     if (!search) {
         return <Error title="500" subtitle="Something went wrong" />;
@@ -58,10 +58,13 @@ function SearchPage({ ...props }: Props): ReactElement {
                 <Loading />
             ) : (
                 transformed?.map(group => (
-                    <SearchResultGroup
+                    <List
                         key={group.label}
                         title={group.label}
-                        results={group.options}
+                        items={group.options.map(option => ({
+                            ...option,
+                            linkTo: option.value,
+                        }))}
                     />
                 ))
             )}

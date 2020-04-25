@@ -13,6 +13,7 @@ const Unauthorized = loadable(() =>
 );
 const MetronomePage = loadable(() => import('./pages/Metronome/MetronomePage'));
 const ChordPage = loadable(() => import('./pages/Chord/ChordPage'));
+const ChordListPage = loadable(() => import('./pages/ChordList/ChordListPage'));
 const ChordProgressionPage = loadable(() =>
     import('./pages/ChordProgression/ChordProgressionPage')
 );
@@ -34,6 +35,10 @@ export const routes: RouteProps[] = [
     {
         path: '/metronome',
         component: MetronomePage,
+    },
+    {
+        path: '/chords',
+        component: ChordListPage,
     },
     {
         path: '/chord/:name',

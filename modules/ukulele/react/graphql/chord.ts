@@ -40,3 +40,25 @@ export const CHORD_SEARCH = gql`
         }
     }
 `;
+
+export interface CHORD_MANY_RETURN {
+    chordMany: Chord[];
+}
+
+export interface CHORD_MANY_VARIABLES {
+    filter?: { name: string };
+}
+
+export const CHORD_MANY = gql`
+    query chordMany($filter: FilterFindManyChordInput) {
+        chordMany(filter: $filter) {
+            name
+            strings
+        }
+    }
+`;
+
+export const useChordMany = (variables: CHORD_MANY_VARIABLES) =>
+    useQuery<CHORD_MANY_RETURN, CHORD_MANY_VARIABLES>(CHORD_MANY, {
+        variables,
+    });
