@@ -134,6 +134,58 @@ export const USER_TOKEN_LOCAL_QUERY = gql`
     }
 `;
 
+export interface USER_MANY_VARIABLES {
+    filter?: { name: string };
+}
+
+export interface USER_MANY_RETURN {
+    userMany: (User & { _id: string })[];
+}
+
+export const USER_MANY = gql`
+    query usersMany($filter: FilterFindManyUserInput) {
+        userMany(filter: $filter) {
+            username
+            email
+            role
+            _id
+        }
+    }
+`;
+
+export const useUserMany = (variables: USER_MANY_VARIABLES) =>
+    useQuery<USER_MANY_RETURN, USER_MANY_VARIABLES>(USER_MANY, { variables });
+
+export interface USER_UPDATE_BY_ID_VARIABLES {
+    record: { _id: string } & Partial<User>;
+}
+
+export interface USER_UPDATE_BY_ID_RETURN {
+    userUpdateById: { record: User & { _id: string } };
+}
+
+export const USER_UPDATE_BY_ID = gql`
+    mutation userUpdateById($record: UpdateByIdUserInput!) {
+        userUpdateById(record: $record) {
+            record {
+                username
+                email
+                role
+                _id
+            }
+        }
+    }
+`;
+
+export const useUserUpdateById = (
+    variables: USER_UPDATE_BY_ID_VARIABLES,
+    optimisticResponse?: User
+) =>
+    useMutation<USER_UPDATE_BY_ID_RETURN, USER_UPDATE_BY_ID_VARIABLES>(
+        USER_UPDATE_BY_ID,
+        { variables }
+    );
+
 export const clientMutations = {
     writeUser: writeUserResolver,
     logoutUser: logoutUserResolver,

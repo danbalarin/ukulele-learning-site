@@ -41,6 +41,13 @@ const createLinks = () => {
                     },
                 }));
             } else {
+                // const toast = useToast();
+                // toast({
+                //     title: 'Expired token',
+                //     description: 'Your token has expired, please login.',
+                //     duration: 1000,
+                //     status: 'error',
+                // });
                 clientMutations.logoutUser(null, null, { cache });
             }
         }

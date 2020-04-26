@@ -29,6 +29,7 @@ export { ColorModeProvider } from './components/ColorModeProvider';
 export { useColorMode } from './hooks/useColorMode';
 export { useDisclosure } from './hooks/useDisclosure';
 export { useInterval } from './hooks/useInterval';
+export { useToast } from './hooks/useToast';
 
 export { createGlobalStyle } from './theme';
 export { default as Theme } from './theme';

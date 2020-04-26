@@ -82,7 +82,6 @@ function AuthenticationModal(
             {transitions.map(({ item, key, props }) =>
                 item ? (
                     <animated.div style={props} key="register">
-                        {' '}
                         <RegisterForm
                             onRegister={onRegister}
                             isLoading={isLoading}

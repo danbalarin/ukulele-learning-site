@@ -14,6 +14,8 @@ import {
     MenuGroup,
     Icon,
     IconName,
+    Theme,
+    useColorMode,
 } from '@uls/look-react';
 import {
     useUserLocalQuery,
@@ -21,7 +23,7 @@ import {
     AuthenticationModal,
 } from '@uls/user-react';
 import { useUserLogoutLocalMutation } from '@uls/user-react';
-import { Role } from '../../../../modules/auth/common';
+import { Role } from '@uls/auth-common';
 
 interface Props {}
 
@@ -113,6 +115,11 @@ interface LoggedProps {
 }
 
 function Logged({ username, onLogout, role }: LoggedProps): ReactElement {
+    const { colorMode } = useColorMode();
+    const IconWrapper = styled.span`
+        width: 30px;
+        border-right: 1px solid ${Theme.modes?.[colorMode].color};
+    `;
     const TextWrapper = styled.span`
         margin-left: 10px;
     `;
@@ -142,14 +149,18 @@ function Logged({ username, onLogout, role }: LoggedProps): ReactElement {
                 <MenuGroup>
                     <Link to="/profile">
                         <MenuItem>
-                            <Icon name="user" />
+                            <IconWrapper>
+                                <Icon name="user" />
+                            </IconWrapper>
                             <TextWrapper children="Profile" />
                         </MenuItem>
                     </Link>
                 </MenuGroup>
                 <MenuGroup>
                     <MenuItem onClick={onLogout}>
-                        <Icon name="sign-out-alt" />
+                        <IconWrapper>
+                            <Icon name="sign-out-alt" />
+                        </IconWrapper>
                         <TextWrapper children="Sign out" />
                     </MenuItem>
                 </MenuGroup>
@@ -158,11 +169,13 @@ function Logged({ username, onLogout, role }: LoggedProps): ReactElement {
                         {adminGroup.map(
                             data =>
                                 data && (
-                                    <Link to={data.link}>
+                                    <Link to={data.link} key={data.link}>
                                         <MenuItem>
-                                            <Icon
-                                                name={data.icon as IconName}
-                                            />
+                                            <IconWrapper>
+                                                <Icon
+                                                    name={data.icon as IconName}
+                                                />
+                                            </IconWrapper>
                                             <TextWrapper children={data.text} />
                                         </MenuItem>
                                     </Link>
