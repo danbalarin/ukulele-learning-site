@@ -156,14 +156,18 @@ const customTheme: Omit<DefaultTheme, 'breakpoints'> &
     contentMinWidth: breakpoints[1],
 };
 
-export const createGlobalStyle = (colorMode: string) => css`
+export const createGlobalStyle = (
+    colorMode: string,
+    disableBgImage?: boolean
+) => css`
     ${gothamRounded}
     ${ubuntuMono}
     body {
         background: ${customTheme.modes?.[colorMode].background};
-        background-image: url(${bg});
+        ${!disableBgImage ? `background-image: url(${bg});` : ''};
         color: ${customTheme.modes?.[colorMode].color};
         min-width: ${customTheme.contentMinWidth};
+        font-size: ${customTheme.fontSizes.md};
     }
 `;
 

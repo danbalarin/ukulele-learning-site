@@ -1,18 +1,31 @@
 import React from 'react';
-import { ApolloProvider } from '@apollo/client';
+import { MockedProvider } from '@apollo/client/testing';
+// import { MockedProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { Global } from '@emotion/core';
 
-import { createGlobalStyle } from '../modules/look/react';
-import { ThemeProvider } from '../modules/look/react';
+import {
+    ThemeProvider,
+    ColorModeProvider,
+    CSSReset,
+    createGlobalStyle,
+    useColorMode,
+    inlineCSS,
+} from '../modules/look/react';
 
 const ThemeDecorator = storyFn => {
+    const { colorMode } = useColorMode();
+
     return (
-        <ApolloProvider client={{}}>
+        <MockedProvider>
             <ThemeProvider>
-                <Global styles={createGlobalStyle('dark')} />
-                <>{storyFn()}</>
+                <ColorModeProvider value="light">
+                    <CSSReset />
+                    <Global styles={createGlobalStyle(colorMode, true)} />
+                    <Global styles={inlineCSS} />
+                    {storyFn()}
+                </ColorModeProvider>
             </ThemeProvider>
-        </ApolloProvider>
+        </MockedProvider>
     );
 };
 

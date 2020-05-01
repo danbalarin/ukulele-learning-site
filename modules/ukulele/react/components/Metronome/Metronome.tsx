@@ -115,7 +115,7 @@ function Metronome({ tempo, halfTick }: Props): ReactElement {
                     style={{ minWidth: 0 }}
                 />
                 <Button onClick={startStop} variant="solid">
-                    <Icon name={isOn ? 'times' : 'check'} />
+                    <Icon name={isOn ? 'times' : 'check'} size="1x" />
                 </Button>
             </InputGroup>
         </Wrapper>

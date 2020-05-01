@@ -126,12 +126,12 @@ function Logged({ username, onLogout, role }: LoggedProps): ReactElement {
 
     const adminGroup = [
         role >= Role.MODERATOR && {
-            link: '/admin/authors',
+            link: '/admin/author',
             icon: 'microphone-alt',
             text: 'Authors',
         },
         role >= Role.MODERATOR && {
-            link: '/admin/songs',
+            link: '/admin/song',
             icon: 'music',
             text: 'Songs',
         },

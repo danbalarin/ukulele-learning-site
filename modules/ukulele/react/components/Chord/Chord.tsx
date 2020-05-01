@@ -33,7 +33,7 @@ function ChordComponent({
             ctx = canvasRef.current.getContext('2d');
             ctx && draw();
         }
-    }, []);
+    }, [colorMode]);
 
     const imperfection = 4;
     const fretHeight = 24;

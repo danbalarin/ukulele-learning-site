@@ -21,11 +21,7 @@ const webpack = {
             },
             {
                 test: /\.s[ac]ss$/i,
-                use: [
-                  'style-loader',
-                  'css-loader',
-                  'sass-loader',
-                ],
+                use: ['style-loader', 'css-loader', 'sass-loader'],
             },
             {
                 test: /\.(woff(2)?|ttf|otf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -42,6 +38,16 @@ const webpack = {
             {
                 test: /\.(png|jpg|gif|mp3)$/,
                 use: 'file-loader',
+            },
+            {
+                test: /\.stories\.tsx?$/,
+                loaders: [
+                    {
+                        loader: require.resolve('@storybook/source-loader'),
+                        options: { parser: 'typescript' },
+                    },
+                ],
+                enforce: 'pre',
             },
         ],
     },
@@ -84,6 +90,7 @@ module.exports = {
     webpack: yarn2Config,
     webpackFinal,
     addons: [
+        '@storybook/addon-storysource',
         '@storybook/addon-knobs/register',
         '@storybook/addon-actions/register',
     ],

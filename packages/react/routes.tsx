@@ -23,12 +23,10 @@ const SearchPage = loadable(() => import('./pages/Search/SearchPage'));
 const AdminUsersPage = loadable(() =>
     import('./pages/AdminUsers/AdminUsersPage')
 );
-const AdminAuthorsPage = loadable(() =>
-    import('./pages/AdminAuthors/AdminAuthorsPage')
+const AdminAuthorPage = loadable(() =>
+    import('./pages/AdminAuthor/AdminAuthorPage')
 );
-const AdminSongsPage = loadable(() =>
-    import('./pages/AdminSongs/AdminSongsPage')
-);
+const AdminSongPage = loadable(() => import('./pages/AdminSong/AdminSongPage'));
 
 export interface RouteProps {
     path: string;
@@ -72,22 +70,33 @@ export const routes: RouteProps[] = [
         component: SongPage,
     },
     {
-        path: '/admin/authors',
+        path: '/admin/song/:id?',
         children: (
             <AuthenticatedRoute
                 requiredRole={Role.MODERATOR}
-                component={<AdminAuthorsPage />}
+                component={<AdminSongPage />}
                 unauthenticatedComponent={<Unauthorized />}
                 userQuery={useUserLocalQuery}
             />
         ),
     },
     {
-        path: '/admin/songs',
+        path: '/admin/author/:id?',
+        children: (props: any) => (
+            <AuthenticatedRoute
+                requiredRole={Role.MODERATOR}
+                component={<AdminAuthorPage {...props} />}
+                unauthenticatedComponent={<Unauthorized />}
+                userQuery={useUserLocalQuery}
+            />
+        ),
+    },
+    {
+        path: '/admin/song/:id?',
         children: (
             <AuthenticatedRoute
                 requiredRole={Role.MODERATOR}
-                component={<AdminSongsPage />}
+                component={<AdminSongPage />}
                 unauthenticatedComponent={<Unauthorized />}
                 userQuery={useUserLocalQuery}
             />

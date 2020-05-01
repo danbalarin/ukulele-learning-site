@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 
 interface Props {}
 
-function AdminSongsPage({}: Props): ReactElement {
+function AdminSongPage({}: Props): ReactElement {
     return <div></div>;
 }
 
-export default AdminSongsPage;
+export default AdminSongPage;

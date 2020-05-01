@@ -5,12 +5,6 @@ import { action } from '@storybook/addon-actions';
 
 import RegisterForm from './RegisterForm';
 
-export default {
-    title: 'User/Register form',
-    component: RegisterForm,
-    decorators: [withKnobs],
-};
-
 interface Props {
     children: React.ReactNode;
 }
