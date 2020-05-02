@@ -17,7 +17,6 @@ export { Button } from './components/Button';
 export { Stack } from './components/Stack';
 export { Navbar } from './components/Navbar';
 export { Modal } from './components/Modal';
-export { Table } from './components/Table';
 export { Heading } from './components/Heading';
 export { ColorSwitch } from './components/ColorSwitch';
 export { Icon, IconName } from './components/Icon';

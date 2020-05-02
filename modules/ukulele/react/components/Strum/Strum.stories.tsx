@@ -1,20 +1,36 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, number } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
+import styled from '@emotion/styled';
 
-import { default as StrumComponent } from './Strum';
 import { Strum } from '@uls/ukulele-common';
 
-storiesOf('Ukulele/Strum', module)
-    .addDecorator(withKnobs)
-    .add('Basic', () => {
-        return (
-            <>
+import { default as StrumComponent } from './Strum';
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+`;
+
+storiesOf('Ukulele/Strum', module).add('Basic', () => {
+    return (
+        <Wrapper>
+            <div>
+                D:
                 <StrumComponent strum={Strum.D} />
+            </div>
+            <div>
+                U:
                 <StrumComponent strum={Strum.U} />
+            </div>
+            <div>
+                T:
                 <StrumComponent strum={Strum.T} />
+            </div>
+            <div>
+                -:
                 <StrumComponent strum={Strum['-']} />
-            </>
-        );
-    });
+            </div>
+        </Wrapper>
+    );
+});
