@@ -60,11 +60,7 @@ var config = {
                     {
                         loader: 'babel-loader',
                         options: {
-                            presets: [
-                                // '@babel/env',
-                                // '@babel/typescript',
-                                '@babel/react',
-                            ],
+                            presets: ['@babel/react'],
                             plugins: ['@loadable/babel-plugin'],
                         },
                     },

@@ -1,5 +1,3 @@
-import SpyInstance = jest.SpyInstance;
-
 import { ConfigChecker, ConfigValue } from './ConfigChecker';
 import { Logger } from '../../../../packages/nodejs/server/src/utils/Logger';
 import { NoopLogger, LoggerLevel } from './Logger';
@@ -67,7 +65,7 @@ describe('without throw', () => {
             false
         );
 
-        const warningSpy: SpyInstance = jest.spyOn(noopLogger, 'warning');
+        const warningSpy: jest.SpyInstance = jest.spyOn(noopLogger, 'warning');
         expect(warningSpy).not.toHaveBeenCalled();
         const res = configChecker.check();
         expect(res).toEqual(true);
@@ -136,7 +134,7 @@ describe('with throw', () => {
             true
         );
 
-        const warningSpy: SpyInstance = jest.spyOn(noopLogger, 'warning');
+        const warningSpy: jest.SpyInstance = jest.spyOn(noopLogger, 'warning');
         expect(warningSpy).not.toHaveBeenCalled();
         const res = configChecker.check();
         expect(res).toEqual(true);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
-// import { MockedProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { Global } from '@emotion/core';
 
 import {
