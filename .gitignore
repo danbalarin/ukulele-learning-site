@@ -2,5 +2,6 @@
 .vscode
 .pnp.js
 node_modules
-doc
+doc/storybook
+doc/typedoc
 coverage
