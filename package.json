@@ -14,7 +14,7 @@
         "build-storybook": "build-storybook -c .storybook -o doc/storybook",
         "build-typedoc": "typedoc --plugin 'typedoc-plugin-external-module-map' ./",
         "docs": "cross-env yarn run build-typedoc && yarn run build-storybook",
-        "test": "jest",
+        "test": "cross-env jest && start-storybook --smoke-test",
         "test:watch": "jest --watch",
         "coverage": "jest --coverage",
         "coverage:watch": "jest --coverage --watch"
