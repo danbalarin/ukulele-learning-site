@@ -4,22 +4,27 @@
     "private": true,
     "dependencies": {
         "@apollo/client": "^3.0.0-beta.44",
+        "@babel/runtime": "^7.9.6",
         "@emotion/core": "^10.0.28",
         "@emotion/styled": "^10.0.27",
         "@uls/look-react": "workspace:modules/look/react",
         "@uls/ukulele-common": "workspace:modules/ukulele/common",
-        "graphql-tag": "^2.10.3"
+        "graphql-tag": "^2.10.3",
+        "react": "^16.13.1"
     },
     "peerDependencies": {
         "@apollo/client": "^3.0.0-beta.44",
         "graphql": "^14.6.0",
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0"
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "webpack": "^4.42.1"
     },
     "devDependencies": {
+        "@babel/core": "^7.9.6",
         "@storybook/addon-actions": "6.0.0-alpha.31",
         "@storybook/addon-knobs": "6.0.0-alpha.31",
         "@storybook/react": "6.0.0-alpha.31",
-        "@types/react": "16.9.19"
+        "@types/react": "16.9.19",
+        "babel-loader": "^8.1.0"
     }
 }

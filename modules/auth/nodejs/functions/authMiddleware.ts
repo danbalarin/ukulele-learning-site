@@ -1,9 +1,9 @@
 import { Role } from '@uls/auth-common';
 
 /**
+ * Creates function that accepts {@link Role} and returns middleware function for resolvers
  * Checks whether user is logged and have atleast required role. In case of error throws exception.
  *
- * @param R Role type
  * @param role Required role
  * @param authException Object to be thrown in case of unsuccesfull authentication
  */

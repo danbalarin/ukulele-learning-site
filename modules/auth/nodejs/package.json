@@ -4,6 +4,7 @@
     "main": "index.ts",
     "private": true,
     "dependencies": {
+        "@babel/runtime": "^7.9.6",
         "@uls/auth-common": "workspace:modules/auth/common"
     }
 }

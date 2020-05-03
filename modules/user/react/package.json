@@ -4,6 +4,7 @@
     "version": "0.1.0",
     "dependencies": {
         "@apollo/client": "^3.0.0-beta.44",
+        "@babel/runtime": "^7.9.6",
         "@emotion/core": "^10.0.28",
         "@emotion/styled": "^10.0.27",
         "@uls/auth-common": "workspace:modules/auth/common",
@@ -12,22 +13,26 @@
         "formik": "^2.1.4",
         "graphql-tag": "^2.10.3",
         "jsonwebtoken": "^8.5.1",
+        "react": "^16.13.1",
         "react-spring": "^8.0.27",
         "yup": "^0.28.1"
     },
     "devDependencies": {
+        "@babel/core": "^7.9.6",
         "@storybook/addon-actions": "6.0.0-alpha.31",
         "@storybook/addon-knobs": "6.0.0-alpha.31",
         "@storybook/react": "6.0.0-alpha.31",
         "@types/jsonwebtoken": "8.3.8",
         "@types/react": "16.9.19",
         "@types/react-dom": "16.9.5",
-        "@types/yup": "0.26.32"
+        "@types/yup": "0.26.32",
+        "babel-loader": "^8.1.0"
     },
     "peerDependencies": {
         "@apollo/client": "^3.0.0-beta.44",
         "graphql": "^14.6.0",
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0"
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "webpack": "^4.42.1"
     }
 }

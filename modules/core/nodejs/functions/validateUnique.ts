@@ -1,5 +1,10 @@
 import { Model } from 'mongoose';
 
+/**
+ * Creates function that checks whether are fields unique
+ *
+ * @param inputError Object to be thrown in case of unsuccesfull check
+ */
 export const validateUnique = (inputError: any) => {
     return async (
         fields: { [key: string]: string }[],

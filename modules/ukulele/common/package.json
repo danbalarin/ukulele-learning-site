@@ -4,6 +4,7 @@
     "main": "index.ts",
     "private": true,
     "dependencies": {
+        "@babel/runtime": "^7.9.6",
         "@uls/core-common": "workspace:modules/core/common"
     }
 }

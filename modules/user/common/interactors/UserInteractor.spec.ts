@@ -55,6 +55,16 @@ it('should strip sensitive information', () => {
     expect(userStripped).toEqual(userWithoutPassword);
 });
 
+it('should match password', () => {
+    const match = ui.matchPassword('secret', text => text);
+    expect(match).toBe(true);
+});
+
+it('should not match password', () => {
+    const match = ui.matchPassword('bad secret', text => text);
+    expect(match).toBe(false);
+});
+
 it('should hash password', () => {
     const userHashed = ui.hashPassword(hashFn);
     expect(userHashed).not.toEqual(user);

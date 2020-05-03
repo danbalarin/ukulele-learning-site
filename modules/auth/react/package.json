@@ -3,16 +3,22 @@
     "private": true,
     "version": "0.1.0",
     "dependencies": {
-        "@uls/auth-common": "workspace:modules/auth/common"
+        "@babel/runtime": "^7.9.6",
+        "@uls/auth-common": "workspace:modules/auth/common",
+        "react": "^16.13.1"
     },
     "devDependencies": {
+        "@babel/core": "^7.9.6",
         "@storybook/addon-actions": "6.0.0-alpha.27",
         "@storybook/addon-knobs": "6.0.0-alpha.27",
         "@storybook/react": "6.0.0-alpha.27",
+        "@types/enzyme": "^3.10.5",
         "@types/jsonwebtoken": "8.3.8",
         "@types/react": "16.9.19",
         "@types/react-dom": "16.9.5",
-        "@types/yup": "0.26.32"
+        "@types/yup": "0.26.32",
+        "babel-loader": "^8.1.0",
+        "enzyme": "^3.11.0"
     },
     "dependenciesMeta": {
         "@chakra-ui": {
@@ -22,7 +28,8 @@
     "peerDependencies": {
         "@apollo/client": "^3.0.0-beta.44",
         "graphql": "^14.6.0",
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0"
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "webpack": "^4.42.1"
     }
 }
