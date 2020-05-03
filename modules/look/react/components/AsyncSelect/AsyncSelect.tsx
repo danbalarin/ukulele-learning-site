@@ -5,18 +5,23 @@ import { useColorMode } from '../../hooks/useColorMode';
 import customTheme from '../../theme';
 
 export type SelectValueType<T> = ValueType<T>;
-export type SelectActionMeta = ActionMeta;
+export type SelectActionMeta<T> = ActionMeta<T>;
 
 interface Props<T> {
     /**
      * Function used to asynchronously load data
+     *
+     * @param input text inserted in select
      */
     loadOptions: (input: string) => Promise<T[]>;
 
     /**
      * Callback function called after change
+     *
+     * @param value value that got changed
+     * @param action change action
      */
-    onChange: (value: T, action: SelectActionMeta) => void;
+    onChange: (value: T, action: SelectActionMeta<T>) => void;
 
     /**
      * Unique identifier
@@ -49,6 +54,11 @@ const bg = {
     dark: customTheme.colors.whiteAlpha['50'],
 };
 
+/**
+ * Select with asynchronous loading
+ *
+ * @param param0 options
+ */
 function AsyncSelect<T>({
     loadOptions,
     onChange,
@@ -63,7 +73,7 @@ function AsyncSelect<T>({
 
     const onChangeWrapped = (
         value: SelectValueType<T>,
-        action: SelectActionMeta
+        action: SelectActionMeta<T>
     ) => {
         if (clearOnChange) {
             setValue('');

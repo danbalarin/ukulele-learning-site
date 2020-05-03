@@ -1,6 +1,6 @@
 /**
  * Provides entities and interactors for ukulele specific data manipulation. It's independent of any framework.
- * 
+ *
  * @packageDocumentation
  */
 
@@ -18,4 +18,4 @@ export { AuthorInteractor } from './interactors/AuthorInteractor';
 export { ChordProgressionInteractor } from './interactors/ChordProgressionInteractor';
 export { MetronomePresetInteractor } from './interactors/MetronomePresetInteractor';
 export { SongInteractor } from './interactors/SongInteractor';
-export { StrummingPatternInteractor } from './interactors/StrumminPatterntInteractor';
+export { StrummingPatternInteractor } from './interactors/StrummingPatternInteractor';

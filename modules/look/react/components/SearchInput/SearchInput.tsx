@@ -23,7 +23,7 @@ interface Props {
     /**
      * Callback function called after change
      */
-    onChange: (value: SearchOption, action: SelectActionMeta) => void;
+    onChange: (value: SearchOption, action: SelectActionMeta<any>) => void;
 
     /**
      * Unique identifier
