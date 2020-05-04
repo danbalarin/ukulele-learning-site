@@ -1,0 +1,102 @@
+name: Deploy
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    build:
+        name: Build packages and docker images
+        runs-on: ubuntu-18.04
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Setup Node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '10.x'
+
+            - name: Install Yarn Berry
+              run: npm install -g yarn@berry
+
+            - run: yarn --version
+
+            - name: Get yarn cache
+              id: yarn-cache
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+
+            - name: Cache dependencies
+              uses: actions/cache@v1
+              with:
+                  path: ${{ steps.yarn-cache.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+
+            - run: yarn install
+
+            - name: BE - Make envfile and build
+              env:
+                  PORT_BE: 4000
+                  MONGODB_URI: ${{ secrets.MONGODB_URI }}
+                  FRONTEND_URI: ${{ secrets.FRONTEND_URI }}
+                  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+              run: |
+                  cd packages/nodejs
+                  echo -e "NODE_ENV=production\nPORT=$PORT_BE\nMONGODB_URI=$MONGODB_URI\nFRONTEND_URI=$FRONTEND_URI\nJWT_SECRET=$JWT_SECRET\n" > .env
+                  yarn run build
+
+            - name: BE - Creating docker image
+              run: |
+                  docker build -t kenny11/uls-nodejs:1.0 ./packages/nodejs
+
+            - name: FE - Make envfile and build
+              env:
+                  API_URL: ${{ secrets.BACKEND_URI }}
+              run: |
+                  cd packages/react
+                  echo -e "API_URL=$API_URL\n" > .env
+                  yarn run build
+
+            - name: FE - Creating docker image
+              run: |
+                  docker build -t kenny11/uls-react:1.0 ./packages/react
+
+            - name: Publish docker images
+              run: |
+                  echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u kenny11 --password-stdin
+                  docker push kenny11/uls-nodejs:1.0
+                  docker push kenny11/uls-react:1.0
+    install:
+        name: Install images on server
+        runs-on: ubuntu-18.04
+        needs: build
+        steps:
+            - name: Install docker images on server
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  # key: ${{ secrets.SSH_KEY }}
+                  password: ${{ secrets.SSH_PASSWORD }}
+                  script: |
+                      ls /bin/ -la
+                      docker_replace kenny11/uls-nodejs:1.0 "4000:4000" "uls-nodejs"
+                      docker_replace kenny11/uls-react:1.0 "80:3000" "uls-react"
+
+    smoke:
+        name: Smoke test
+        runs-on: ubuntu-18.04
+        needs: install
+        steps:
+            - name: Ping servers
+              run: |
+                  curl -sSL --max-time 5 -D - ${{ secrets.BACKEND_URI }} -o /dev/null
+                  curl -sSL --max-time 5 -D - ${{ secrets.FRONTEND_URI }} -o /dev/null
+            # - name: Install docker images on server
+            #   run: |
+            #       sudo apt install sshpass
+            #       sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -oStrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}
+            #       docker_replace kenny11/uls-nodejs:1.0 "4000:4000" "uls-nodejs"
+            #       docker_replace kenny11/uls-react:1.0 "80:3000" "uls-react"
