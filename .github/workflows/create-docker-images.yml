@@ -1,0 +1,54 @@
+name: Create docker images
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    build:
+        runs-on: ubuntu-18.04
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Setup Node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '10.x'
+
+            - name: Install Yarn Berry
+              run: npm install -g yarn@berry
+
+            - run: yarn --version
+
+            - run: yarn install
+
+            - name: Build
+              run: docker build -t $CONTAINER_RELEASE_IMAGE:test .
+
+            - name: BE - Make envfile and build
+              env:
+                  PORT_BE: 4000
+                  MONGODB_URI: ${{ secrets.MONGODB_URI }}
+                  FRONTEND_URI: ${{ secrets.FRONTEND_URI }}
+                  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+              run: |
+                  cd packages/nodejs
+                  echo "PORT=$PORT_BE\nMONGODB_URI=$MONGODB_URI\nFRONTEND_URI=$FRONTEND_URI\nJWT_SECRET=$JWT_SECRET\n" > .env
+                  yarn run build
+
+            - name: FE - Make envfile and build
+              env:
+                  API_URL: ${{ secrets.BACKEND_URI }}
+              run: |
+                  cd packages/react
+                  echo "API_URL=$API_URL\n" > .env
+                  yarn run build
+
+            - name: BE - Creating docker image
+              run: |
+                  docker build -t docker.pkg.github.com/danbalarin/ukulele-learning-site-nodejs:1.0 ./packages/nodejs
+
+            - name: FE - Creating docker image
+              run: |
+                  docker build -t docker.pkg.github.com/danbalarin/ukulele-learning-site-react:1.0 ./packages/react
