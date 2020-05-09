@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 import { User } from '@uls/user-common';
 import { Song, Author, Chord } from '@uls/ukulele-common';
+import { AUTHOR_FRAGMENT_NAME, AUTHOR_FRAGMENT } from '@uls/ukulele-react';
 
 export type SEARCH_QUERY_VARIABLES = { query: string };
 
@@ -33,11 +34,7 @@ export const SEARCH_QUERY = gql`
                     username
                 }
             }
-            ... on Author {
-                _id
-                name
-                members
-            }
+            ...${AUTHOR_FRAGMENT_NAME}
             ... on Chord {
                 _id
                 name
@@ -45,4 +42,5 @@ export const SEARCH_QUERY = gql`
             }
         }
     }
+    ${AUTHOR_FRAGMENT}
 `;

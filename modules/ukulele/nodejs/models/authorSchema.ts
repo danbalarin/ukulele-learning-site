@@ -35,6 +35,14 @@ export const createAuthorSchema = (
         },
     });
 
+    AuthorTC.addRelation('members', {
+        resolver: () => AuthorTC.getResolver('findMany'),
+        prepareArgs: {
+            filter: source => ({ _ids: source.memberIds || [] }),
+        },
+        projection: { memberIds: true },
+    });
+
     const query = {
         authorById: AuthorTC.getResolver('findById'),
         authorByIds: AuthorTC.getResolver('findByIds'),
@@ -42,6 +50,7 @@ export const createAuthorSchema = (
         authorMany: AuthorTC.getResolver('findMany'),
         authorCount: AuthorTC.getResolver('count'),
         authorPagination: AuthorTC.getResolver('pagination'),
+        authorSearch: AuthorTC.getResolver('search'),
     };
 
     const authenticated = authMiddleware(options.errors.authorizationError);
@@ -51,6 +60,9 @@ export const createAuthorSchema = (
             authenticated(Role.MODERATOR),
         ]),
         authorUpdateById: AuthorTC.getResolver('updateById', [
+            authenticated(Role.MODERATOR),
+        ]),
+        authorRemoveById: AuthorTC.getResolver('removeById', [
             authenticated(Role.MODERATOR),
         ]),
     };

@@ -5,6 +5,36 @@ import { Chord } from './Chords';
 import { StrummingPattern } from './StrummingPattern';
 
 /**
+ * Chord position on the line
+ */
+export interface ChordPosition {
+    /**
+     * Offset from beggining of the line
+     */
+    offset: number;
+
+    /**
+     * Chord
+     */
+    chord: Chord;
+}
+
+/**
+ * Describes single line of lyrics with chords
+ */
+export interface SongLine {
+    /**
+     * Chords on the line
+     */
+    chords: ChordPosition[];
+
+    /**
+     * Song lyrics for one line
+     */
+    lyrics: string;
+}
+
+/**
  * Song entity
  *
  * @typeparam T creator entity
@@ -16,9 +46,9 @@ export interface Song<T> extends Creator<T> {
     title: string;
 
     /**
-     * Song lyrics
+     * Song lyrics and chords
      */
-    lyrics: string;
+    lyrics: SongLine[];
 
     /**
      * Song author/authors

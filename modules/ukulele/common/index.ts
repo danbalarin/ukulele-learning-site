@@ -9,7 +9,7 @@ export { Author } from './entities/Author';
 export { ChordProgression } from './entities/ChordProgression';
 export { Chord } from './entities/Chords';
 export { MetronomePreset } from './entities/MetronomePreset';
-export { Song } from './entities/Song';
+export { Song, SongLine, ChordPosition } from './entities/Song';
 export { StrummingPattern, Strum } from './entities/StrummingPattern';
 export { Tone } from './entities/Tone';
 

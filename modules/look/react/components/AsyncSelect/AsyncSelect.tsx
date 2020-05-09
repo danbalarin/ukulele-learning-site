@@ -47,6 +47,21 @@ interface Props<T> {
      * Called when no options are provided
      */
     noOptionsMessage?: ({ inputValue }: { inputValue: string }) => string;
+
+    /**
+     * Multi select flag
+     */
+    multi?: boolean;
+
+    /**
+     * Pass value to have controlled select
+     */
+    value?: T;
+
+    /**
+     * Disabled flag
+     */
+    disabled?: boolean;
 }
 
 const bg = {
@@ -67,16 +82,19 @@ function AsyncSelect<T>({
     loading,
     noOptionsMessage,
     keyName,
+    multi,
+    value,
+    disabled,
 }: Props<T>): ReactElement {
     const { colorMode } = useColorMode();
-    const [value, setValue] = useState<string>('');
+    const [inputValue, setInputValue] = useState<string>('');
 
     const onChangeWrapped = (
         value: SelectValueType<T>,
         action: SelectActionMeta<T>
     ) => {
         if (clearOnChange) {
-            setValue('');
+            setInputValue('');
         }
 
         onChange(value as T, action);
@@ -111,24 +129,26 @@ function AsyncSelect<T>({
 
     return (
         <Async
+            isDisabled={disabled}
             instanceId={keyName}
             loadOptions={loadOptions}
             onChange={onChangeWrapped}
-            onInputChange={value => setValue(value)}
-            inputValue={value}
+            onInputChange={value => setInputValue(value)}
+            inputValue={inputValue}
             styles={{
                 container: createContainerStyles,
                 control: createControlStyles,
                 input: createInputStyles,
                 singleValue: createInputStyles,
             }}
-            isMulti={false}
+            isMulti={multi}
             isClearable={true}
             placeholder={placeholder || 'Search...'}
             isLoading={loading}
             noOptionsMessage={
                 noOptionsMessage ? noOptionsMessage : () => 'Start typing'
             }
+            value={value}
             components={{ DropdownIndicator: null, IndicatorSeparator: null }}
         />
     );

@@ -7,5 +7,6 @@ export { Chord } from './components/Chord';
 export { StrummingPattern } from './components/StrummingPattern';
 export { Metronome } from './components/Metronome';
 
+export * from './graphql/author';
 export * from './graphql/chord';
 export * from './graphql/chordProgression';

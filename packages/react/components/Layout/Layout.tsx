@@ -10,7 +10,8 @@ import { Topbar } from '../Topbar';
 import { routes, RouteProps } from '../../routes';
 
 const Wrapper = styled.div<{ colorMode: string }>`
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     padding-top: 56px;
     backdrop-filter: blur(5pt);
     z-index: 1;

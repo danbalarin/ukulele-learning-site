@@ -4517,6 +4517,7 @@ __metadata:
     dotenv-webpack: ^1.7.0
     express: ^4.17.1
     file-loader: ^5.1.0
+    formik: ^2.1.4
     graphql: ^14.6.0
     graphql-tag: ^2.10.3
     isomorphic-style-loader: ^5.1.0
@@ -4543,6 +4544,7 @@ __metadata:
     webpack-dev-middleware: ^3.7.2
     webpack-hot-middleware: ^2.25.0
     webpack-node-externals: ^1.7.2
+    yup: ^0.28.5
   languageName: unknown
   linkType: soft
 
@@ -22177,7 +22179,7 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"yup@npm:^0.28.1":
+"yup@npm:^0.28.1, yup@npm:^0.28.5":
   version: 0.28.5
   resolution: "yup@npm:0.28.5"
   dependencies:

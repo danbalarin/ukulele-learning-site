@@ -168,6 +168,7 @@ export const createGlobalStyle = (
         color: ${customTheme.modes?.[colorMode].color};
         min-width: ${customTheme.contentMinWidth};
         font-size: ${customTheme.fontSizes.md};
+        background-attachment: scroll;
     }
 `;
 
