@@ -10,6 +10,7 @@ export { DisplayBox } from './components/DisplayBox';
 export { Card } from './components/Card';
 export { CSSReset } from './components/CSSReset';
 export { ComponentWrapper } from './components/ComponentWrapper';
+export { FormLabel } from './components/FormLabel';
 export { FormControl } from './components/FormControl';
 export { FormErrorMessage } from './components/FormErrorMessage';
 export { Checkbox } from './components/Checkbox';

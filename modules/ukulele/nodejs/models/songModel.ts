@@ -10,6 +10,9 @@ import { MODEL_NAME as AUTHOR_MODEL_NAME } from './authorModel';
 
 export interface SongModel extends Song<any>, Document {
     creatorId: Schema.Types.ObjectId;
+    chordsIds: [Schema.Types.ObjectId];
+    strummingPatternId?: Schema.Types.ObjectId;
+    authorId?: Schema.Types.ObjectId;
 }
 
 export const MODEL_NAME = 'Song';
@@ -17,6 +20,29 @@ export const MODEL_NAME = 'Song';
 export const createSongModel = (
     options: ServerModuleOptions<ObjectTypeComposer>
 ) => {
+    const ChordPositionSchema = new Schema({
+        chordId: {
+            type: Schema.Types.ObjectId,
+            ref: CHORD_MODEL_NAME,
+            required: true,
+        },
+        offset: {
+            type: Number,
+            required: true,
+        },
+    });
+
+    const SongLineSchema = new Schema({
+        chords: {
+            type: [ChordPositionSchema],
+            required: true,
+        },
+        lyrics: {
+            type: String,
+            required: true,
+        },
+    });
+
     const SongSchema = new Schema<SongModel>({
         title: {
             type: String,
@@ -24,7 +50,7 @@ export const createSongModel = (
             unique: true,
         },
         lyrics: {
-            type: String,
+            type: [SongLineSchema],
             required: true,
         },
         chordsIds: {

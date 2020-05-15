@@ -3,11 +3,6 @@
  */
 export interface Author {
     /**
-     * Author id
-     */
-    _id?: string;
-
-    /**
      * Author name
      */
     name: string;

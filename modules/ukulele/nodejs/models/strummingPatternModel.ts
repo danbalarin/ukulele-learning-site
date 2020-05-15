@@ -6,7 +6,9 @@ import { StrummingPattern, Strum } from '@uls/ukulele-common';
 
 import { MODEL_NAME as METRONOME_PRESET_MODEL_NAME } from './metronomePresetModel';
 
-export interface StrummingPatternModel extends StrummingPattern, Document {}
+export interface StrummingPatternModel extends StrummingPattern, Document {
+    metronomePresetId: Schema.Types.ObjectId;
+}
 
 export const MODEL_NAME = 'StrummingPattern';
 
@@ -19,7 +21,7 @@ export const createStrummingPatternModel = (
             enum: [Strum.D, Strum.T, Strum.U, Strum['-']],
             required: true,
         },
-        metronomePreset: {
+        metronomePresetId: {
             type: Schema.Types.ObjectId,
             ref: METRONOME_PRESET_MODEL_NAME,
         },

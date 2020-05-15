@@ -4316,6 +4316,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/yup@npm:^0.28.1":
+  version: 0.28.1
+  resolution: "@types/yup@npm:0.28.1"
+  checksum: 5f4995286e87e2c748aa364a9e0bc5508dc604bec7c246601659211a2a6358f4c8832f8cb9862b7afa0ce62f60f2089cb16720de76383afddbe9133c0d62beff
+  languageName: node
+  linkType: hard
+
 "@types/zen-observable@npm:^0.8.0":
   version: 0.8.0
   resolution: "@types/zen-observable@npm:0.8.0"
@@ -4499,6 +4506,7 @@ __metadata:
     "@types/webpack-env": ^1.15.1
     "@types/webpack-hot-middleware": 2.25.0
     "@types/webpack-node-externals": 1.7.1
+    "@types/yup": ^0.28.1
     "@uls/auth-common": "workspace:modules/auth/common"
     "@uls/auth-react": "workspace:modules/auth/react"
     "@uls/core-common": "workspace:modules/core/common"

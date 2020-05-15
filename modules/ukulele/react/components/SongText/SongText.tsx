@@ -26,7 +26,7 @@ function SongText({ songText, onChange, editable }: Props): ReactElement {
 
     return (
         <Wrapper>
-            {songText.map((songLine, i) => (
+            {songText?.map((songLine, i) => (
                 <SongTextLine
                     textLine={songLine}
                     onChange={onChangeWrapper(i)}

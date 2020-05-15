@@ -21,9 +21,6 @@ import {
     AUTHOR_UPDATE_BY_ID_RETURN,
     AUTHOR_UPDATE_BY_ID_VARIABLES,
     AUTHOR_UPDATE_BY_ID,
-    AUTHOR_SEARCH,
-    AUTHOR_SEARCH_RETURN,
-    AUTHOR_SEARCH_VARIABLES,
 } from '@uls/ukulele-react';
 
 interface Props {}
@@ -76,21 +73,6 @@ function AuthorTable({}: Props, ref: React.Ref<any>): ReactElement {
             });
         }
         refetch();
-    };
-
-    const findAuthors = async (input: string) => {
-        const { data } = await client.query<
-            AUTHOR_SEARCH_RETURN,
-            AUTHOR_SEARCH_VARIABLES
-        >({
-            query: AUTHOR_SEARCH,
-            variables: { query: input },
-        });
-        console.log(data);
-        return data.authorSearch.map(author => ({
-            label: author.name,
-            value: author,
-        }));
     };
 
     const columns = [

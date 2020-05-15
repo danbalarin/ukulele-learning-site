@@ -5,17 +5,30 @@ import { ServerModuleOptions, ServerModuleModel } from '@uls/core-nodejs';
 import { authMiddleware } from '@uls/auth-nodejs';
 import { Role } from '@uls/auth-common';
 
+interface TCProps {
+    MetronomePresetTC: ObjectTypeComposer;
+}
+
 import {
     createStrummingPatternModel,
     MODEL_NAME as STRUMMING_PATTERN_MODEL_NAME,
 } from './strummingPatternModel';
 
 export const createStrummingPatternSchema = (
-    options: ServerModuleOptions<ObjectTypeComposer>
+    options: ServerModuleOptions<ObjectTypeComposer>,
+    { MetronomePresetTC }: TCProps
 ) => {
     const StrummingPatternModel = createStrummingPatternModel(options);
 
     const StrummingPatternTC = composeWithMongoose(StrummingPatternModel, {});
+
+    StrummingPatternTC.addRelation('metronomePreset', {
+        resolver: () => MetronomePresetTC.getResolver('findById'),
+        prepareArgs: {
+            _id: source => source.metronomePresetId,
+        },
+        projection: { metronomePresetId: true },
+    });
 
     const query = {
         strummingPatternById: StrummingPatternTC.getResolver('findById'),

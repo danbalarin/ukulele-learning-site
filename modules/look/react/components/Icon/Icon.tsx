@@ -19,6 +19,7 @@ import {
     faMicrophoneAlt,
     faMusic,
     faUsers,
+    faPen,
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -39,6 +40,7 @@ library.add(
     faMicrophoneAlt,
     faMusic,
     faUsers,
+    faPen,
     faPlus
 );
 

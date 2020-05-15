@@ -10,6 +10,7 @@ import {
     MenuList,
     MenuItem,
     useToast,
+    ComponentWrapper,
 } from '@uls/look-react';
 import { useUserMany } from '@uls/user-react';
 import { Role } from '@uls/auth-common';
@@ -31,9 +32,7 @@ function AdminUsersPage({}: Props): ReactElement {
     const Wrapper = styled.div`
         width: 100%;
         height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        padding: 16px;
     `;
 
     const createUpdate = (
@@ -124,14 +123,15 @@ function AdminUsersPage({}: Props): ReactElement {
 
     return (
         <Wrapper>
-            {!!data && (
-                <DataTable
-                    data={data.userMany}
-                    columns={columns}
-                    title="Users"
-                    loading={loading}
-                />
-            )}
+            <ComponentWrapper width="100%" title="Users table">
+                {!!data && (
+                    <DataTable
+                        data={data.userMany}
+                        columns={columns}
+                        loading={loading}
+                    />
+                )}
+            </ComponentWrapper>
         </Wrapper>
     );
 }

@@ -6,6 +6,7 @@ import { authMiddleware } from '@uls/auth-nodejs';
 import { Role } from '@uls/auth-common';
 
 import { createChordModel, MODEL_NAME as CHORD_MODEL_NAME } from './chordModel';
+import { Schema } from 'mongoose';
 
 export const createChordSchema = (
     options: ServerModuleOptions<ObjectTypeComposer>
@@ -55,12 +56,13 @@ export const createChordSchema = (
     const model: Omit<
         ServerModuleModel<any, Resolver, ObjectTypeComposer>,
         'seed'
-    > = {
+    > & { schema: Schema } = {
         mutation,
         query,
         name: CHORD_MODEL_NAME,
         typeComposer: ChordTC,
         searchQuery: ChordTC.getResolver('search'),
+        schema: ChordModelCreated.schema,
     };
 
     return model;

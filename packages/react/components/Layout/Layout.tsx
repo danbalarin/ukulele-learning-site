@@ -20,6 +20,10 @@ const Wrapper = styled.div<{ colorMode: string }>`
     max-width: ${`${Theme.breakpoints[2]}`};
     min-width: ${`${Theme.contentMinWidth}`};
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `;
 
 interface Props {}
