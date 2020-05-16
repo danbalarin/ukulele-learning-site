@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState, useRef } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
 import styled from '@emotion/styled';
 
@@ -10,13 +10,26 @@ import {
     SONG_BY_ID_VARIABLES,
     Metronome,
     StrummingPattern,
+    useSongCreateOne,
+    SONG_CREATE_ONE_VARIABLES,
+    useSongUpdateById,
+    SONG_UPDATE_BY_ID_VARIABLES,
 } from '@uls/ukulele-react';
-import { Button, Icon, ComponentWrapper, Heading } from '@uls/look-react';
+import {
+    Button,
+    Icon,
+    ComponentWrapper,
+    Heading,
+    useToast,
+    DisplayBox,
+} from '@uls/look-react';
 import { Song, Strum } from '@uls/ukulele-common';
 import { useUserLocalQuery } from '@uls/user-react';
 import { Role } from '@uls/auth-common';
 
 import EditableSongPage from './EditableSongPage';
+import ChordComponent from '../../../../.yarn/$$virtual/@uls-ukulele-react-virtual-fc78971b44/1/modules/ukulele/react/components/Chord/Chord';
+import { Loading } from '../../components/Loading';
 
 const SongPageWrapper = styled.div`
     width: 100%;
@@ -41,23 +54,42 @@ function SongPage({
         params: { id },
     },
 }: SongPageProps): ReactElement {
-    const [song, setSong] = useState<Song<any>>({
+    const [song, setSong] = useState<Song<any> & { _id: string }>({
+        _id: '',
         chords: [],
         title: '',
         lyrics: [],
         creator: '',
     });
+    const [loading, setLoading] = useState<boolean>(id !== 'new');
     const [editting, setEditting] = useState(false);
     const songEditRef = useRef<any>();
     const client = useApolloClient();
-    const { data } = useUserLocalQuery();
+    const { replace: replaceHistory } = useHistory();
+    const toaster = useToast();
+    const { data: userData } = useUserLocalQuery();
+    const [createSong] = useSongCreateOne();
+
+    const [updateSong] = useSongUpdateById();
+
+    const showError = (error: any) => {
+        toaster({
+            status: 'error',
+            title: 'Error while saving',
+            description: 'Check console for more information',
+        });
+        console.error('Application error:');
+        console.error(error);
+        setEditting(false);
+    };
 
     const isModerator = () =>
-        data?.user.role && data?.user.role >= Role.MODERATOR;
+        userData?.user.role && userData?.user.role >= Role.MODERATOR;
 
     useEffect(() => {
         (async () => {
             if (id !== 'new' && isModerator()) {
+                setLoading && setLoading(true);
                 const fetchedSong = await client.query<
                     SONG_BY_ID_RETURN,
                     SONG_BY_ID_VARIABLES
@@ -69,15 +101,64 @@ function SongPage({
                 fetchedSong?.data?.songOne &&
                     setSong &&
                     setSong(fetchedSong.data.songOne);
+                setLoading && setLoading(false);
             }
         })();
-    }, [id, data]);
+    }, [id, userData]);
 
-    const save = () => {
+    const save = async () => {
+        if (!songEditRef.current?.hasChanged()) {
+            setEditting(false);
+            return;
+        }
         const newSong: Song<any> = songEditRef.current?.getSong();
-        console.log(newSong);
-        // save
-        setEditting(false);
+        const transformedSong: Pick<SONG_CREATE_ONE_VARIABLES, 'song'> = {
+            song: {
+                title: newSong.title,
+                authorId: (newSong.author as any)?._id,
+                chordsIds: newSong.chords?.map(({ _id }: any) => _id),
+                lyrics: newSong.lyrics.map(lyric => ({
+                    lyrics: lyric.lyrics,
+                    chords: lyric.chords.map(({ offset, chord }: any) => ({
+                        offset: offset,
+                        chordId: chord._id,
+                    })),
+                })),
+            },
+        };
+
+        const variables: SONG_CREATE_ONE_VARIABLES = {
+            song: transformedSong.song,
+            strummingPattern: newSong.strummingPattern?.pattern,
+            tempo: newSong.strummingPattern?.metronomePreset?.tempo,
+        };
+
+        let data;
+        let errors;
+        if (id === 'new') {
+            const created = await createSong({ variables });
+            errors = created.errors;
+            data = created.data?.songCreateOne;
+        } else {
+            const updateVariables: SONG_UPDATE_BY_ID_VARIABLES = {
+                ...variables,
+                _id: song._id,
+            };
+            const created = await updateSong({ variables: updateVariables });
+            errors = created.errors;
+            data = created.data?.songUpdateById;
+        }
+
+        if (!errors && !!data) {
+            if (id === 'new') {
+                replaceHistory(`/song/${data.record._id}`);
+            } else {
+                setSong(data.record);
+            }
+            setEditting(false);
+        } else {
+            showError(errors);
+        }
     };
 
     const Btn = editting ? (
@@ -92,7 +173,9 @@ function SongPage({
         </Button>
     );
 
-    return (
+    return loading ? (
+        <Loading />
+    ) : (
         <SongPageWrapper>
             {isModerator() && <ButtonWrapper>{Btn}</ButtonWrapper>}
             {editting ? (
@@ -137,6 +220,16 @@ const ComponentsWrapper = styled.div`
     z-index: 10;
 `;
 
+const ChordsWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+`;
+
+const ChordWrapper = styled.div`
+    width: 33%;
+`;
+
 interface SongPagePresenterProps {
     song: Song<any>;
 }
@@ -154,6 +247,18 @@ function SongPagePresenter({ song }: SongPagePresenterProps): ReactElement {
                 <SongText songText={song.lyrics} />
             </TextWrapper>
             <ComponentsWrapper>
+                <ComponentWrapper title="Chords">
+                    <ChordsWrapper>
+                        {song.chords.map((chord, i) => (
+                            <ChordWrapper key={'chordwrapper' + i}>
+                                <DisplayBox heading={chord.name}>
+                                    <ChordComponent chord={chord} />
+                                </DisplayBox>
+                            </ChordWrapper>
+                        ))}
+                    </ChordsWrapper>
+                </ComponentWrapper>
+
                 <ComponentWrapper title="Metronome">
                     <Metronome
                         tempo={
@@ -165,23 +270,14 @@ function SongPagePresenter({ song }: SongPagePresenterProps): ReactElement {
                     />
                 </ComponentWrapper>
                 <ComponentWrapper title="Strumming pattern">
-                    <StrummingPattern
-                        ref={strummingPatternRef}
-                        strummingPattern={
-                            song.strummingPattern || {
-                                pattern: [
-                                    Strum.U,
-                                    Strum.D,
-                                    Strum.U,
-                                    Strum.D,
-                                    Strum.U,
-                                    Strum.D,
-                                    Strum.U,
-                                    Strum.D,
-                                ],
-                            }
-                        }
-                    />
+                    {song.strummingPattern ? (
+                        <StrummingPattern
+                            ref={strummingPatternRef}
+                            strummingPattern={song.strummingPattern}
+                        />
+                    ) : (
+                        <span>No strumming set.</span>
+                    )}
                 </ComponentWrapper>
             </ComponentsWrapper>
         </Wrapper>

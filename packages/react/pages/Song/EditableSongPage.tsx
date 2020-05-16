@@ -1,22 +1,15 @@
-import React, {
-    ReactElement,
-    forwardRef,
-    useImperativeHandle,
-    useState,
-} from 'react';
+import React, { ReactElement, forwardRef, useImperativeHandle } from 'react';
 import { useApolloClient } from '@apollo/client';
 import styled from '@emotion/styled';
 import { useFormik } from 'formik';
-import { string, array, object, number, mixed } from 'yup';
+import { string, array, object, number } from 'yup';
 
 import {
     Song,
     Author,
-    MetronomePreset,
     SongLine,
     ChordPosition,
-    Chord,
-    Tone,
+    Strum,
 } from '@uls/ukulele-common';
 import {
     FormLabel,
@@ -34,7 +27,6 @@ import {
     CHORD_SEARCH,
     SongText,
 } from '@uls/ukulele-react';
-import SongTextLine from '../../../../.yarn/$$virtual/@uls-ukulele-react-virtual-fc78971b44/1/modules/ukulele/react/components/SongText/SongTextLine';
 
 const chordPosSchema = object().shape<ChordPosition>({
     offset: number(),
@@ -66,6 +58,17 @@ const Wrapper = styled.div`
     height: 100;
 `;
 
+const defaultPattern = [
+    Strum.D,
+    Strum.U,
+    Strum.D,
+    Strum.U,
+    Strum.D,
+    Strum.U,
+    Strum.D,
+    Strum.U,
+];
+
 interface Props {
     song: Song<any>;
 }
@@ -76,16 +79,30 @@ function EditableSongPage(
 ): ReactElement {
     const client = useApolloClient();
 
-    const { handleChange, values, touched, errors, setFieldValue } = useFormik<
-        Song<string>
-    >({
+    propsSong.strummingPattern &&
+        propsSong.strummingPattern.pattern.length !== 8 &&
+        (propsSong.strummingPattern.pattern = defaultPattern);
+
+    const {
+        handleChange,
+        values,
+        touched,
+        errors,
+        setFieldValue,
+        dirty,
+    } = useFormik<Song<string>>({
         initialValues: {
             title: propsSong.title || '',
             lyrics: propsSong.lyrics || [],
             chords: propsSong.chords || [],
             author: propsSong.author,
             creator: propsSong.creator || '',
-            strummingPattern: propsSong.strummingPattern,
+            strummingPattern: propsSong.strummingPattern || {
+                pattern: defaultPattern,
+                metronomePreset: {
+                    tempo: 100,
+                },
+            },
         },
         onSubmit: values => {},
         validationSchema,
@@ -99,10 +116,10 @@ function EditableSongPage(
             query: AUTHOR_SEARCH,
             variables: { query: input },
         });
-        console.log(data);
         return data.authorSearch.map(author => ({
             label: author.name,
-            value: author,
+            value: author.name,
+            author: author,
         }));
     };
 
@@ -116,13 +133,24 @@ function EditableSongPage(
         });
         return data.chordSearch.map(chord => ({
             label: chord.name,
-            value: chord,
+            value: chord.name,
+            chord: chord,
         }));
     };
 
     useImperativeHandle(ref, () => ({
+        hasChanged: () => dirty,
         getSong: () => values as Song<string>,
     }));
+
+    const onChangeStrum = (index: number) => (value: any) => {
+        const newArray = values.strummingPattern?.pattern || [];
+        newArray[index] = value;
+        setFieldValue('strummingPattern', {
+            ...values.strummingPattern,
+            pattern: newArray,
+        });
+    };
 
     return (
         <Wrapper>
@@ -161,12 +189,14 @@ function EditableSongPage(
                     value={
                         values.author && {
                             label: values.author.name,
-                            value: values.author,
+                            value: values.author.name,
+                            author: values.author,
                         }
                     }
+                    multi={false}
                     loadOptions={findAuthors}
                     onChange={authorVal =>
-                        setFieldValue('author', authorVal.value)
+                        setFieldValue('author', authorVal.author)
                     }
                 />
             </FormControl>
@@ -175,17 +205,48 @@ function EditableSongPage(
                 <AsyncSelect
                     keyName={'editsongchords'}
                     // @ts-ignore
-                    value={values.chords.map(chord => ({
+                    value={values.chords?.map(chord => ({
                         label: chord.name,
-                        value: chord,
-                        toString: () => `${chord.name}`,
+                        value: chord.name,
+                        chord: chord,
                     }))}
                     multi={true}
                     loadOptions={findChords}
                     onChange={chordsVal =>
-                        setFieldValue('chords', chordsVal.value)
+                        setFieldValue(
+                            'chords',
+                            chordsVal.map(value => value.chord)
+                        )
                     }
                 />
+            </FormControl>
+            <FormControl>
+                <FormLabel>Strumming pattern</FormLabel>
+                <br />
+                {values.strummingPattern?.pattern.map((strum, i) => (
+                    <select
+                        key={`select-${i}`}
+                        name={`strummingPattern.pattern.${i}`}
+                        onChange={e =>
+                            setFieldValue(
+                                `strummingPattern.pattern.${i}`,
+                                +e.target.value
+                            )
+                        }
+                        value={strum}
+                    >
+                        {Object.values(Strum)
+                            .filter(key => typeof key !== 'string')
+                            .map((val: any) => (
+                                <option
+                                    value={val as number}
+                                    key={`option-${i}-${val}`}
+                                >
+                                    {Strum[val]}
+                                </option>
+                            ))}
+                    </select>
+                ))}
             </FormControl>
             <FormControl>
                 <FormLabel>Lyrics</FormLabel>

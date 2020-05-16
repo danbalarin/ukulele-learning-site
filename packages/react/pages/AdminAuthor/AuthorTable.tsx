@@ -84,7 +84,7 @@ function AuthorTable({}: Props, ref: React.Ref<any>): ReactElement {
             name: 'Name',
             selector: 'name',
             sortable: true,
-            cell: (row: Author) => (
+            cell: (row: Author & { _id: string }) => (
                 <Editable
                     key={`name ${row.name}`}
                     value={row.name}
@@ -96,19 +96,19 @@ function AuthorTable({}: Props, ref: React.Ref<any>): ReactElement {
             name: 'Members',
             selector: 'members',
             sortable: true,
-            cell: (row: Author) => (
+            cell: (row: Author & { _id: string }) => (
                 <AsyncSelect
                     key={`author select ${row._id} ${row.name}`}
                     keyName={`author ${row._id} ${row.name}`}
                     onChange={() => {}}
-                    loadOptions={async () => []}
+                    loadOptions={async (): Promise<any[]> => []}
                     multi={true}
                     // @ts-ignore-line
                     value={row.members?.map(mem => ({
                         label: mem.name,
                         value: {
                             ...mem,
-                            toString: () => `${mem._id}${mem.name}`,
+                            toString: () => `${mem.name}`,
                         },
                     }))}
                     disabled={true}
@@ -118,7 +118,7 @@ function AuthorTable({}: Props, ref: React.Ref<any>): ReactElement {
         {
             name: 'Del',
             grow: 0,
-            cell: (row: Author) => (
+            cell: (row: Author & { _id: string }) => (
                 <Button
                     variantColor="red"
                     onClick={() =>

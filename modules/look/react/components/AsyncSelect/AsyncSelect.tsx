@@ -7,22 +7,7 @@ import customTheme from '../../theme';
 export type SelectValueType<T> = ValueType<T>;
 export type SelectActionMeta<T> = ActionMeta<T>;
 
-interface Props<T> {
-    /**
-     * Function used to asynchronously load data
-     *
-     * @param input text inserted in select
-     */
-    loadOptions: (input: string) => Promise<T[]>;
-
-    /**
-     * Callback function called after change
-     *
-     * @param value value that got changed
-     * @param action change action
-     */
-    onChange: (value: T, action: SelectActionMeta<T>) => void;
-
+interface PropsGeneral {
     /**
      * Unique identifier
      */
@@ -49,19 +34,63 @@ interface Props<T> {
     noOptionsMessage?: ({ inputValue }: { inputValue: string }) => string;
 
     /**
+     * Disabled flag
+     */
+    disabled?: boolean;
+}
+
+interface PropsSingle<T> extends PropsGeneral {
+    /**
+     * Function used to asynchronously load data
+     *
+     * @param input text inserted in select
+     */
+    loadOptions: (input: string) => Promise<T[]>;
+
+    /**
+     * Callback function called after change
+     *
+     * @param value value that got changed
+     * @param action change action
+     */
+    onChange: (value: T, action: SelectActionMeta<T>) => void;
+
+    /**
      * Multi select flag
      */
-    multi?: boolean;
+    multi: false | undefined;
 
     /**
      * Pass value to have controlled select
      */
     value?: T;
+}
+
+interface PropsMulti<T> extends PropsGeneral {
+    /**
+     * Function used to asynchronously load data
+     *
+     * @param input text inserted in select
+     */
+    loadOptions: (input: string) => Promise<T[]>;
 
     /**
-     * Disabled flag
+     * Callback function called after change
+     *
+     * @param value value that got changed
+     * @param action change action
      */
-    disabled?: boolean;
+    onChange: (value: T[], action: SelectActionMeta<T>) => void;
+
+    /**
+     * Multi select flag
+     */
+    multi: true;
+
+    /**
+     * Pass value to have controlled select
+     */
+    value?: T[];
 }
 
 const bg = {
@@ -85,7 +114,7 @@ function AsyncSelect<T>({
     multi,
     value,
     disabled,
-}: Props<T>): ReactElement {
+}: PropsSingle<T> | PropsMulti<T>): ReactElement {
     const { colorMode } = useColorMode();
     const [inputValue, setInputValue] = useState<string>('');
 
@@ -97,7 +126,7 @@ function AsyncSelect<T>({
             setInputValue('');
         }
 
-        onChange(value as T, action);
+        onChange(value as T & T[], action as SelectActionMeta<T & T[]>);
     };
 
     const createContainerStyles = (provided: any, state: any) => {

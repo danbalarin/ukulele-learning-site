@@ -58,6 +58,7 @@ function SearchInput({
             loadOptions={loadResults}
             placeholder={placeholder || 'Search...'}
             loading={loading}
+            multi={false}
             noOptionsMessage={text => 'Start typing'}
         />
     );

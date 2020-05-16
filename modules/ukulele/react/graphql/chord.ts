@@ -3,6 +3,15 @@ import { useMutation, useQuery, QueryHookOptions } from '@apollo/client';
 
 import { Chord } from '@uls/ukulele-common';
 
+export const CHORD_FRAGMENT_NAME = 'ChordFragment';
+export const CHORD_FRAGMENT = gql`
+    fragment ${CHORD_FRAGMENT_NAME} on Chord {
+        _id
+        name
+        strings
+    }
+`;
+
 export interface CHORD_BY_ID_RETURN {
     chordOne: Chord;
 }
@@ -14,10 +23,10 @@ export interface CHORD_BY_ID_VARIABLES {
 export const CHORD_BY_ID = gql`
     query chordOne($name: String!) {
         chordOne(filter: { name: $name }) {
-            name
-            strings
+            ...${CHORD_FRAGMENT_NAME}
         }
     }
+    ${CHORD_FRAGMENT}
 `;
 
 export const useChordByName = (
@@ -35,10 +44,10 @@ export interface CHORD_SEARCH_VARIABLES {
 export const CHORD_SEARCH = gql`
     query chordSearch($query: String!) {
         chordSearch(query: $query) {
-            name
-            strings
+            ...${CHORD_FRAGMENT_NAME}
         }
     }
+    ${CHORD_FRAGMENT}
 `;
 
 export interface CHORD_MANY_RETURN {
@@ -52,10 +61,10 @@ export interface CHORD_MANY_VARIABLES {
 export const CHORD_MANY = gql`
     query chordMany($filter: FilterFindManyChordInput) {
         chordMany(filter: $filter) {
-            name
-            strings
+            ...${CHORD_FRAGMENT_NAME}
         }
     }
+    ${CHORD_FRAGMENT}
 `;
 
 export const useChordMany = (variables: CHORD_MANY_VARIABLES) =>

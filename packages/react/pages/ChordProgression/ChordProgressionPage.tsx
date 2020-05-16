@@ -169,6 +169,7 @@ function AddChord({ onSelect }: AddChordProps): ReactElement {
             loadOptions={findChords}
             onChange={value => value && onSelect(value.value as Chord)}
             clearOnChange={true}
+            multi={false}
             noOptionsMessage={({ inputValue }) =>
                 !!inputValue
                     ? `Value '${inputValue}' cannot be found`

@@ -71,5 +71,12 @@ export const createSongModel = (
         },
     });
 
-    return model<SongModel>(MODEL_NAME, SongSchema);
+    SongSchema.index({ title: 'text' });
+
+    return {
+        [MODEL_NAME]: model<SongModel>(MODEL_NAME, SongSchema),
+        ChordPosition: model<
+            { chordId: Schema.Types.ObjectId; offset: number } & Document
+        >('ChordPosition', ChordPositionSchema),
+    };
 };

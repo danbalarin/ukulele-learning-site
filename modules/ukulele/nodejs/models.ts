@@ -51,16 +51,12 @@ export const createModels = (
         ...authorSeed,
     };
 
-    const songModel = createSongSchema(
-        options,
-        {
-            ChordTC: chordModel.typeComposer,
-            AuthorTC: authorModel.typeComposer,
-            StrummingPatternTC: strummingPattern.typeComposer,
-            MetronomePresetTC: metronomePreset.typeComposer,
-        },
-        chordModel.schema
-    );
+    const songModel = createSongSchema(options, {
+        ChordTC: chordModel.typeComposer,
+        AuthorTC: authorModel.typeComposer,
+        StrummingPatternTC: strummingPattern.typeComposer,
+        MetronomePresetTC: metronomePreset.typeComposer,
+    });
     const songSeed = createSongSeed(options);
     const song = {
         ...songModel,

@@ -21,10 +21,20 @@ interface TCProps {
 
 export const createSongSchema = (
     options: ServerModuleOptions<ObjectTypeComposer>,
-    { ChordTC, AuthorTC, StrummingPatternTC, MetronomePresetTC }: TCProps,
-    chordSchema: Schema
+    { ChordTC, AuthorTC, StrummingPatternTC, MetronomePresetTC }: TCProps
 ) => {
-    const SongModelCreated = createSongModel(options, chordSchema);
+    const SongModels = createSongModel(options);
+    const SongModelCreated = SongModels[SONG_MODEL_NAME];
+    const ChordPositionCreated = SongModels.ChordPosition;
+
+    const ChordPositionTC = composeWithMongoose(ChordPositionCreated, {});
+    ChordPositionTC.addRelation('chord', {
+        resolver: () => ChordTC.getResolver('findById'),
+        prepareArgs: {
+            _id: source => source.chordId,
+        },
+        projection: { chordId: 1 },
+    });
 
     const SongTC = composeWithMongoose(SongModelCreated, {});
 
@@ -45,6 +55,81 @@ export const createSongSchema = (
         },
     });
 
+    const updateOrCreateMetronome = async (
+        { tempo }: { tempo: number },
+        otherProps: any
+    ) => {
+        try {
+            const metronomeProps = {
+                ...otherProps,
+                args: { record: { tempo } },
+            };
+            const metronomeResult = await MetronomePresetTC.getResolver(
+                'findOrCreate'
+            ).resolve(metronomeProps);
+            return metronomeResult.recordId;
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const updateOrCreateStrummingPattern = async (
+        {
+            pattern,
+            metronomePresetId,
+        }: { pattern: number[]; metronomePresetId?: string },
+        otherProps: any
+    ) => {
+        try {
+            const strummingProps = {
+                ...otherProps,
+                args: {
+                    record: {
+                        pattern,
+                        metronomePresetId,
+                    },
+                },
+            };
+            const strummingResult = await StrummingPatternTC.getResolver(
+                'createOne'
+            ).resolve(strummingProps);
+            console.log(pattern);
+            return strummingResult.recordId;
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const prepareSong = async (
+        resolveProps: ResolverResolveParams<any, any>
+    ) => {
+        let metronomeId = await updateOrCreateMetronome(
+            { tempo: resolveProps.args.tempo },
+            resolveProps
+        );
+
+        let strummingPatternId = await updateOrCreateStrummingPattern(
+            {
+                pattern: resolveProps.args.strummingPattern,
+                metronomePresetId: metronomeId,
+            },
+            resolveProps
+        );
+
+        const songProps = {
+            ...resolveProps,
+            args: { record: {} as any },
+        };
+
+        songProps.args.record = { ...resolveProps.args.song };
+        songProps.args.record.creatorId = resolveProps.context.user._id;
+        songProps.args.record.strummingPatternId = strummingPatternId;
+        resolveProps.args._id &&
+            (songProps.args.record._id = resolveProps.args._id); // for update
+
+        return songProps;
+    };
+
     SongTC.addResolver({
         name: 'createNested',
         args: {
@@ -56,49 +141,28 @@ export const createSongSchema = (
         },
         type: SongTC.getResolver('createOne').getType(),
         resolve: async (resolveProps: ResolverResolveParams<any, any>) => {
-            let metronomeId;
-            try {
-                const metronomeProps = {
-                    ...resolveProps,
-                    args: { record: { tempo: resolveProps.args.tempo } },
-                };
-                const metronomeResult = await MetronomePresetTC.getResolver(
-                    'findOrCreate'
-                ).resolve(metronomeProps);
-                metronomeId = metronomeResult.recordId;
-            } catch (err) {
-                console.log(err);
-            }
-
-            let strummingPatternId;
-            try {
-                const strummingProps = {
-                    ...resolveProps,
-                    args: {
-                        record: {
-                            pattern: resolveProps.strummingPattern,
-                            metronomePresetId: metronomeId,
-                        },
-                    },
-                };
-                const strummingResult = await StrummingPatternTC.getResolver(
-                    'createOne'
-                ).resolve(strummingProps);
-                strummingPatternId = strummingResult.recordId;
-            } catch (err) {
-                console.log(err);
-            }
-
-            const songProps = {
-                ...resolveProps,
-                args: { record: {} as any },
-            };
-
-            songProps.args.record = { ...resolveProps.args.song };
-            songProps.args.record.creatorId = resolveProps.context.user._id;
-            songProps.args.record.strummingPatternId = strummingPatternId;
+            const songProps = await prepareSong(resolveProps);
 
             return SongTC.getResolver('createOne').resolve(songProps);
+        },
+    });
+
+    SongTC.addResolver({
+        name: 'updateNested',
+        args: {
+            _id: SongTC.getResolver('updateById')
+                .getArgITC('record')
+                .getFieldTC('_id'),
+            song: SongTC.getITC()
+                .removeField(['strummingPatternId', 'creatorId'])
+                .makeRequired(['title', 'lyrics', 'chordsIds']),
+            strummingPattern: StrummingPatternTC.getITC().getField('pattern'),
+            tempo: MetronomePresetTC.getITC().getField('tempo'),
+        },
+        type: SongTC.getResolver('updateById').getType(),
+        resolve: async (resolveProps: ResolverResolveParams<any, any>) => {
+            const songProps = await prepareSong(resolveProps);
+            return SongTC.getResolver('updateById').resolve(songProps);
         },
     });
 
@@ -149,7 +213,7 @@ export const createSongSchema = (
         songCreateOne: SongTC.getResolver('createNested', [
             authenticated(Role.MODERATOR),
         ]),
-        songUpdateById: SongTC.getResolver('updateById', [
+        songUpdateById: SongTC.getResolver('updateNested', [
             authenticated(Role.MODERATOR),
         ]),
     };
