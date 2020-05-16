@@ -7,7 +7,7 @@ const song: Song<any> = {
     title: 'Song title',
     chords: [],
     creator: 'creatorId',
-    lyrics: 'text',
+    lyrics: [{ lyrics: 'text', chords: [] }],
     author: { name: 'author' },
     strummingPattern: { pattern: [0] },
 };
@@ -30,7 +30,7 @@ it('should update values', () => {
     };
 
     const lyrics: Partial<Song<any>> = {
-        lyrics: 'new text',
+        lyrics: [{ lyrics: 'new text', chords: [] }],
     };
 
     const author: Partial<Song<any>> = {
@@ -54,7 +54,10 @@ it('should update values', () => {
         chords: [{ name: 'G', strings: [0, 0, 0, 0] }],
     });
     expect(songCreator).toEqual({ ...song, creator: 'admin' });
-    expect(songLyrics).toEqual({ ...song, lyrics: 'new text' });
+    expect(songLyrics).toEqual({
+        ...song,
+        lyrics: [{ lyrics: 'new text', chords: [] }],
+    });
     expect(songAuthor).toEqual({ ...song, author: { name: 'new author' } });
     expect(songStrummingPattern).toEqual({
         ...song,
