@@ -38,7 +38,7 @@ export const createUserSchema = (options: ServerModuleOptions) => {
     UserTC.addResolver({
         name: 'login',
         args: { username: 'String!', password: 'String!' },
-        type: `type LoginResponse { token: String! }`,
+        type: `type TokenResponse { token: String! }`,
         resolve: async (req: any) => {
             const { username, password } = req.args;
             const user = await UserModelCreated.findOne({ username });
@@ -57,7 +57,7 @@ export const createUserSchema = (options: ServerModuleOptions) => {
     UserTC.addResolver({
         name: 'signup',
         args: { username: 'String!', email: 'String!', password: 'String!' },
-        type: UserTC,
+        type: `type TokenResponse { token: String! }`,
         resolve: async (req: any) => {
             const { username, password, email } = req.args;
 
@@ -75,7 +75,9 @@ export const createUserSchema = (options: ServerModuleOptions) => {
                 throw new Error('Something went wrong');
             }
             const userInteractor = new UserInteractor(user.toObject());
-            return userInteractor.stripUser();
+            const token = options.tokenCreator(userInteractor.stripUser());
+            req.context.token = token;
+            return { token };
         },
     });
 

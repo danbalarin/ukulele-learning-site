@@ -49,7 +49,12 @@ export const createUserModel = (options: ServerModuleOptions) => {
         next: () => void
     ) {
         if (this.isModified('password')) {
-            const ui = new UserInteractor(this);
+            const ui = new UserInteractor({
+                email: this.email,
+                role: this.role,
+                username: this.username,
+                password: this.password,
+            });
             const newUser: User = ui.hashPassword(options.hashFunction);
             this.password = newUser.password;
         }
