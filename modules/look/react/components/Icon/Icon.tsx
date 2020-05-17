@@ -22,6 +22,7 @@ import {
     faPen,
     faHeart,
     faHeartBroken,
+    faSync,
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -45,6 +46,7 @@ library.add(
     faPen,
     faHeart,
     faHeartBroken,
+    faSync,
     faPlus
 );
 
@@ -65,6 +67,11 @@ interface Props {
      * Icon color
      */
     color?: string;
+
+    /**
+     * Spinning icon
+     */
+    spin?: boolean;
 }
 
 function Icon({ name, ...props }: Props): ReactElement {
