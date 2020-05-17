@@ -143,15 +143,6 @@ function EditableSongPage(
         getSong: () => values as Song<string>,
     }));
 
-    const onChangeStrum = (index: number) => (value: any) => {
-        const newArray = values.strummingPattern?.pattern || [];
-        newArray[index] = value;
-        setFieldValue('strummingPattern', {
-            ...values.strummingPattern,
-            pattern: newArray,
-        });
-    };
-
     return (
         <Wrapper>
             <FormControl isInvalid={touched.title && !!errors.title}>

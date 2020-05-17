@@ -23,6 +23,8 @@ import {
     faHeart,
     faHeartBroken,
     faSync,
+    faChevronLeft,
+    faChevronRight,
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -47,6 +49,8 @@ library.add(
     faHeart,
     faHeartBroken,
     faSync,
+    faChevronLeft,
+    faChevronRight,
     faPlus
 );
 

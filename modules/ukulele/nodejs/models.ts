@@ -37,7 +37,11 @@ export const createModels = (
         ...strummingPatternSeed,
     };
 
-    const chordProgressionModel = createChordProgressionSchema(options);
+    const chordProgressionModel = createChordProgressionSchema(options, {
+        ChordTC: chordModel.typeComposer,
+        StrummingPatternTC: strummingPattern.typeComposer,
+        MetronomePresetTC: metronomePreset.typeComposer,
+    });
     const chordProgressionSeed = createChordProgressionSeed(options);
     const chordProgression = {
         ...chordProgressionModel,

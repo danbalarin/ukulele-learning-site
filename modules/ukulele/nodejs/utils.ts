@@ -3,7 +3,7 @@ import { Model, Types } from 'mongoose';
 export const creator = (
     authException: any,
     model: Model<any>,
-    field: string = 'creator'
+    field: string = 'creatorId'
 ) =>
     async function(
         resolve: any,
@@ -14,9 +14,9 @@ export const creator = (
     ) {
         const user = context?.user;
         const filter: any = {
-            _id: args.record._id,
+            _id: args._id,
         };
-        filter[field] = Types.ObjectId(user._id);
+        filter[field] = Types.ObjectId(user?._id);
 
         const wasCreatedByUser = await model.find(filter);
 

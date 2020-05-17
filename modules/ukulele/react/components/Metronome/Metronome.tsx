@@ -55,13 +55,19 @@ interface Props {
      * Speed at which metronome operates, defaults to 100
      */
     tempo?: number;
+
     /**
      * Callback called every halftick
      */
     halfTick?: (halfTickNumber?: number) => void;
+
+    /**
+     * Callback called after tempo change
+     */
+    onChange?: (newTempo: number) => void;
 }
 
-function Metronome({ tempo, halfTick }: Props): ReactElement {
+function Metronome({ tempo, halfTick, onChange }: Props): ReactElement {
     const [isOn, setIsOn] = useState(false);
     const [activeDot, setActiveDot] = useState(0);
     const [actualTempo, setActualTempo] = useState(tempo || 100);
@@ -92,7 +98,9 @@ function Metronome({ tempo, halfTick }: Props): ReactElement {
     };
 
     const handleTempoChange = (event: React.FormEvent<HTMLInputElement>) => {
-        setActualTempo(+event.currentTarget.value);
+        const newTempo = +event.currentTarget.value;
+        setActualTempo(newTempo);
+        onChange && onChange(newTempo);
     };
 
     return (

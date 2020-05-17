@@ -16,6 +16,7 @@ import {
     SONG_UPDATE_BY_ID_VARIABLES,
     useSongDislike,
     useSongLike,
+    Chord as ChordComponent,
 } from '@uls/ukulele-react';
 import {
     Button,
@@ -30,7 +31,6 @@ import { useUserLocalQuery } from '@uls/user-react';
 import { Role } from '@uls/auth-common';
 
 import EditableSongPage from './EditableSongPage';
-import ChordComponent from '../../../../.yarn/$$virtual/@uls-ukulele-react-virtual-fc78971b44/1/modules/ukulele/react/components/Chord/Chord';
 import { Loading } from '../../components/Loading';
 
 const SongPageWrapper = styled.div`
@@ -107,6 +107,9 @@ function SongPage({
 
     useEffect(() => {
         (async () => {
+            if (id === ' new') {
+                return;
+            }
             setLoading && setLoading(true);
             const fetchedSong = await client.query<
                 SONG_BY_ID_RETURN,

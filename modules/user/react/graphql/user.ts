@@ -43,12 +43,14 @@ export const useSignupMutation = () =>
     });
 
 interface UserLocalData extends Pick<User, 'username' | 'email' | 'role'> {
+    _id: string;
     token: string;
 }
 
 export const USER_LOCAL_QUERY = gql`
     {
         user @client {
+            _id
             token
             username
             email
@@ -85,10 +87,11 @@ export const writeUserResolver: Resolver = async (
     { token }: any,
     { cache }: any
 ) => {
-    const user = jwt.decode(token) as User;
+    const user = jwt.decode(token) as User & { _id: string };
     const data = { user: {} };
     if (user) {
         data.user = {
+            _id: user._id,
             username: user.username,
             email: user.email,
             role: user.role,

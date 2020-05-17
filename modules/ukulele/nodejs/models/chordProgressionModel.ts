@@ -8,6 +8,9 @@ import { MODEL_NAME as CHORD_MODEL_NAME } from './chordModel';
 import { MODEL_NAME as STRUMMING_PATTERN_MODEL_NAME } from './strummingPatternModel';
 
 export interface ChordProgressionModel extends ChordProgression<any>, Document {
+    chordsIds: string[];
+    creatorId: string;
+    strummingPatternId: string;
     wasCreatedByUser: (userId: Schema.Types.ObjectId) => boolean;
 }
 
@@ -21,17 +24,17 @@ export const createChordProgressionModel = (
             type: String,
             required: true,
         },
-        chords: {
+        chordsIds: {
             type: [Schema.Types.ObjectId],
             ref: CHORD_MODEL_NAME,
             required: true,
         },
-        creator: {
+        creatorId: {
             type: Schema.Types.ObjectId,
             ref: options.creatorModel?.getTypeName(),
             required: true,
         },
-        strummingPattern: {
+        strummingPatternId: {
             type: Schema.Types.ObjectId,
             ref: STRUMMING_PATTERN_MODEL_NAME,
         },
