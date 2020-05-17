@@ -26,6 +26,7 @@ export const createSongSchema = (
     const SongModels = createSongModel(options);
     const SongModelCreated = SongModels[SONG_MODEL_NAME];
     const ChordPositionCreated = SongModels.ChordPosition;
+    const SongLikesCreated = SongModels.SongLikes;
 
     const ChordPositionTC = composeWithMongoose(ChordPositionCreated, {});
     ChordPositionTC.addRelation('chord', {
@@ -49,7 +50,7 @@ export const createSongSchema = (
         resolve: async (req: any) => {
             const { query } = req.args;
             const found = await SongModelCreated.find({
-                name: { $regex: query, $options: 'ix' },
+                title: { $regex: query, $options: 'ix' },
             });
             return found;
         },
@@ -198,6 +199,106 @@ export const createSongSchema = (
         projection: { creatorId: 1 },
     });
 
+    SongTC.addRelation('liked', {
+        resolver: () => SongLikesTC.getResolver('isLiked'),
+        prepareArgs: {
+            songId: source => source._id,
+        },
+        projection: { _id: 1 },
+    });
+
+    const SongLikesTC = composeWithMongoose(SongLikesCreated, {});
+
+    SongLikesTC.addRelation('user', {
+        resolver: () => options.creatorModel?.getResolver('findById'),
+        prepareArgs: {
+            _id: source => source.userId,
+        },
+        projection: { userId: true },
+    });
+
+    SongLikesTC.addRelation('song', {
+        resolver: () => SongTC.getResolver('findById'),
+        prepareArgs: {
+            _id: source => source.songId,
+        },
+        projection: { songId: true },
+    });
+
+    SongLikesTC.addResolver({
+        name: 'like',
+        args: {
+            songId: `MongoID!`,
+        },
+        type: SongLikesTC.getResolver('createOne').getType(),
+        resolve: async (resolveProps: ResolverResolveParams<any, any>) => {
+            resolveProps.args.userId = resolveProps.context.user._id;
+            resolveProps.args.record = { ...resolveProps.args };
+
+            const songLike = await SongLikesCreated.findOne(
+                resolveProps.args.record
+            );
+
+            if (!!songLike) {
+                return { record: songLike, recordId: songLike._id };
+            }
+
+            return SongLikesTC.getResolver('createOne').resolve(resolveProps);
+        },
+    });
+
+    SongLikesTC.addResolver({
+        name: 'dislike',
+        args: {
+            songId: `MongoID!`,
+        },
+        type: SongLikesTC.getResolver('createOne').getType(),
+        resolve: async (resolveProps: ResolverResolveParams<any, any>) => {
+            const songLike = await SongLikesCreated.findOneAndDelete({
+                songId: resolveProps.args.songId,
+                userId: resolveProps.context.user._id,
+            });
+            return { record: songLike, recordId: songLike?._id };
+        },
+    });
+
+    SongLikesTC.addResolver({
+        name: 'likedSongs',
+        args: {},
+        type: [SongLikesTC],
+        resolve: async (resolveProps: ResolverResolveParams<any, any>) => {
+            if (!resolveProps.context.user._id) {
+                return [];
+            }
+            resolveProps.args.userId = resolveProps.context.user._id;
+            return SongLikesTC.getResolver('findMany').resolve(resolveProps);
+        },
+    });
+
+    SongLikesTC.addResolver({
+        name: 'isLiked',
+        args: {
+            songId: `MongoID!`,
+        },
+        type: 'Boolean',
+        resolve: async (resolveProps: ResolverResolveParams<any, any>) => {
+            if (!resolveProps.context?.user?._id) {
+                return false;
+            }
+
+            resolveProps.args.userId = resolveProps.context.user._id;
+            resolveProps.args.record = { ...resolveProps.args };
+
+            const res = await SongLikesCreated.findOne(
+                resolveProps.args.record
+            );
+
+            return !!res;
+        },
+    });
+
+    const authenticated = authMiddleware(options.errors.authorizationError);
+
     const query = {
         songById: SongTC.getResolver('findById'),
         songByIds: SongTC.getResolver('findByIds'),
@@ -205,9 +306,10 @@ export const createSongSchema = (
         songMany: SongTC.getResolver('findMany'),
         songCount: SongTC.getResolver('count'),
         songPagination: SongTC.getResolver('pagination'),
+        likedSongs: SongLikesTC.getResolver('likedSongs', [
+            authenticated(Role.USER),
+        ]),
     };
-
-    const authenticated = authMiddleware(options.errors.authorizationError);
 
     const mutation = {
         songCreateOne: SongTC.getResolver('createNested', [
@@ -215,6 +317,10 @@ export const createSongSchema = (
         ]),
         songUpdateById: SongTC.getResolver('updateNested', [
             authenticated(Role.MODERATOR),
+        ]),
+        songLike: SongLikesTC.getResolver('like', [authenticated(Role.USER)]),
+        songDislike: SongLikesTC.getResolver('dislike', [
+            authenticated(Role.USER),
         ]),
     };
 

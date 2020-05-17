@@ -45,7 +45,6 @@ export class UserInteractor implements EntityBase<User>, Updatable<User> {
         const newUser: User = {
             ...(this._entity as User),
         };
-        console.log(newUser);
         if (!newUser.password) {
             throw new Error('Cannot hash user with empty password');
         }

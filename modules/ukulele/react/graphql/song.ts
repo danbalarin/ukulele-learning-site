@@ -15,6 +15,7 @@ export const SONG_FRAGMENT = gql`
     fragment ${SONG_FRAGMENT_NAME} on Song {
         _id
         title
+        liked
         chords{
             ...${CHORD_FRAGMENT_NAME}
         }
@@ -158,5 +159,79 @@ export const SONG_BY_ID = gql`
 export const useSongById = (variables: SONG_BY_ID_VARIABLES) =>
     useQuery<SONG_BY_ID_RETURN, SONG_BY_ID_VARIABLES>(SONG_BY_ID, {
         variables,
+        fetchPolicy: 'no-cache',
+    });
+
+export interface LIKED_SONGS_RETURN {
+    likedSongs: (Song<any> & { _id: string })[];
+}
+
+export interface LIKED_SONGS_VARIABLES {}
+
+export const LIKED_SONGS = gql`
+    query likedSongs {
+        likedSongs {
+            song{
+                ...${SONG_FRAGMENT_NAME}
+            }
+        }
+    }
+    ${SONG_FRAGMENT}
+`;
+
+export const useLikedSongs = () =>
+    useQuery<LIKED_SONGS_RETURN, LIKED_SONGS_VARIABLES>(LIKED_SONGS, {
+        fetchPolicy: 'no-cache',
+    });
+
+export interface SONG_LIKE_RETURN {
+    songLike: { record: { song: Song<any> & { _id: string } } };
+}
+
+export interface SONG_LIKE_VARIABLES {
+    songId: string;
+}
+
+export const SONG_LIKE = gql`
+    mutation songLike($songId: MongoID!) {
+        songLike(songId: $songId) {
+            record {
+                song{
+                    ...${SONG_FRAGMENT_NAME}
+                }
+            }
+        }
+    }
+    ${SONG_FRAGMENT}
+`;
+
+export const useSongLike = () =>
+    useMutation<SONG_LIKE_RETURN, SONG_LIKE_VARIABLES>(SONG_LIKE, {
+        fetchPolicy: 'no-cache',
+    });
+
+export interface SONG_DISLIKE_RETURN {
+    songDislike: { record: { song: Song<any> & { _id: string } } };
+}
+
+export interface SONG_DISLIKE_VARIABLES {
+    songId: string;
+}
+
+export const SONG_DISLIKE = gql`
+    mutation songDislike($songId: MongoID!) {
+        songDislike(songId: $songId) {
+            record {
+                song{
+                    ...${SONG_FRAGMENT_NAME}
+                }
+            }
+        }
+    }
+    ${SONG_FRAGMENT}
+`;
+
+export const useSongDislike = () =>
+    useMutation<SONG_DISLIKE_RETURN, SONG_DISLIKE_VARIABLES>(SONG_DISLIKE, {
         fetchPolicy: 'no-cache',
     });

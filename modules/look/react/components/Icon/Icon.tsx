@@ -20,6 +20,8 @@ import {
     faMusic,
     faUsers,
     faPen,
+    faHeart,
+    faHeartBroken,
     faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -41,6 +43,8 @@ library.add(
     faMusic,
     faUsers,
     faPen,
+    faHeart,
+    faHeartBroken,
     faPlus
 );
 

@@ -14,6 +14,8 @@ import {
     SONG_CREATE_ONE_VARIABLES,
     useSongUpdateById,
     SONG_UPDATE_BY_ID_VARIABLES,
+    useSongDislike,
+    useSongLike,
 } from '@uls/ukulele-react';
 import {
     Button,
@@ -23,7 +25,7 @@ import {
     useToast,
     DisplayBox,
 } from '@uls/look-react';
-import { Song, Strum } from '@uls/ukulele-common';
+import { Song } from '@uls/ukulele-common';
 import { useUserLocalQuery } from '@uls/user-react';
 import { Role } from '@uls/auth-common';
 
@@ -54,6 +56,7 @@ function SongPage({
         params: { id },
     },
 }: SongPageProps): ReactElement {
+    /** States */
     const [song, setSong] = useState<Song<any> & { _id: string }>({
         _id: '',
         chords: [],
@@ -63,14 +66,21 @@ function SongPage({
     });
     const [loading, setLoading] = useState<boolean>(id !== 'new');
     const [editting, setEditting] = useState(false);
-    const songEditRef = useRef<any>();
+
+    //** Requests */
     const client = useApolloClient();
-    const { replace: replaceHistory } = useHistory();
-    const toaster = useToast();
     const { data: userData } = useUserLocalQuery();
     const [createSong] = useSongCreateOne();
-
     const [updateSong] = useSongUpdateById();
+    const [
+        songDislike,
+        { loading: dislikeLoading, data: dislikeData },
+    ] = useSongDislike();
+    const [songLike, { loading: likeLoading, data: likeData }] = useSongLike();
+
+    const songEditRef = useRef<any>();
+    const { replace: replaceHistory } = useHistory();
+    const toaster = useToast();
 
     const showError = (error: any) => {
         toaster({
@@ -86,25 +96,54 @@ function SongPage({
     const isModerator = () =>
         userData?.user.role && userData?.user.role >= Role.MODERATOR;
 
+    const isUser = () =>
+        userData?.user.role && userData?.user.role >= Role.USER;
+
+    useEffect(() => {
+        if (id === 'new' && !isModerator()) {
+            replaceHistory('/unauthorized');
+        }
+    }, [id, userData]);
+
     useEffect(() => {
         (async () => {
-            if (id !== 'new' && isModerator()) {
-                setLoading && setLoading(true);
-                const fetchedSong = await client.query<
-                    SONG_BY_ID_RETURN,
-                    SONG_BY_ID_VARIABLES
-                >({
-                    query: SONG_BY_ID,
-                    fetchPolicy: 'no-cache',
-                    variables: { _id: id },
-                });
-                fetchedSong?.data?.songOne &&
-                    setSong &&
-                    setSong(fetchedSong.data.songOne);
-                setLoading && setLoading(false);
-            }
+            setLoading && setLoading(true);
+            const fetchedSong = await client.query<
+                SONG_BY_ID_RETURN,
+                SONG_BY_ID_VARIABLES
+            >({
+                query: SONG_BY_ID,
+                fetchPolicy: 'no-cache',
+                variables: { _id: id },
+            });
+            fetchedSong?.data?.songOne &&
+                setSong &&
+                setSong(fetchedSong.data.songOne);
+            setLoading && setLoading(false);
         })();
-    }, [id, userData]);
+    }, []);
+
+    useEffect(() => {
+        if (likeData?.songLike.record.song._id) {
+            setSong(likeData.songLike.record.song);
+            toaster({
+                title: 'Liked!',
+                description: `${song.title} is now your favourite.`,
+                status: 'success',
+            });
+        }
+    }, [likeData]);
+
+    useEffect(() => {
+        if (dislikeData?.songDislike.record.song._id) {
+            setSong(dislikeData.songDislike.record.song);
+            toaster({
+                title: 'Disliked!',
+                description: `${song.title} is not your favourite anymore.`,
+                status: 'success',
+            });
+        }
+    }, [dislikeData]);
 
     const save = async () => {
         if (!songEditRef.current?.hasChanged()) {
@@ -173,6 +212,13 @@ function SongPage({
         </Button>
     );
 
+    const likeSongCallback = isUser()
+        ? () => songLike({ variables: { songId: song._id } })
+        : undefined;
+    const dislikeSongCallback = isUser()
+        ? () => songDislike({ variables: { songId: song._id } })
+        : undefined;
+
     return loading ? (
         <Loading />
     ) : (
@@ -181,7 +227,11 @@ function SongPage({
             {editting ? (
                 <EditableSongPage song={song} ref={songEditRef} />
             ) : (
-                <SongPagePresenter song={song} />
+                <SongPagePresenter
+                    song={song}
+                    likeSong={likeSongCallback}
+                    dislikeSong={dislikeSongCallback}
+                />
             )}
         </SongPageWrapper>
     );
@@ -232,16 +282,51 @@ const ChordWrapper = styled.div`
 
 interface SongPagePresenterProps {
     song: Song<any>;
+    likeSong?: () => void;
+    dislikeSong?: () => void;
 }
 
-function SongPagePresenter({ song }: SongPagePresenterProps): ReactElement {
+const LikeButtonWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+const LikeButtonOverride = styled(Button)`
+    height: auto;
+    padding: 5px;
+`;
+
+function SongPagePresenter({
+    song,
+    likeSong,
+    dislikeSong,
+}: SongPagePresenterProps): ReactElement {
     const strummingPatternRef = useRef<any>();
+
+    const LikeButton = !!(likeSong && dislikeSong) ? (
+        <Heading size="sm">
+            <LikeButtonOverride onClick={song.liked ? dislikeSong : likeSong}>
+                <LikeButtonWrapper>
+                    {song.liked ? 'Dislike' : 'Like'}&nbsp;
+                    <Icon
+                        size="2x"
+                        name={song.liked ? 'heart-broken' : 'heart'}
+                    />
+                </LikeButtonWrapper>
+            </LikeButtonOverride>
+        </Heading>
+    ) : (
+        <></>
+    );
 
     return (
         <Wrapper>
             <TextWrapper>
-                <Heading size="lg">{song.title}</Heading>
-                <Heading size="md">
+                {LikeButton}
+                <Heading size="2xl">{song.title}</Heading>
+                <Heading size="xl">
                     {song.author ? song.author.name : 'Unknown Authors'}
                 </Heading>
                 <SongText songText={song.lyrics} />
@@ -258,7 +343,6 @@ function SongPagePresenter({ song }: SongPagePresenterProps): ReactElement {
                         ))}
                     </ChordsWrapper>
                 </ComponentWrapper>
-
                 <ComponentWrapper title="Metronome">
                     <Metronome
                         tempo={

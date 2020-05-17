@@ -15,6 +15,11 @@ export interface SongModel extends Song<any>, Document {
     authorId?: Schema.Types.ObjectId;
 }
 
+export interface SongLikeModel extends Document {
+    songId: Schema.Types.ObjectId;
+    userId: Schema.Types.ObjectId;
+}
+
 export const MODEL_NAME = 'Song';
 
 export const createSongModel = (
@@ -71,6 +76,17 @@ export const createSongModel = (
         },
     });
 
+    const SongLikesSchema = new Schema<SongLikeModel>({
+        songId: {
+            type: Schema.Types.ObjectId,
+            required: true,
+        },
+        userId: {
+            type: Schema.Types.ObjectId,
+            required: true,
+        },
+    });
+
     SongSchema.index({ title: 'text' });
 
     return {
@@ -78,5 +94,6 @@ export const createSongModel = (
         ChordPosition: model<
             { chordId: Schema.Types.ObjectId; offset: number } & Document
         >('ChordPosition', ChordPositionSchema),
+        SongLikes: model<SongLikeModel>('SongLikes', SongLikesSchema),
     };
 };

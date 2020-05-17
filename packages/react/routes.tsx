@@ -125,6 +125,10 @@ export const routes: RouteProps[] = [
         ),
     },
     {
+        path: '/unauthorized',
+        component: Unauthorized,
+    },
+    {
         path: '/',
         component: NotFound,
     },

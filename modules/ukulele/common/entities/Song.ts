@@ -64,4 +64,9 @@ export interface Song<T> extends Creator<T> {
      * Song Strumming pattern
      */
     strummingPattern?: StrummingPattern;
+
+    /**
+     * Flag whether actually logged user has liked this song
+     */
+    liked?: boolean;
 }
