@@ -9,7 +9,7 @@ interface ListProps {
     /**
      * List heading
      */
-    title: string;
+    title: React.ReactNode;
 
     /**
      * List items

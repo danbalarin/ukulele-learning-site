@@ -7,19 +7,19 @@ import { Loading } from '../../components/Loading';
 import { List } from '../../components/List';
 import { Error } from '../../components/Error';
 
+const Wrapper = styled.div`
+    @media (min-width: ${Theme.breakpoints[0]}) {
+        padding-top: 1em;
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+`;
+
 interface Props {}
 
 function ChordListPage({}: Props): ReactElement {
-    const Wrapper = styled.div`
-        @media (min-width: ${Theme.breakpoints[0]}) {
-            padding-top: 1em;
-        }
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-    `;
-
     const { data, loading, error } = useChordMany({});
     if (loading) {
         return <Wrapper children={<Loading />} />;
