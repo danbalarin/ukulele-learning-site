@@ -40,11 +40,9 @@ export const createSongModel = (
     const SongLineSchema = new Schema({
         chords: {
             type: [ChordPositionSchema],
-            required: true,
         },
         lyrics: {
             type: String,
-            required: true,
         },
     });
 

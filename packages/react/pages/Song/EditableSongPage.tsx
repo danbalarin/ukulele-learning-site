@@ -17,6 +17,7 @@ import {
     Input,
     FormControl,
     FormErrorMessage,
+    Button,
 } from '@uls/look-react';
 import {
     AUTHOR_SEARCH,
@@ -89,6 +90,7 @@ function EditableSongPage(
         touched,
         errors,
         setFieldValue,
+        setFieldTouched,
         dirty,
     } = useFormik<Song<string>>({
         initialValues: {
@@ -139,7 +141,7 @@ function EditableSongPage(
     };
 
     useImperativeHandle(ref, () => ({
-        hasChanged: () => dirty,
+        hasChanged: () => dirty || touched,
         getSong: () => values as Song<string>,
     }));
 
@@ -241,7 +243,23 @@ function EditableSongPage(
             </FormControl>
             <FormControl>
                 <FormLabel>Lyrics</FormLabel>
-                <SongText songText={values.lyrics} editable={true} />
+                <SongText
+                    songText={values.lyrics}
+                    editable={true}
+                    onChange={songLines => setFieldValue('lyrics', songLines)}
+                    availableChords={values.chords}
+                />
+                <Button
+                    onClick={() => {
+                        setFieldTouched('lyrics', true);
+                        setFieldValue('lyrics', [
+                            ...values.lyrics,
+                            { chords: [], lyrics: '' },
+                        ]);
+                    }}
+                >
+                    Add new line
+                </Button>
             </FormControl>
         </Wrapper>
     );
