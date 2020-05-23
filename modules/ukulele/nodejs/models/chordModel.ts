@@ -2,7 +2,7 @@ import { ObjectTypeComposer } from 'graphql-compose';
 import { Document, Schema, model } from 'mongoose';
 
 import { ServerModuleOptions } from '@uls/core-nodejs';
-import { Chord } from '@uls/ukulele-common';
+import { Chord, ChordType } from '@uls/ukulele-common';
 
 export interface ChordModel extends Chord, Document {}
 
@@ -20,6 +20,11 @@ export const createChordModel = (
         strings: {
             type: [],
             required: true,
+        },
+        type: {
+            type: Number,
+            enum: Object.keys(ChordType).filter(c => typeof c === 'number'),
+            default: ChordType.Major,
         },
     });
 

@@ -9,6 +9,7 @@ export const CHORD_FRAGMENT = gql`
         _id
         name
         strings
+        type
     }
 `;
 

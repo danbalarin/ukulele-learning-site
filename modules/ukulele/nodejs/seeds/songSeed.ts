@@ -12,9 +12,7 @@ import { Types } from 'mongoose';
 export const createSongSeed = (
     options: ServerModuleOptions
 ): Pick<ServerModuleModel, 'seed'> => {
-    const authors: (Song<any> & EntityID<Types.ObjectId>)[] = [
-        { title: 'Heathens', creator: 'admin', chords: [], lyrics: [] },
-    ];
+    const authors: (Song<any> & EntityID<Types.ObjectId>)[] = [];
 
     return { seed: authors };
 };

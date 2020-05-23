@@ -94,7 +94,6 @@ export const createSongSchema = (
             const strummingResult = await StrummingPatternTC.getResolver(
                 'createOne'
             ).resolve(strummingProps);
-            console.log(pattern);
             return strummingResult.recordId;
         } catch (err) {
             console.log(err);

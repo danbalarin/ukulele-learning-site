@@ -10,9 +10,7 @@ import { ChordProgression } from '@uls/ukulele-common';
 export const createChordProgressionSeed = (
     options: ServerModuleOptions
 ): Pick<ServerModuleModel, 'seed'> => {
-    const chordProgressions: ChordProgression<any>[] = [
-        { name: 'asd', chords: [], creator: '5e80b6609155a5708cb4a2cc' },
-    ];
+    const chordProgressions: ChordProgression<any>[] = [];
 
     return { seed: chordProgressions };
 };

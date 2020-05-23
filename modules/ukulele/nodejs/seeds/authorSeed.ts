@@ -15,10 +15,8 @@ export const createAuthorSeed = (
     const authors: (Author & EntityID<Types.ObjectId>)[] = [
         { name: 'Various Artists' },
         { name: 'Vance Joy' },
-        {
-            name: 'Twenty One Pilots',
-            members: [{ name: 'Tyler Joseph' }, { name: 'Josh Dun' }],
-        },
+        { name: 'Tyler Joseph' },
+        { name: 'Josh Dun' },
     ];
 
     return { seed: authors };

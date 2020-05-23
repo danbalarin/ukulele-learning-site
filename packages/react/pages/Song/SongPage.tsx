@@ -107,7 +107,7 @@ function SongPage({
 
     useEffect(() => {
         (async () => {
-            if (id === ' new') {
+            if (id === 'new') {
                 return;
             }
             setLoading && setLoading(true);
