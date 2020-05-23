@@ -182,6 +182,14 @@ export const createSongSchema = (
         projection: { authorId: 1 },
     });
 
+    AuthorTC.addRelation('songs', {
+        resolver: () => SongTC.getResolver('findMany'),
+        prepareArgs: {
+            filter: source => ({ authorId: source._id }),
+        },
+        projection: { _id: true },
+    });
+
     SongTC.addRelation('strummingPattern', {
         resolver: () => StrummingPatternTC.getResolver('findById'),
         prepareArgs: {

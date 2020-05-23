@@ -15,6 +15,7 @@ const MetronomePage = loadable(() => import('./pages/Metronome/MetronomePage'));
 const ChordPage = loadable(() => import('./pages/Chord/ChordPage'));
 const SongListPage = loadable(() => import('./pages/SongList/SongListPage'));
 const SongPage = loadable(() => import('./pages/Song/SongPage'));
+const AuthorPage = loadable(() => import('./pages/Author/AuthorPage'));
 const ChordListPage = loadable(() => import('./pages/ChordList/ChordListPage'));
 const ChordProgressionPage = loadable(() =>
     import('./pages/ChordProgression/ChordProgressionPage')
@@ -68,6 +69,10 @@ export const routes: RouteProps[] = [
     {
         path: '/song/:id',
         component: SongPage,
+    },
+    {
+        path: '/author/:id',
+        component: AuthorPage,
     },
     {
         path: '/admin/song/:id?',

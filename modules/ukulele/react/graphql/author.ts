@@ -3,6 +3,15 @@ import { useMutation, useQuery, QueryHookOptions } from '@apollo/client';
 
 import { Author } from '@uls/ukulele-common';
 
+interface FreagmentAuthor extends Author {
+    _id: string;
+    songs: {
+        _id: string;
+        title: string;
+        liked: boolean;
+    }[];
+}
+
 export const AUTHOR_FRAGMENT_NAME = 'AuthorFragment';
 export const AUTHOR_FRAGMENT = gql`
     fragment ${AUTHOR_FRAGMENT_NAME} on Author {
@@ -16,11 +25,16 @@ export const AUTHOR_FRAGMENT = gql`
                 name
             }
         }
+        songs {
+            _id
+            title
+            liked
+        }
     }
 `;
 
 export interface AUTHOR_CREATE_ONE_RETURN {
-    authorCreateOne: { record: Author & { _id: string } };
+    authorCreateOne: { record: FreagmentAuthor };
 }
 
 export interface AUTHOR_CREATE_ONE_VARIABLES {
@@ -47,7 +61,7 @@ export const useAuthorCreateOne = () =>
     );
 
 export interface AUTHOR_SEARCH_RETURN {
-    authorSearch: (Author & { _id: string })[];
+    authorSearch: FreagmentAuthor[];
 }
 
 export interface AUTHOR_SEARCH_VARIABLES {
@@ -64,7 +78,7 @@ export const AUTHOR_SEARCH = gql`
 `;
 
 export interface AUTHOR_MANY_RETURN {
-    authorMany: (Author & { _id: string })[];
+    authorMany: FreagmentAuthor[];
 }
 
 export interface AUTHOR_MANY_VARIABLES {
@@ -132,3 +146,26 @@ export const useAuthorRemoveById = () =>
             fetchPolicy: 'no-cache',
         }
     );
+
+export interface AUTHOR_BY_ID_RETURN {
+    authorOne: FreagmentAuthor;
+}
+
+export interface AUTHOR_BY_ID_VARIABLES {
+    _id: string;
+}
+
+export const AUTHOR_BY_ID = gql`
+    query authorOne($_id: MongoID!) {
+        authorOne(filter: { _id: $_id }) {
+            ...${AUTHOR_FRAGMENT_NAME}
+        }
+    }
+    ${AUTHOR_FRAGMENT}
+`;
+
+export const useAuthorById = (variables: AUTHOR_BY_ID_VARIABLES) =>
+    useQuery<AUTHOR_BY_ID_RETURN, AUTHOR_BY_ID_VARIABLES>(AUTHOR_BY_ID, {
+        variables,
+        fetchPolicy: 'no-cache',
+    });
