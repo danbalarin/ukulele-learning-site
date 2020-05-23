@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState, useRef } from 'react';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { RouteComponentProps, useHistory, Link } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
 import styled from '@emotion/styled';
 
@@ -261,15 +261,14 @@ const TextWrapper = styled.div`
 const ComponentsWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-end;
-    position: fixed;
+    position: sticky;
     & > * {
         margin: 8px;
     }
     right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 50px;
     z-index: 10;
 `;
 
@@ -324,14 +323,24 @@ function SongPagePresenter({
         <></>
     );
 
+    const authorTitle = (
+        <Heading size="xl">
+            {song.author ? song.author.name : 'Unknown Author'}
+        </Heading>
+    );
+
     return (
         <Wrapper>
             <TextWrapper>
                 {LikeButton}
                 <Heading size="2xl">{song.title}</Heading>
-                <Heading size="xl">
-                    {song.author ? song.author.name : 'Unknown Authors'}
-                </Heading>
+                {song.author ? (
+                    <Link to={`/author/${(song.author as any)._id}`}>
+                        {authorTitle}
+                    </Link>
+                ) : (
+                    authorTitle
+                )}
                 <SongText songText={song.lyrics} />
             </TextWrapper>
             <ComponentsWrapper>
