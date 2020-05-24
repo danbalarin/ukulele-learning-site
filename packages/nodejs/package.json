@@ -6,6 +6,7 @@
         "watch:build": "webpack-cli --watch",
         "watch:server": "nodemon \"./build/server.js\" --watch \"./build\"",
         "build": "webpack-cli",
+        "build:prod": "webpack-cli --mode=\"production\"",
         "start": "node build/server.js",
         "start-dev": "npm-run-all --parallel watch:build watch:server",
         "seed": "cross-env webpack-cli --config webpack.config.seed.js && node ./build/seed.js"

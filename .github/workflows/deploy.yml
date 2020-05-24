@@ -57,7 +57,7 @@ jobs:
               run: |
                   cd packages/react
                   echo -e "API_URL=$API_URL\n" > .env
-                  yarn run build
+                  yarn run build:prod
 
             - name: FE - Creating docker image
               run: |

@@ -110,6 +110,17 @@ var client = Object.assign({}, config, {
         //     generateStatsFile: true,
         // }),
     ]),
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/].yarn[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
+        },
+    },
     output: {
         filename: 'static/js/[name].[hash].bundle.js',
         path: path.resolve(__dirname, 'build/client/'),

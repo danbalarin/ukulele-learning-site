@@ -3495,6 +3495,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/compression@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@types/compression@npm:1.7.0"
+  dependencies:
+    "@types/express": "*"
+  checksum: ca94adc0c1261771f028ce233ccb2eb0d6738691a6c4f000ead1d6ba62221fab4dc26a0fc2bfb2deb703993e6df5e9157e0fb70d4e6efedd8757a9ba06dec5f4
+  languageName: node
+  linkType: hard
+
 "@types/connect@npm:*":
   version: 3.4.33
   resolution: "@types/connect@npm:3.4.33"
@@ -4487,6 +4496,7 @@ __metadata:
     "@storybook/addon-actions": 6.0.0-alpha.27
     "@storybook/addon-knobs": 6.0.0-alpha.27
     "@storybook/react": 6.0.0-alpha.27
+    "@types/compression": ^1.7.0
     "@types/dotenv-webpack": 1.7.0
     "@types/express": 4.17.2
     "@types/file-loader": 4.2.0
@@ -4519,6 +4529,7 @@ __metadata:
     babel-loader: ^8.1.0
     chalk: ^3.0.0
     clean-webpack-plugin: ^3.0.0
+    compression: ^1.7.4
     cross-env: ^7.0.0
     css-loader: ^3.5.2
     dotenv: ^8.2.0
@@ -5038,7 +5049,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"accepts@npm:^1.3.5, accepts@npm:~1.3.7":
+"accepts@npm:^1.3.5, accepts@npm:~1.3.5, accepts@npm:~1.3.7":
   version: 1.3.7
   resolution: "accepts@npm:1.3.7"
   dependencies:
@@ -7101,6 +7112,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bytes@npm:3.0.0":
+  version: 3.0.0
+  resolution: "bytes@npm:3.0.0"
+  checksum: 34e6270ec41daf6bcc1245e560a5c4917607405f643a5870702f4eefb4f13ca1ed1b2b6a3f26acdac374fe7c6496a6c88f44e0c6494ba5083685c90101e7e02a
+  languageName: node
+  linkType: hard
+
 "bytes@npm:3.1.0":
   version: 3.1.0
   resolution: "bytes@npm:3.1.0"
@@ -7940,6 +7958,30 @@ __metadata:
   version: 1.3.0
   resolution: "component-emitter@npm:1.3.0"
   checksum: 93469e3df4dab0d21ab3784cfc1afb5d897a7dbcf6baedfb7f7f4dd3f1c9444cd5ab86843c5f483fa2a58a6e55b67ddccc72985897f7990ff60ca6e83e0d9b4e
+  languageName: node
+  linkType: hard
+
+"compressible@npm:~2.0.16":
+  version: 2.0.18
+  resolution: "compressible@npm:2.0.18"
+  dependencies:
+    mime-db: ">= 1.43.0 < 2"
+  checksum: 84139c98128e267a7ebd71cb8e5f5f4b3a6db3d09a9a093a5ad5bfd9cbee270380e77c06750ec9943089e4ce99a21a1a3c9973515493d028fcd81578010a6c99
+  languageName: node
+  linkType: hard
+
+"compression@npm:^1.7.4":
+  version: 1.7.4
+  resolution: "compression@npm:1.7.4"
+  dependencies:
+    accepts: ~1.3.5
+    bytes: 3.0.0
+    compressible: ~2.0.16
+    debug: 2.6.9
+    on-headers: ~1.0.2
+    safe-buffer: 5.1.2
+    vary: ~1.1.2
+  checksum: ccfb00714c2d07f313b4df0aefd5067c5b63f26a2cdf0499d2ed7943f743675dac1df4d95c4fcc3fa140cd03f1a5a3834b6fcc4cdadd7376c53a787e70a146d0
   languageName: node
   linkType: hard
 
@@ -14540,7 +14582,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"mime-db@npm:1.44.0":
+"mime-db@npm:1.44.0, mime-db@npm:>= 1.43.0 < 2":
   version: 1.44.0
   resolution: "mime-db@npm:1.44.0"
   checksum: 0768adc37250c11ec9bb787ed051caf3d339a1692b933cb053eef025391b3553915bbe8f5a88101faf79370463136ada53731d3bc1b1f7b1a95193afb9d96f67
@@ -15885,6 +15927,13 @@ fsevents@^1.2.7:
   dependencies:
     ee-first: 1.1.1
   checksum: a22fb45dade5cdc10ab0d0064a035dcb42f5cb6bb302da58c4a9db4e6b8a5042209da8644c9e020a81872be5259b5c0be3385979b3d5802591454181c64143eb
+  languageName: node
+  linkType: hard
+
+"on-headers@npm:~1.0.2":
+  version: 1.0.2
+  resolution: "on-headers@npm:1.0.2"
+  checksum: 06aa555375a4e33b4c8b42af5a5538a6974dcb8fd8af6f4e084a039a026a7d1b2a8e97779fb7c46faafcc544cf17f1aadaed79829db9962ddbbaaf5e8b90100e
   languageName: node
   linkType: hard
 

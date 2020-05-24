@@ -1,5 +1,6 @@
 import React from 'react';
 import express from 'express';
+import compression from 'compression';
 import path from 'path';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter as Router } from 'react-router';
@@ -22,6 +23,7 @@ import ApolloServer from './ApolloServer';
 
     const port = 3000;
     const server = express();
+    server.use(compression());
 
     server.use('/static', express.static('build/client/static/'));
     server.get('*', (req, res) => {
