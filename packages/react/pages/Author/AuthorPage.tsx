@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import styled from '@emotion/styled';
 
 import { Heading } from '@uls/look-react';
@@ -44,15 +45,40 @@ function AuthorPage({
         </Link>
     ));
 
+    if (!userQuery.data) {
+        return (
+            <>
+                <Heading>Something went wrong while loading.</Heading>
+                <Heading size="md">Please try refreshing the page.</Heading>
+            </>
+        );
+    }
+
+    const author = userQuery.data.authorOne;
+
     return (
         <Wrapper>
-            <Heading>{userQuery.data?.authorOne.name}</Heading>
+            <Helmet>
+                <title>EasyUKU - {author.name}</title>
+                <meta
+                    property="og:title"
+                    content={`EasyUKU - ${author.name}`}
+                />
+                <meta
+                    property="og:description"
+                    content={`Learn how to play  song by ${author.name} on ukulele!`}
+                />
+                <meta property="og:locale" content="en_US" />
+                <meta property="og:site_name" content="EasyUKU" />
+            </Helmet>
+
+            <Heading>{author.name}</Heading>
             <MemberWrapper>{memberLinks}</MemberWrapper>
-            {!!userQuery.data?.authorOne.songs.length ? (
+            {!!author.songs.length ? (
                 <List
                     title="Songs"
                     items={
-                        userQuery.data?.authorOne.songs.map(song => ({
+                        author.songs.map(song => ({
                             label: song.title,
                             linkTo: `/song/${song._id}`,
                             description: song.liked ? 'Liked' : undefined,

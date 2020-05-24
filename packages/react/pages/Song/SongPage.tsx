@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState, useRef } from 'react';
 import { RouteComponentProps, useHistory, Link } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
+import { Helmet } from 'react-helmet';
 import styled from '@emotion/styled';
 
 import {
@@ -330,6 +331,16 @@ function SongPagePresenter({
 
     return (
         <Wrapper>
+            <Helmet>
+                <title>EasyUKU - {song.title}</title>
+                <meta property="og:title" content={`EasyUKU - ${song.title}`} />
+                <meta
+                    property="og:description"
+                    content={`Learn how to play ${song.title} on ukulele!`}
+                />
+                <meta property="og:locale" content="en_US" />
+                <meta property="og:site_name" content="EasyUKU" />
+            </Helmet>
             <TextWrapper>
                 {LikeButton}
                 <Heading size="2xl">{song.title}</Heading>
