@@ -1,4 +1,8 @@
-import { Resolver, ObjectTypeComposer } from 'graphql-compose';
+import {
+    Resolver,
+    ObjectTypeComposer,
+    ResolverResolveParams,
+} from 'graphql-compose';
 import { composeWithMongoose } from 'graphql-compose-mongoose';
 
 import {
@@ -15,6 +19,7 @@ import {
     UserModel,
     MODEL_NAME as USER_MODEL_NAME,
 } from './userModel';
+import { isMe } from '../utils';
 
 /**
  * Creates user graphql schema
@@ -91,6 +96,21 @@ export const createUserSchema = (options: ServerModuleOptions) => {
         },
     });
 
+    UserTC.addResolver<UserModel>({
+        name: 'updateMe',
+        args: { record: UserTC.getITC().removeField('_id') },
+        type: UserTC,
+        resolve: async (req: ResolverResolveParams<any, any>) => {
+            const id = req.context.user._id;
+            await UserModelCreated.findOneAndUpdate(
+                { _id: id },
+                req.args.record
+            );
+            const user = await UserModelCreated.findOne({ _id: id });
+            return user;
+        },
+    });
+
     UserTC.addResolver({
         name: 'search',
         args: { query: 'String!' },
@@ -108,6 +128,8 @@ export const createUserSchema = (options: ServerModuleOptions) => {
 
     const authenticated = authMiddleware(options.errors.authorizationError);
 
+    const userMe = isMe(options.errors.authorizationError, UserModelCreated);
+
     const query = {
         me: UserTC.getResolver('me', [authenticated(Role.USER)]),
         userById: UserTC.getResolver('findById', [authenticated(Role.ADMIN)]),
@@ -122,6 +144,9 @@ export const createUserSchema = (options: ServerModuleOptions) => {
 
     const mutation = {
         signup: UserTC.getResolver('signup'),
+        userUpdateMe: UserTC.getResolver('updateMe', [
+            authenticated(Role.USER),
+        ]),
         userUpdateById: UserTC.getResolver('updateById', [
             authenticated(Role.ADMIN),
         ]),

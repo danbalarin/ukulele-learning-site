@@ -277,7 +277,9 @@ export const createSongSchema = (
             if (!resolveProps.context.user._id) {
                 return [];
             }
-            resolveProps.args.userId = resolveProps.context.user._id;
+            resolveProps.args.filter = {
+                userId: resolveProps.context.user._id,
+            };
             return SongLikesTC.getResolver('findMany').resolve(resolveProps);
         },
     });

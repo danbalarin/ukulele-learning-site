@@ -94,10 +94,9 @@ function SongPage({
     };
 
     const isModerator = () =>
-        userData?.user.role && userData?.user.role >= Role.MODERATOR;
+        userData?.user.role && userData.user.role >= Role.MODERATOR;
 
-    const isUser = () =>
-        userData?.user.role && userData?.user.role >= Role.USER;
+    const isUser = () => !!userData?.user;
 
     useEffect(() => {
         if (id === 'new' && !isModerator()) {
@@ -226,7 +225,7 @@ function SongPage({
         <Loading />
     ) : (
         <SongPageWrapper>
-            {isModerator() && <ButtonWrapper>{Btn}</ButtonWrapper>}
+            {isModerator() ? <ButtonWrapper>{Btn}</ButtonWrapper> : <></>}
             {editting ? (
                 <EditableSongPage song={song} ref={songEditRef} />
             ) : (

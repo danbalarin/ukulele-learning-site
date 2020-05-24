@@ -9,6 +9,7 @@ const createConnection = () => {
         bufferMaxEntries: 0,
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
     });
     mongoose.set('useCreateIndex', true);
     return connection;

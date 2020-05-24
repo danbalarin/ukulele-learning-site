@@ -68,11 +68,14 @@ export const useUserLocalQuery = () => {
     });
 };
 
-export type USER_LOCAL_MUTATION_VARIABLES = { token: string };
+export type USER_LOCAL_MUTATION_VARIABLES = {
+    token?: string;
+    user?: User & { _id: string };
+};
 
 export const USER_LOCAL_MUTATION = gql`
-    mutation writeUser($token: String!) {
-        writeUser(token: $token) @client
+    mutation writeUser($token: String, $user: UserUpdateById) {
+        writeUser(token: $token, user: $user) @client
     }
 `;
 
@@ -84,10 +87,21 @@ export const useUserLocalMutation = () => {
 
 export const writeUserResolver: Resolver = async (
     _root: any,
-    { token }: any,
+    { token: argToken, user: argUser }: any,
     { cache }: any
 ) => {
-    const user = jwt.decode(token) as User & { _id: string };
+    let user;
+    let token;
+    if (!!argToken) {
+        user = jwt.decode(argToken) as User & { _id: string };
+        token = argToken;
+    } else {
+        user = argUser;
+        const localData = await cache.readQuery({
+            query: USER_LOCAL_QUERY,
+        });
+        token = localData?.user?.token;
+    }
     const data = { user: {} };
     if (user) {
         data.user = {
@@ -180,16 +194,36 @@ export const USER_UPDATE_BY_ID = gql`
     }
 `;
 
-export const useUserUpdateById = (
-    variables: USER_UPDATE_BY_ID_VARIABLES,
-    optimisticResponse?: User
-) =>
+export const useUserUpdateById = () =>
     useMutation<USER_UPDATE_BY_ID_RETURN, USER_UPDATE_BY_ID_VARIABLES>(
-        USER_UPDATE_BY_ID,
-        { variables }
+        USER_UPDATE_BY_ID
     );
 
 export const clientMutations = {
     writeUser: writeUserResolver,
     logoutUser: logoutUserResolver,
 };
+
+export interface USER_UPDATE_ME_VARIABLES {
+    record: Partial<User>;
+}
+
+export interface USER_UPDATE_ME_RETURN {
+    userUpdateMe: User & { _id: string };
+}
+
+export const USER_UPDATE_ME = gql`
+    mutation userUpdateMe($record: UserInput!) {
+        userUpdateMe(record: $record) {
+            username
+            email
+            role
+            _id
+        }
+    }
+`;
+
+export const useUserUpdateMe = () =>
+    useMutation<USER_UPDATE_ME_RETURN, USER_UPDATE_ME_VARIABLES>(
+        USER_UPDATE_ME
+    );

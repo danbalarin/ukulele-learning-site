@@ -163,7 +163,7 @@ export const useSongById = (variables: SONG_BY_ID_VARIABLES) =>
     });
 
 export interface LIKED_SONGS_RETURN {
-    likedSongs: (Song<any> & { _id: string })[];
+    likedSongs: { song: Song<any> & { _id: string } }[];
 }
 
 export interface LIKED_SONGS_VARIABLES {}
