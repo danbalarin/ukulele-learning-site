@@ -7,6 +7,7 @@ import { useColorMode, Theme } from '@uls/look-react';
 const Wrapper = styled.div`
     width: 100%;
     height: 100%;
+    min-height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;

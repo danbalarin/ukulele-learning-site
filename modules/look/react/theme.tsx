@@ -128,9 +128,9 @@ const modes: ModesTheme = {
     light: {
         background: '#F2D785',
         containerBackground: '#F2A057',
-        topbarBackground: '#444059',
-        color: '#A66C4B',
-        primary: colors.orange[500],
+        topbarBackground: '#8C5946',
+        color: '#F24738',
+        primary: '#A05A27',
     },
     dark: {
         background: '#2F0459',
