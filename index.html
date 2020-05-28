@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ukulele learning site documentation</title>
+        <style>
+            @keyframes gradient {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background: linear-gradient(
+                    -45deg,
+                    #ee7752,
+                    #e73c7e,
+                    #23a6d5,
+                    #23d5ab
+                );
+                background-size: 400% 400%;
+                animation: gradient 15s ease infinite;
+            }
+            #wrapper {
+                width: 800px;
+            }
+            h1 {
+                border-bottom: .1em solid white;
+                font-size: 5em;
+                color: white;
+            }
+            h2 {
+                font-size: 4em;
+                color: white;
+            }
+            a {
+                text-decoration: none;
+            }
+            a:visited,
+            a:link {
+                color: inherit;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="wrapper">
+            <h1>🎉 @uls documentation</h1>
+            <a href="typedoc/"><h2>📝 Typedoc</h2></a>
+            <a href="storybook/"><h2>🎨 Storybook</h2></a>
+        </div>
+    </body>
+</html>
